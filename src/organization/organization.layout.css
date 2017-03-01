@@ -1,0 +1,148 @@
+.flex1{
+	flex:1;
+}
+.flex2{
+	flex:2;
+}
+
+.qqlist{
+    flex-direction:row;
+	justify-content:flex-start;	
+	align-items:center;
+}
+
+.row-flex-center{
+	flex-direction:row;
+	justify-content:center;	
+	align-items:center;
+}
+
+.column-flex-center{
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+
+.organization-tabbar-text {
+	font-size: 16;
+}
+
+.organization-tabbar-text-index {
+	font-size: 16;
+}
+
+.organization-tabbar{
+	flex-wrap:nowrap;
+    flex-direction:row;
+    align-items:center;
+	height:44dp;
+	padding:0 8 0 8;
+}
+
+.organization-select{
+	flex-wrap:nowrap;
+    flex-direction:row;
+    align-items:center;	
+	padding:0 0 0 8;
+}
+
+.list-cell-userimage {
+	width: 40;
+	height: 40;
+	round: true;
+	margin: 6 12 6 12;
+	scaleType: cover;
+	cacheType: memory;
+	fade: true;
+	visibility: hidden;
+}
+
+.list-cell-userimage-select {
+	width: 34;
+	height: 34;
+	round: true;
+	margin: 6 2 6 2;
+	scaleType: cover;
+	cacheType: memory;
+	fade: true;
+}
+
+.list-cell-userbox {
+	margin: 6 12 6 12;
+	height: 40;
+	width: 40;
+	border-radius: 20;
+	/*  display:none;*/
+	position: absolute;
+	top: 2;
+	left: 0;
+	visibility: hidden;
+}
+
+.list-cell-userbox-select {
+	margin: 6 2 6 2;
+	height: 34;
+	width: 34;
+	border-radius: 17;
+	/*  display:none;*/
+}
+
+.selectbox {
+	margin: 6 0 6 0;
+	height: 36;
+	width: 36;
+	border-radius: 18;
+	/*  display:none;*/	
+}
+
+.selecttip {
+	flex-direction: row;
+	align-items: center;
+	height: 14;
+	justify-content: center;
+	border-radius: 7;
+	position: absolute;
+	top: 1;
+	left: 30;
+}
+
+.selecttip-text {
+	line-space: 0dp;	
+	font-size: 10;
+	margin: 0 4.5 0 4.5;
+}
+
+text {
+	text-overflow: ellipsis;
+	singleline: true;
+	text-align: left;
+	line-space: 0;
+}
+
+checkbox {
+	height: 20;
+	checkbox-border-radius: 10;
+}
+
+.qqlist-cell-textbox{
+	flex:1;
+    justify-content:center;	
+	align-items:center;
+	height:50;
+	margin: 8 6 8 0;
+}
+
+.qqlist-cell-titletbox{
+	flex:1;
+	flex-direction:row;
+	justify-content:flex-start;	
+	align-items:center;
+}
+.qqlist-cell-title-text{
+	flex:1;
+	text-align: left;
+    font-size: 18;
+    color: #000000;
+	text-overflow:ellipsis;
+	singleline:true;   
+}

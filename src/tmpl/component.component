@@ -1,0 +1,70 @@
+<!-- 
+    样式：
+    公共样式；
+    pop-background-color:弹出框背景色;
+    pop-text-color:弹出框字体颜色
+    indexbar-text-color:滑动条字体颜色
+   
+    属性：
+    ispop:是否弹出pop，取值true,false
+   
+
+
+    方法：公共方法；
+
+
+    事件：公共事件；
+ -->
+<page>
+  <module>
+
+    <![CDATA[
+       require("titlebarUI");
+       require("buttonUI");
+       require("menubarUI");
+       require("gridmenuUI");
+       require("newsliderUI"); 
+       require("checkboxUI");  
+       require("radioUI");
+       require("switchUI");
+       require("selectUI");
+       require("tabbarUI");
+       require("indexbarUI");
+       require("popmenuUI");
+       require("popbottommenuUI");
+       require("sliderbarUI");
+       require("audioplayUI");
+       require("organizationUI");
+       require("superhandsignUI");
+       require("memoryfieldUI");
+       require("audiorecordUI");
+    ]]>
+
+  </module>
+  <script>
+    <![CDATA[
+   
+    var Component = function () { };
+
+    Component.prototype = {
+      created: function () { },
+      init: function () { },
+      //属性变更回调函数
+      attrChanged: function (attrName, attrValue) { },
+      //样式变更回调函数
+      styleChanged: function (styleName, styleValue) { }
+    }
+
+    module.exports = Component;
+
+    ]]>
+  </script>
+  <style>
+
+  </style>
+  <ui>
+    <box/>
+
+  </ui>
+
+</page>

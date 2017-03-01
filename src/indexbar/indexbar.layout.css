@@ -1,0 +1,19 @@
+
+
+.slider-index-text{
+	font-size: 13;
+	height: 15;
+	text-align: center;
+}
+
+.indexbar{
+  position:absolute;
+  top:0;
+  right: 0;
+  width:30;
+  bottom: 0; 
+  background-color: transparent;
+  border-radius:15;
+  justify-content:center;
+  align-items:center;
+}

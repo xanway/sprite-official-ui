@@ -1,0 +1,996 @@
+<!-- 
+    样式：
+    公共样式；暂无
+   
+    
+
+    属性：
+    rootid="root" ：跟节点ID
+    ischeckbox="true" ：是否有checkbox，可通过setAttr动态设置(可通过js修改)。
+    rootname="南京烽火星空通信发展有限公司"  ：根节点名称
+    
+   
+
+    方法：
+    loadData(datas); loadSearchData(datas);
+      数组元素
+        var json = {};             
+        json.name   = "黄楠";  //必须
+        json.id   = "2";     //必须而且必须唯一
+        json.pid = "root";    //必须
+        json.iscollapse = false; //是否有子节点，如果没有自己就是最后子节点，一般部门这里设置treu
+        json.userdata = {"phone":"12323232222","QQ":"233333333"}; //可以自定义一些数据，点击后返回可以得到
+        datas.push(json);
+
+    reset();复位列表，可在查询完后复位到组织架构列表 
+    clearSelectDatas(); 清除已选数据 
+    getSelectDatas(); 得到已选择的数据
+
+
+    事件：
+    itemClick  入参e,data,isgroup,ishaschild：//data是单条记录的json数据；isgroup是否是部门；ishaschild该节点下是否还有数据，如果是部门又没有数据可以发起ajax请求再次异步注入数据
+
+
+ -->
+<page>
+    <module>
+    <![CDATA[
+      require("checkbox/checkbox.component");
+    ]]>
+    </module>
+    <script>
+        <![CDATA[
+        var document = require("Document");
+        var window = require("Window");
+        var time = require("Time");
+        var console = require("Console");
+        var ListAdapter = require("ListAdapter");
+        //var $ = require('JQLite');
+        var screenWidth = window.getScreenWidth();
+
+
+
+        var Organization = function () {
+            this.list = null;
+            this.scrolltabbar = null;
+            this.scrollselect = null;
+            this.selecttip = null;
+            this.yixuan = null;
+            this.boxselect = null;
+            this.adapter = null;
+            this.jsondatas = [];
+            this.datas = [];
+            this.organizationDatas = [];
+            this.selectedarr = [];//存放已经选择的人员数据
+            this.searcharr = [];//存放搜索查找出来的人员数据
+            this.colorarr = ["#FF6F36", "#FFAE01", "#ABE3FD", "#CF79F2", "#4CD32D"];
+            this.rootid = null;
+            this.rootname = "";
+            this.organizationDatas = [];
+            this.currentname = null;
+            this.ischeckbox = "false";
+            this.selectindex = 0;
+            this.currentid = null;//记录当前结构的id,一般复位用。
+
+            	this.pathLocation = "";
+
+        };
+
+        module.exports = Organization;
+
+        Organization.prototype = {
+            created: function () {
+                //这里是得到组件所在的uixml页面的绝对路径目录
+				this.pathLocation = document.getPathLocation();
+                var copythis = this;
+                this.list = this.getElement("list");
+                this.scrolltabbar = this.getElement("scrolltabbar");
+                this.boxselect = this.getElement("boxselect");
+                this.scrollselect = this.getElement("scrollselect");
+                this.currentid = this.getAttr("rootid");
+                this.currentname = this.getAttr("rootname");
+                this.selecttip = this.getElement("selecttip");
+                this.selecttip.setText(this.selectindex);
+                this.yixuan = this.getElement("yixuan");
+
+                this.init();
+
+                this.initAdapter();
+
+                this.list.on("scrollStart", function (e, param) {
+                    //在内部处理键盘隐藏
+                    window.hideSip();
+
+
+                });
+
+                this.yixuan.on("click", function (e) {
+                    var json = {};
+                    json.title = "询问";
+                    json.content = "是否清空已选人员？";
+                    json.buttonTexts = ["是", "否"];
+
+
+                    ui.confirm(json, function (x) {
+                        //x对应buttonTexts数组索引
+                        if (x == 0) {
+                            copythis.clearSelectDatas();
+                        }
+                        else if (x == 1) {
+
+
+                        }
+                    });
+                });
+
+
+                this.scrollselect.on("click", function (e) {
+                    var ctrlobj = e.target;
+                    var children = copythis.scrolltabbar.getChildren();
+                    var userid = ctrlobj.getAttr("userid");
+
+
+                    for (var i = 0; i < copythis.selectedarr.length; i++) {
+
+                        if (copythis.selectedarr[i].id == userid) {
+
+                            copythis.selectedarr[i].selected = false;
+                            copythis.selectedarr.splice(i, 1);
+
+                            //这里做删除动画
+                            copythis.selectAnimator(copythis.scrollselect, i);
+
+                            break;
+                        }
+                    }
+
+
+                    if (copythis.searcharr.length > 0) {
+                        //如果搜索出来的数组里面有数据，则同时也对这里面的数据做操作
+
+                        for (var i = 0; i < copythis.searcharr.length; i++) {
+
+                            if (copythis.searcharr[i].id == userid) {
+                                copythis.searcharr[i].selected = false;
+                                //这里做删除动画
+                                // copythis.selectAnimator(copythis.scrollselect,i);
+                                break;
+                            }
+                        }
+                    }
+
+
+                    if (copythis.datas.length > 0) {
+                        //如果搜索出来的数组里面有数据，则同时也对这里面的数据做操作
+
+                        for (var i = 0; i < copythis.datas.length; i++) {
+
+                            if (copythis.datas[i].id == userid) {
+                                copythis.datas[i].selected = false;
+
+                                break;
+                            }
+                        }
+                    }
+
+                    copythis.adapter.refresh();
+                    copythis.selectindex = copythis.selectindex - 1;
+
+                    copythis.selecttip.setText(copythis.selectindex);
+                    document.refresh();
+
+
+
+
+                });
+
+                this.scrolltabbar.on("click", function (e) {
+                    var ctrlobj = e.target;
+                    var children = copythis.scrolltabbar.getChildren();
+                    var m = 0;
+                    for (var i = 0; i < children.length; i++) {
+                        if (ctrlobj.getAttr("index") == children[i].getAttr("index")) {
+                            m = i;
+                            break;
+                        }
+                    }
+
+
+
+                    //如果当前就是选中的，则不做注入操作
+                    if (children[m].getElements("text")[0].getClassStyle != "organization-tabbar-text-index") {
+
+                        children[m].getElements("text")[0].setClassStyle("organization-tabbar-text-index", copythis);
+
+                        //删掉当前节点之后的所有节点
+                        var lh = children.length - m - 1;
+
+                        var widthx = 0;
+                        for (var j = 0; j < lh; j++) {
+                            widthx = widthx + children[children.length - 1 - j].getFrame().width;
+                            children[children.length - 1 - j].setStyle("visibility", "hidden");
+                        }
+
+                        // console.log(widthx+";getScrollX():"+ copythis.scrolltabbar.getScrollX() );
+                        if (copythis.scrolltabbar.getScrollX() > 0) {
+
+                            var json = {};
+                            json.animated = true;
+                            json.x = -widthx;
+                            copythis.scrolltabbar.scrollBy(json);
+
+                        }
+
+
+                        time.setTimeout(function () {
+                            for (var j = 0; j < lh; j++) {
+
+                                children[children.length - 1].remove();
+                                children.splice(children.length - 1, 1);
+
+                            }
+                            document.refresh();
+
+                        }, 500);
+
+
+
+
+                        copythis.currentid = ctrlobj.getAttr("index");
+                        console.log("tabar点击 this.currentid：" + copythis.currentid);
+
+                        copythis.addTabbar2(ctrlobj.getAttr("index"));
+
+                    }
+                });
+
+
+
+                this.list.on("itemClick", function (e, position) {
+
+                    var data = copythis.datas[position];
+                    var isgroup;
+                    var ishaschild;
+                    var arr = [];
+                    arr.push(data);
+
+
+
+                    if (data.iscollapse == true) {
+                        var pid = data.id;
+                        var name = data.name;
+
+                        copythis.currentid = pid;
+                        copythis.currentname = name;
+                        isgroup = true;
+                        //  console.log("isgroup:"+isgroup);
+                        arr.push(isgroup);
+
+                        if (copythis.ishaschild(pid) == 0) {
+                            ishaschild = false;
+                        }
+                        else {
+                            ishaschild = true;
+                            copythis.addTabbar(pid, name);
+                        }
+
+                        arr.push(ishaschild);
+                        copythis.fire("itemClick", arr);
+
+                    }
+                    else {
+
+                        isgroup = false;
+                        ishaschild = false;
+                        //console.log("isgroup:"+isgroup);
+                        arr.push(isgroup);
+
+                        if (copythis.ischeckbox == "true") {
+                            if (data.selected == true) {
+                                data.selected = false;
+                            }
+                            else {
+                                data.selected = true;
+
+                            }
+
+
+                            copythis.adapter.refresh();
+                            copythis.addSelected(data);
+
+
+                        }
+                        else if (copythis.ischeckbox == "false") {
+
+                            arr.push(ishaschild);
+                            copythis.fire("itemClick", arr);
+
+                        }
+
+                    }
+
+                });
+
+
+
+
+
+            },
+            init: function () {
+                this.setAttr("rootid", this.getAttr("rootid"));
+                this.setAttr("rootname", this.getAttr("rootname"));
+                this.setAttr("ischeckbox", this.getAttr("ischeckbox"));
+
+            },
+            initAdapter: function () {
+                var copythis = this;
+
+                if (this.adapter == null) {
+                    this.adapter = new ListAdapter();
+                    this.adapter.on("getCellId", function (e, position) {
+                        var data = copythis.datas[position];
+                        var cellid = "cell1";
+                        if (data.iscollapse == false) {
+                            cellid = "cell1";
+
+                        }
+                        else {
+
+                            cellid = "cell2";
+                        }
+
+                        return cellid;
+                    });
+
+                    this.adapter.on("getSectionText", function (e, sectionindex) {
+                        return null;
+                    });
+                    this.adapter.on("getSectionCount", function (e) {
+                        return 1;
+                    });
+                    this.adapter.on("getView", function (e, position) {
+                        var data = copythis.datas[position];
+                        var caption = data.name;
+
+                        // console.log((caption.charCodeAt()+"").substring(0,2));
+                        //通过ASCII码计算某个人的专属颜色
+                        var n = Number((caption.charCodeAt() + "").substring(0, 2)) % 4;
+
+
+                     
+                        var icon = data.icon;
+
+
+
+                        var limagedom = e.target.getElement("limage");
+                        var userbox = e.target.getElement("userbox");
+                        var usertext = e.target.getElement("usertext");
+                        var groupbox = e.target.getElement("groupbox");
+                        if (data.icon != null && data.icon != "") {
+
+                            if (e.target.getElement("limage") != null) {
+
+                                if(data.icon.indexOf("res:")>-1 ||data.icon.indexOf("http://")>-1 || data.icon.indexOf("https://")>-1 ){
+
+
+                                }
+                                else{
+                                  data.icon =   copythis.pathLocation +"/"+ data.icon;
+
+
+                                }
+                               
+                                limagedom.setAttr("src", data.icon);
+
+                                
+                               
+                                limagedom.setStyle("visibility", "visible");
+                            }
+                            if (e.target.getElement("userbox") != null) {
+                                userbox.setStyle("visibility", "hidden");
+                            }
+                            if (e.target.getElement("groupbox") != null) {
+                                groupbox.setStyle("visibility", "hidden");
+                            }
+                        }
+                        else {
+
+                            if (e.target.getElement("limage") != null) {
+                                limagedom.setStyle("visibility", "hidden");
+                            }
+
+                            if (e.target.getElement("userbox") != null) {
+
+                                userbox.setStyle("visibility", "visible");
+                                userbox.setStyle("background-color", copythis.colorarr[n]);
+                                usertext.setText(caption.substring(caption.length - 2));
+                                copythis.datas[position].sx = caption.substring(caption.length - 2);
+                                copythis.datas[position].txbg = copythis.colorarr[n];
+
+                            }
+
+                            if (e.target.getElement("groupbox") != null) {
+                                groupbox.setStyle("visibility", "visible");
+                                // console.log(groupbox);
+                            }
+                        }
+
+
+                        var captiondom = e.target.getElement("caption");
+                        var txlid = e.target.getElement("txlid");
+                        captiondom.setText(caption);
+                        //设置列表点击背景色
+                        var boxObj = e.target;
+                        var event = txlid.getOn("touchUp");
+                        if (event.length == 0) {
+                            // console.log("event.length"+event.length); 
+                            txlid.on("touchDown", function (e) {
+                                this.setStyle("background-color", "#f5f5f5");
+                            });
+                            txlid.on("touchUp", function (e) {
+                                this.setStyle("background-color", "transparent");
+                            });
+                            txlid.on("touchCancel", function (e) {
+                                this.setStyle("background-color", "transparent");
+                            });
+
+
+                        }
+
+
+                        var cellChecbox = e.target.getElement("cellChecbox");
+                        if (cellChecbox != null) {
+                            if (data.selected) {
+
+                                cellChecbox.setAttr("checked", "true");
+
+                            }
+                            else {
+
+                                //cellChecbox.setAttr("src", "res:spritetest/image/wangyi/checkbox_unselected.png");
+                                cellChecbox.setAttr("checked", "false");
+                            }
+
+                            cellChecbox.setAttr("position", position);
+                            var funs = cellChecbox.getOn("click");
+                            if (funs.length <= 0) {
+                                cellChecbox.on("click", function (e) {
+
+                                    var position = this.getAttr("position");
+                                    copythis.datas[position].selected = !copythis.datas[position].selected;
+
+                                    copythis.addSelected(copythis.datas[position]);
+
+
+
+                                    this.getParent().getParent().getParent().getParent().setStyle("background-color", "transparent");
+
+
+
+
+                                });
+                            }
+
+                            //编辑状态处理
+                            if (copythis.ischeckbox == "true") {
+                                //编辑状态
+
+                                cellChecbox.setStyle("visibility", "visible");
+                                /* var jsonData = {};
+                                 jsonData.type = "fade";            
+                                 cellChecbox.show(jsonData);*/
+
+
+                            } else if (copythis.ischeckbox == "false") {
+                                //普通状态
+                                cellChecbox.setStyle("visibility", "hidden");
+
+                                /* var jsonData = {};
+                                 jsonData.type = "fade";             
+                                 cellChecbox.hide(jsonData);*/
+                            }
+
+
+                        }
+
+
+
+
+
+                    });
+
+                    this.adapter.on("getCount", function (e) {
+
+                        return copythis.datas.length;
+                    });
+                    this.adapter.on("getItem", function (e, position) {
+                        return copythis.datas[position];
+                    });
+
+                    this.list.setAdapter(this.adapter);
+                }
+            },
+            ishaschild: function (id) {
+                var m = 0;
+                for (var i = 0; i < this.jsondatas.length; i++) {
+                    if (this.jsondatas[i].pid == id) {
+                        m++;
+                    }
+                }
+                return m;
+            },
+            loadData: function (jsondatas) {
+                this.jsondatas = [];
+                this.jsondatas = jsondatas;
+
+                this.addTabbar(this.currentid, this.currentname);
+            },
+            addSelected: function (userdata) {
+
+                if (userdata.selected == true) {
+
+                    this.selectedarr.push(userdata);
+                    var bgcolor = userdata.txbg;
+                    var sx = userdata.sx;
+                    var xmlstr = '';
+                    var src = userdata.icon;
+
+                    if (sx != null) {
+                        xmlstr = '<box userid="' + userdata.id + '"   class="column-flex-center list-cell-userbox-select" style="background-color:' + bgcolor + '">'
+                            + '<text  userid="' + userdata.id + '"  style="font-size: 13;color:#ffffff">' + sx + '</text>'
+                            + ' </box>';
+                    }
+                    else {
+                        xmlstr = '<image userid="' + userdata.id + '"  src="' + src + '"     class="list-cell-userimage-select"  />';
+
+
+                    }
+
+
+                    var dom = document.createElementByXml(xmlstr, this);
+                    this.scrollselect.appendChild(dom);
+
+
+                    document.refresh();
+
+                    var json = {};
+                    json.animated = true;
+                    json.x = dom.getFrame().width + 8;
+                    this.scrollselect.scrollBy(json);
+                    this.selectindex = this.selectindex + 1;
+
+
+                }
+                else {
+
+                    // console.log("取消选择");
+
+
+                    for (var i = 0; i < this.selectedarr.length; i++) {
+
+                        if (this.selectedarr[i].id == userdata.id) {
+                            this.selectedarr.splice(i, 1);
+                            userdata.selected = false;
+
+                            //这里做删除动画
+                            this.selectAnimator(this.scrollselect, i);
+
+                            break;
+                        }
+                    }
+
+
+                    this.selectindex = this.selectindex - 1;
+
+
+                }
+
+
+                this.selecttip.setText(this.selectindex);
+                document.refresh();
+
+
+
+            },
+            selectAnimator: function (dom, i) {
+
+                var copythis = this;
+                //做删除位移动画
+                var selectChildren = dom.getChildren();
+
+
+                selectChildren[i].setStyle("visibility", "hidden");
+
+
+
+                if (i + 1 < selectChildren.length) {
+
+                    for (var j = i + 1; j < selectChildren.length; j++) {
+
+                        var json = selectChildren[j - 1].getFrame();
+                        var jsonData = {};
+                        var aniAry = new Array();
+                        var jsonAni = {};
+
+                        jsonAni.delay = 0;
+                        jsonAni.duration = 200;
+                        jsonAni.curve = "linear";
+                        jsonAni.props = {};
+                        jsonAni.props.x = json.x;
+                        jsonAni.props.y = json.y;
+                        aniAry.push(jsonAni);
+
+                        jsonData.animators = aniAry;
+
+                        var thisselectdom = selectChildren[j];
+                        thisselectdom.startAnimator(jsonData, function () {
+
+                            thisselectdom.releaseAnimator();
+                            document.refresh();
+                            thisselectdom.setFrame(json);
+
+                        });
+
+                    }
+
+
+                    time.setTimeout(function () {
+
+                        selectChildren[i].remove();
+                        //document.refresh();
+                        var json2 = {};
+                        json2.animated = true;
+                        json2.x = -34;
+                        copythis.scrollselect.scrollBy(json2);
+
+
+                    }, 10);
+
+                    // 
+
+
+                }
+                else {
+
+
+
+                    selectChildren[i].remove();
+
+
+                }
+
+
+                document.refresh();
+
+
+
+
+            },
+
+
+            addTabbar: function (id, name) {
+                //重新把数组对象指向一个空数组，注意数组在类存中并没有清除，后面把每个数组对象分配到不同的数组对象里面
+                this.datas = [];
+
+                var m = 0;
+                for (var i = 0; i < this.organizationDatas.length; i++) {
+                    if (this.organizationDatas[i].titlejson.id == id) {
+                        m = i;
+                        break;
+                    }
+                }
+
+                if (m == 0) {
+                    var json = {};
+                    json.id = id;
+                    json.name = name;
+
+                    var organizationDataobj = {};
+                    organizationDataobj.titlejson = {};
+                    organizationDataobj.datas = [];
+
+                    organizationDataobj.titlejson = json;
+
+                    for (var i = 0; i < this.jsondatas.length; i++) {
+                        if (this.jsondatas[i].pid == id) {
+                            organizationDataobj.datas.push(this.jsondatas[i]);
+                        }
+                    }
+                    //把数据都保存到数组里面
+                    this.organizationDatas.push(organizationDataobj);
+
+                    //给当前list需要的datas赋值
+                    this.datas = organizationDataobj.datas;
+
+
+
+                }
+                else {
+                    //如果数组里面保存的有数据，直接从数组里面得到
+                    this.datas = this.organizationDatas[m].datas;
+                }
+
+                //由于选中的数据可能来之搜索得到了，所以这里根据已选择的人员再次把组织列表里面的人员设置selected=true;
+
+                for (var i = 0; i < this.datas.length; i++) {
+                    var mm = -1;
+                    for (var j = 0; j < this.selectedarr.length; j++) {
+                        if (this.datas[i].id == this.selectedarr[j].id) {
+                            mm = mm + 1;
+                        }
+
+                    }
+                    if (mm > -1) {
+                        this.datas[i].selected = true;
+                    }
+                    else {
+                        this.datas[i].selected = false;
+                    }
+                }
+
+
+
+                this.adapter.refresh();
+
+
+
+                // console.log(m+";this.datas:"+ JSON.stringify(this.datas));
+                var children = this.scrolltabbar.getChildren();
+
+                for (var j = 0; j < children.length; j++) {
+                    var textdom = children[j].getElements("text")[0];
+                    textdom.setClassStyle("organization-tabbar-text", this);
+                }
+                var arrow = '';
+                //如果是第一个不显示小箭头
+                if (children.length != 0) {
+                    arrow = '<iconfont style="font-family:Material Design Icons;color:#a0a0a0;font-size:20;;width:20;margin:0">\\uF142</iconfont>';
+
+                }
+                var xmlstr = '<box style="height:50;"  index="' + id + '" class="row-flex-center">'
+                    + '' + arrow + ''
+                    + '<text  index="' + id + '" class="organization-tabbar-text-index">' + name + '</text>'
+                    + '</box>';
+                var dom = document.createElementByXml(xmlstr, this);
+                this.scrolltabbar.appendChild(dom);
+                document.refresh();
+
+                var copythis = this;
+
+                var json2 = {};
+                json2.animated = true;
+                json2.x = dom.getFrame().width + 8;
+                copythis.scrolltabbar.scrollBy(json2);
+
+
+            },
+
+            addTabbar2: function (id) {
+                //点上面tabbar部分的组织名称进入这里
+                this.datas = [];
+                var m = 0;
+                for (var i = 0; i < this.organizationDatas.length; i++) {
+                    if (this.organizationDatas[i].titlejson.id == id) {
+                        m = i;
+                        break;
+                    }
+                }
+                this.datas = this.organizationDatas[m].datas;
+                //由于选中的数据可能来之搜索得到了，所以这里根据已选择的人员再次把组织列表里面的人员设置selected=true;
+                for (var i = 0; i < this.datas.length; i++) {
+                    var mm = -1;
+                    for (var j = 0; j < this.selectedarr.length; j++) {
+                        if (this.datas[i].id == this.selectedarr[j].id) {
+                            mm = mm + 1;
+                        }
+
+                    }
+                    if (mm > -1) {
+                        this.datas[i].selected = true;
+                    }
+                    else {
+                        this.datas[i].selected = false;
+                    }
+                }
+
+                this.adapter.refresh();
+
+
+            },
+            getSelectDatas: function () {
+                return this.selectedarr; //返回的json数组
+            },
+            clearSelectDatas: function () {
+
+                this.selectindex = 0;
+                this.selecttip.setText(this.selectindex);
+
+                this.scrollselect.clear();
+                for (var i = 0; i < this.selectedarr.length; i++) {
+                    //数组长度一直在变化，一直清除第0位即可
+                    //this.selectedarr.splice(i,1).selected = false;
+                    this.selectedarr[i].selected = false;
+
+                }
+                this.selectedarr.splice(0, this.selectedarr.length);
+                this.adapter.refresh();
+                document.refresh();
+            },
+            loadSearchData: function (jsondatas) {
+                this.searcharr = jsondatas;
+                //注入搜索的数据
+                for (var i = 0; i < this.selectedarr.length; i++) {
+                    for (var j = 0; j < jsondatas.length; j++) {
+                        if (this.selectedarr[i].id == jsondatas[j].id) {
+                            jsondatas[j].selected = true;
+                            break;
+
+                        }
+                    }
+                }
+
+                this.datas = jsondatas;
+                this.adapter.refresh();
+                this.scrolltabbar.setStyle("display", "none");
+                document.refresh();
+
+
+            },
+            reset: function () {
+                // console.log("在reset里面 this.currentid:"+this.currentid);
+
+                var m = 0;
+                for (var i = 0; i < this.organizationDatas.length; i++) {
+                    if (this.organizationDatas[i].titlejson.id == this.currentid) {
+                        m = i;
+                        break;
+                    }
+                }
+
+                //复位后把当前组织列表里面对应的人员变成选中
+                for (var i = 0; i < this.organizationDatas[m].datas.length; i++) {
+                    var mm = -1;
+                    for (var j = 0; j < this.selectedarr.length; j++) {
+                        if (this.organizationDatas[m].datas[i].id == this.selectedarr[j].id) {
+                            mm = mm + 1;
+                        }
+                    }
+                    if (mm > -1) {
+                        this.organizationDatas[m].datas[i].selected = true;
+                    }
+                    else {
+                        this.organizationDatas[m].datas[i].selected = false;
+                    }
+                }
+
+                this.datas = this.organizationDatas[m].datas;
+                this.adapter.refresh();
+                this.scrolltabbar.setStyle("display", "block");
+                document.refresh();
+
+            },
+            //属性变更回调函数
+            attrChanged: function (attrName, attrValue) {
+                if (attrName == "rootid") {
+                    if (attrValue != null) {
+                        this.rootid = attrValue;
+                    }
+                }
+
+                if (attrName == "rootname") {
+                    if (attrValue != null) {
+                        this.rootname = attrValue;
+                    }
+                }
+                if (attrName == "ischeckbox") {
+                    if (attrValue != null) {
+                        this.ischeckbox = attrValue;
+
+                        if (this.ischeckbox == "true") {
+                            this.boxselect.setStyle("height", 40);
+                            document.refresh();
+                        }
+                        else {
+                            this.boxselect.setStyle("height", 0);
+                            document.refresh();
+                        }
+
+                        if (this.adapter != null) {
+                            this.adapter.refresh();
+                        }
+
+                    }
+                }
+            },
+            //样式变更回调函数
+            styleChanged: function (styleName, styleValue) {
+
+            }
+        }
+    ]]>
+    </script>
+    <style>
+        @import url("organization.layout.css");
+        @import url("organization.color.css");
+    </style>
+    <ui>
+        <box class="flex1" id="rootbox">
+            <box>
+
+                <box id="boxselect" class="organization-select" style="height:0dp;">
+                    <box id="yixuan" class="column-flex-center selectbox">
+                        <text style="font-size: 15;color:#ffffff">已选</text>
+                    </box>
+
+                    <scroll id="scrollselect" class="organization-select flex1" direction="horizontal">
+
+
+                    </scroll>
+                    <box class="selecttip">
+                        <text id="selecttip" class="selecttip-text"></text>
+                    </box>
+                </box>
+                <line style="line-size:0.5;" />
+                <scroll id="scrolltabbar" direction="horizontal" style="background-color:#f0f0f0" class="organization-tabbar">
+
+                </scroll>
+                <line style="line-size:0.5;" />
+
+
+            </box>
+            <list id="list" style="flex:1" scrollToTop="true">
+                <cell id="cell1" class="listcell">
+                    <box id="txlid" class="qqlist bg-white">
+                        <image id="limage" src="res:yuanhongqian/image/touxiang.png" class="list-cell-userimage" />
+
+                        <box id="userbox" class="column-flex-center list-cell-userbox">
+                            <text id="usertext" style="font-size: 14;color:#ffffff">鸿乾</text>
+                        </box>
+
+                        <box class="flex1">
+                            <box class="qqlist-cell-textbox" style="height:40">
+
+                                <box class="qqlist-cell-titletbox" style="height:40">
+                                    <text id="caption" style="font-size:16;height:40" class="qqlist-cell-title-text"></text>
+                                    <!--  <image id="cellChecbox" src="res:spritetest/image/wangyi/checkbox_unselected.png" class="cellChecbox" />  -->
+
+                                    <checkbox id="cellChecbox" style="visibility:hidden" />
+
+
+                                </box>
+                            </box>
+                            <line style="line-size:0.5;align-self:flex-end;line-length:fill_screen" />
+                        </box>
+
+                    </box>
+                </cell>
+                <cell id="cell2" class="listcell">
+                    <box id="txlid" class="qqlist bg-white">
+                        <image id="limage" src="res:yuanhongqian/image/touxiang.png" class="list-cell-userimage" />
+
+                        <box id="groupbox" class="column-flex-center list-cell-userbox">
+                            <iconfont style="font-family:Material Design Icons;color:#ffffff;font-size:25;text-align:center;width:30;;margin:0">\uF00E</iconfont>
+                        </box>
+                        <box class="flex1">
+                            <box class="qqlist-cell-textbox" style="height:40">
+
+                                <box class="qqlist-cell-titletbox" style="height:40">
+                                    <text id="caption" style="font-size:16" class="qqlist-cell-title-text">范冰冰</text>
+                                </box>
+                            </box>
+
+                        </box>
+
+                    </box>
+                    <line style="line-size:0.5;align-self:flex-end;line-length:fill_screen" />
+                </cell>
+
+            </list>
+
+
+
+        </box>
+
+    </ui>
+
+</page>

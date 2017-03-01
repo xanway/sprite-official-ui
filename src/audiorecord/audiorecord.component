@@ -1,0 +1,243 @@
+<!--
+样式：box公共样式;
+
+
+
+属性：
+无
+
+
+
+
+方法:
+recordinit(jsondata):录音初始化
+jsondata格式：
+        var jsondata = {};
+        jsondata.recordingtext = "手指上滑，取消发送";
+        jsondata.readyendtext = "手指松开，取消发送";
+        jsondata.folderpah = "res:recorddata"; //录音存放的目录
+        jsondata.maxTime = "100"; //秒
+start(): 开始录音
+stop():停止录音
+readycancel(): 准备停止录音，类似微信发送语音手势上滑时候的状态，这个时候录音还在继续，如果再次执行start()
+cancelrecord();取消录音，取消录音不会生成录音文件
+注意：执行stop()和cancelrecord()都会被finish事件监听到，正常结束返回录音时间和录音文件地址，取消录音返回时间0，地址为null
+
+
+
+
+事件：
+finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件路径
+
+-->
+<page>
+    <module>
+    <![CDATA[
+    
+    ]]>
+    </module>
+    <script>
+    <![CDATA[
+        var document = require("Document");
+        var window = require("Window");
+        var console = require("Console");
+        var app = require("App");
+        var ui = require("UI");
+        var time = require("Time");
+        var audiorecord = require("AudioRecord");
+        var file = require("File");
+        var screenWidth = window.getScreenWidth();
+        var rootDom = null;
+        var AudioRecord = function () {
+            this.box1 = null;
+            this.texttime = null;
+            this.textsm = null;
+            this.biaoshi = null;
+            this.imageid = null;
+            this.voluembox = null;
+            this.t = 0;
+            this.jsondata = null;
+            this.audiorecordtime = null
+        };
+        AudioRecord.prototype = {
+            created: function () { },
+            recordinit: function (jsondata) {
+                rootDom = document.getRootElement();
+                if (this.audiorecordtime == null) {
+                    var copythis = this;
+                    this.jsondata = jsondata;
+                    this.box1 = this.getElement("box1");
+                    this.texttime = this.getElement("texttime");
+                    this.textsm = this.getElement("textsm");
+                    this.biaoshi = this.getElement("biaoshi");
+                    this.imageid = this.getElement("imageid");
+                    this.voluembox = this.getElement("voluembox");
+                    this.readycanceltag = false;
+                    if (jsondata.recordingtext != null) {
+                        this.textsm.setText(jsondata.recordingtext);
+                    }
+                    /* var oo = rootDom.getElements("audiorecord");
+                     console.log("有多少个audiorecord"+oo.length);*/
+                    rootDom.appendChild(this);
+                    document.refresh();
+                    //重复点击事件会注册多次，这里判断下
+                    var event = audiorecord.getOn("finish");
+                    if (event.length == 0) {
+                        audiorecord.on("finish", function (e) {
+                          //  console.log("进入了结束");
+                            if (copythis.t < 1) {
+                                var isf = file.fileExist(copythis.jsondata.path);
+                                if (isf == true) {
+                                    var deljson = {};
+                                    deljson.srcPath = copythis.jsondata.path;
+                                    file.deleteFile(deljson);
+                                }
+                                var toastdata = { "content": "录制时间不能小于1秒", "duration": "1" };
+                                ui.toast(toastdata);
+                                return;
+                            }
+                            if (copythis.readycanceltag == false) {
+                                var arr = [];
+                                arr.push(copythis.t);
+                                arr.push(copythis.jsondata.path);
+                                copythis.fire("finish", arr);
+                            }
+                            else if (copythis.readycanceltag == true) {
+                                var isf = file.fileExist(copythis.jsondata.path);
+                                if (isf == true) {
+                                    var deljson = {};
+                                    deljson.srcPath = copythis.jsondata.path;
+                                    file.deleteFile(deljson);
+                                }
+                                var arr = [];
+                                arr.push(0);
+                                arr.push(null);
+                                copythis.fire("finish", arr);
+                            }
+                        });
+
+                        audiorecord.on("error", function (e) {
+
+                        });
+                    }
+                }
+            },
+            start: function () {
+                var copythis = this;
+                this.readycanceltag = false;
+                this.box1.setStyle("display", "block");
+                this.voluembox.setStyle("display", "block");
+                this.imageid.setText("\uF36C");
+                this.textsm.setStyle("background-color", "transparent");
+                if (this.jsondata.recordingtext != null) {
+                    this.textsm.setText(this.jsondata.recordingtext);
+                }
+                document.refresh();
+                if (this.audiorecordtime == null) {
+                    this.t = 0;
+                    //生成音频文件，根据时间毫秒加上随机数生成保证唯一
+                    var datetime = new Date();
+                    var randnum = Math.floor(Math.random() * 1000);
+                    var mp4path = this.jsondata.folderpah+"/" + datetime.getTime() + "_" + randnum + ".mp4";
+                    this.jsondata.path = mp4path;
+                    audiorecord.start(this.jsondata);
+                    copythis.texttime.setText("00:00");
+                    this.audiorecordtime = time.setInterval(function () {
+                        copythis.t = copythis.t + 1;
+                        var m;
+                        var s = Number(copythis.t % 60) >= 10 ? Number(copythis.t % 60) : "0" + Number(copythis.t % 60);
+                        if (Math.floor(copythis.t / 60) < 10) {
+                            m = "0" + Math.floor(copythis.t / 60);
+                        }
+                        else {
+                            m = Math.floor(copythis.t / 60);
+                        }
+                        var time1str = m + ":" + s;
+                        copythis.texttime.setText(time1str);
+                        //得到录音音量大小，然后改变录音标识杠
+                        var voluem = Math.ceil((audiorecord.getVolumeRate()) * 10);
+                        for (var i = 1; i <= 10; i++) {
+                            var lv = copythis.getElement("voluem" + i);
+                            lv.setStyle("background-color", "transparent");
+                        }
+                        for (var i = 1; i <= voluem; i++) {
+                            var lv = copythis.getElement("voluem" + i);
+                            lv.setStyle("background-color", "#ffffff");
+                        }
+                        //白红间变，显示正在录音
+                        if (copythis.t % 2 == 1) {
+                            copythis.biaoshi.setStyle("background-color", "red");
+                        }
+                        else {
+                            copythis.biaoshi.setStyle("background-color", "#ffffff");
+                        }
+                        document.refresh();
+                        if (copythis.t > copythis.jsondata.maxTime) {
+                            copythis.stop();
+                        }
+                    }, 1000);
+                }
+            },
+            stop: function () {
+                audiorecord.stop();
+                if (this.box1 != null) {
+                    this.box1.setStyle("display", "none");
+                    document.refresh();
+                }
+                time.clearInterval(this.audiorecordtime);
+                this.audiorecordtime = null;
+            },
+            readycancel: function () {
+                //准备结束，这个时候应该还在录音，只暂时要结束之前的一个样式，比如手指松开前的准备结束状态。
+                this.imageid.setText("\uF36D");
+                this.textsm.setStyle("background-color", "#a63e3a");
+                this.voluembox.setStyle("display", "none");
+                if (this.jsondata.readyendtext != null) {
+                    this.textsm.setText(this.jsondata.readyendtext);
+                }
+                document.refresh();
+            },
+            cancelrecord: function () {
+                //取消发送，停止录音的同上，删除刚才的录音文件
+                this.readycanceltag = true;
+                this.stop();
+            },
+            //属性变更回调函数
+            attrChanged: function (attrName, attrValue) { },
+            //样式变更回调函数
+            styleChanged: function (styleName, styleValue){ }
+        }
+        module.exports = AudioRecord;
+    ]]>
+    </script>
+    <style>
+        @import url("audiorecord.color.css");
+        @import url("audiorecord.layout.css");       
+    </style>
+    <ui>
+        <box id="box1" class="box1 column-flex-center">
+            <box class="row-flex-center">
+                <box id="biaoshi" class="biaoshi" />
+                <text id="texttime" style="color:#ffffff; margin: 4 0 4 0;width: 50 ">00:00</text>
+            </box>
+            <box class="row-flex-center">
+                <box style="" class="column-flex-center">
+                    <iconfont id="imageid" style="font-family:Material Design Icons;font-size:80;color:#ffffff;width: 80;height: 80">\uF36C</iconfont>
+                </box>
+                <box id="voluembox" style="width: 50;height:80;justify-content:flex-end;align-items:start;padding: 0 0 10 0">
+                    <box id="voluem10" class="voluemline" style="width:28;" />
+                    <box id="voluem9" class="voluemline" style="width:26;" />
+                    <box id="voluem8" class="voluemline" style="width:24;" />
+                    <box id="voluem7" class="voluemline" style="width:22;" />
+                    <box id="voluem6" class="voluemline" style="width:20;" />
+                    <box id="voluem5" class="voluemline" style="width:18;" />
+                    <box id="voluem4" class="voluemline" style="width:16;" />
+                    <box id="voluem3" class="voluemline" style="width:14;" />
+                    <box id="voluem2" class="voluemline" style="width:12;" />
+                    <box id="voluem1" class="voluemline" style="width:10;background-color: #ffffff" />
+                </box>
+            </box>
+            <text id="textsm" style="color:#ffffff;margin: 8 0 0 0 ">松动手指完成录音</text>
+        </box>
+    </ui>
+</page>

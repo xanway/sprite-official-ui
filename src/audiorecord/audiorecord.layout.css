@@ -1,0 +1,57 @@
+.flex1{
+	flex:1;
+}
+.flex2{
+	flex:2;
+}
+
+.column-flex-center{
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+
+.row-flex-center{
+	flex-direction:row;
+	justify-content:center;	
+	align-items:center;
+}
+
+.box1 {
+	background-color: rgba(0, 0, 0, 0.4);
+	width: 150;
+	height: 150;
+	border-radius: 15;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	left: 100;
+	top: 250;
+	display: none;
+}
+
+text {
+	text-align: center;
+	text-overflow: ellipsis;
+	singleline: true;
+	padding: 2 4 2 4;
+	margin: 10 0 0 0;
+	font-size: 14;
+	line-space: 0;
+	border-radius: 4;
+}
+
+.biaoshi {
+	width: 10;
+	height: 10;
+	margin: 0 4 0 4;
+	border-radius: 5;
+	background-color: #ffffff;
+}
+
+.voluemline {
+	/*display: none;*/
+	background-color: transparent;
+	height: 4;
+	margin: 4 0 0 0;
+}

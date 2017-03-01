@@ -1,0 +1,43 @@
+.organization-tabbar-text {
+	color: #000000;
+}
+
+.organization-tabbar-text-index {
+
+	color: #549FF7;
+}
+
+
+
+.list-cell-userbox {
+	background-color: #549FF7;
+}
+
+.list-cell-userbox-select {
+	background-color: #549FF7;
+}
+
+.selectbox {
+	background-color: #549FF7;
+}
+
+.selecttip {
+	background-color: red;
+}
+
+.selecttip-text {
+	color: #ffffff;
+
+}
+
+.bg-white{background-color:#ffffff;}
+
+.organization-select{
+	background-color: #ffffff;
+}
+
+line{
+	line-color:#dddddd;
+	line-size:0.5;
+	/*line-length:fill_screen;*/
+}

@@ -1,0 +1,88 @@
+.flex1{
+	flex:1;
+}
+.flex2{
+	flex:2;
+}
+
+
+.margin2{
+	margin:2;
+}
+
+.margin4{
+	margin:4;
+}
+
+.margin6{
+	margin:6;
+}
+
+
+.radius2{
+	border-radius:2;
+}
+
+.radius4{
+	border-radius:4;
+}
+
+
+.row-flex-center{
+	flex-direction:row;
+	justify-content:center;	
+	align-items:center;
+}
+
+.column-flex-center{
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+
+.radio{
+
+	height: 30;
+	flex-direction:row;
+}
+
+.boxradio {
+	width: 30;
+	height: 30;
+	
+	border-width: 0.8;
+
+	justify-content: center;
+	align-items: center;
+	/* border-radius:20;*/
+}
+		
+.readonly {
+	width: 30;
+	height: 30;
+	opacity: 0.8;
+	flex-direction: row;
+	align-items: center;
+	padding: 0 0 0 0;
+	margin: 0;
+	position: absolute;
+	left: 0;
+}
+
+.btn {
+	width: 15;
+	height: 15;
+	border-radius: 6.5;
+	background-color: #549FF7;
+	border-width: 1;
+}
+
+text {
+	font-size: 16;
+	margin: 0 0 0 4;
+}
+
+image {
+	width: 30;
+	height: 30;
+}
