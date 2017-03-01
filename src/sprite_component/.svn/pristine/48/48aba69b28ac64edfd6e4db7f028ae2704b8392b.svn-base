@@ -1,0 +1,79 @@
+.flex1{
+	flex:1;
+}
+.flex2{
+	flex:2;
+}
+
+.back{
+	position: absolute;
+	height:40;
+	width:40;
+	border-radius:20;
+	background-color:rgba(0,0,0,0.3);
+	left:10;
+	top:20;
+}
+
+.ok{
+	position: absolute;
+	height:40;
+	width:40;
+	border-radius:20;
+	background-color:rgba(0,0,0,0.3);
+	right:10;
+	top:20;
+}
+
+.caidan{
+	position: absolute;
+	height:50;
+	width:fill_screen;
+	
+	left:0;
+	bottom:0;
+	background-color:rgba(255,255,255,0.5);
+
+
+
+}
+
+.huabicaidan{
+
+	position: absolute;
+	height:60;
+	width:fill_screen;
+	background-color:rgba(200,200,200,0.5);
+	left:0;
+	bottom:50;
+	visibility: hidden;
+}
+.huabidaxiao{
+
+	width: 20;
+	height: 20;
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+	margin: 8;
+}
+
+
+.xuanxiang{
+	width: 20;
+	height: 20;
+	margin: 4;
+	background-color: red;
+}
+
+.column-flex-center{
+	flex-direction:column;
+	justify-content:center;
+	align-items:center;
+}
+
+.row-flex-center{
+	flex-direction:row;
+	justify-content:center;	
+	align-items:center;
+}

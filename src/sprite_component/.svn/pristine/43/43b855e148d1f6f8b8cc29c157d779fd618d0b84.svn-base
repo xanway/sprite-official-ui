@@ -1,0 +1,226 @@
+<!--
+样式：公共样式
+属性：caption,sndcaption,icon
+方法：公共方法
+事件：
+-->
+<page>
+    <module>
+    <![CDATA[
+    
+    ]]>
+    </module>
+     <script>
+    <![CDATA[
+    var document = require("Document");
+	var time = require("Time");
+    var window = require("Window");
+	var console = require("Console");
+	var screenWidth = window.getScreenWidth();
+    var ui = require("UI");
+
+    
+    module.exports ={
+		itembox:null,
+		hidebox:null,
+		caption:null,
+		sndcaption:null,
+		icon:null,
+		fangxiang:"left",
+		tagshuzhi:0,
+		
+        created: function()
+        {
+			this.itembox = this.getElement("itembox");
+			//this.hidebox = this.getElement("hidebox");
+			this.caption = this.getElement("caption");
+			this.sndcaption = this.getElement("sndcaption");
+			this.icon = this.getElement("img");
+			
+			console.log("height"+this.itembox.getStyle("height")); 
+			//this.hidebox.setStyle("height",this.itembox.getStyle("height"));
+			
+			var copythis = this; 
+			/*this.itembox.on("touchMove",function(e,param){
+			   var json = this.getFrame();
+			 	
+					json.x += param.distanceX;
+					if(json.x<-120){
+						//当超过距离时，减慢速度
+						json.x = json.x-(param.distanceX/2);
+					}
+					else if(json.x>0){
+					 json.x = 0;
+					}
+					this.setFrame(json);
+					
+			    
+				
+			});
+			
+			this.itembox.on("touchUp",function(e){
+				var json = this.getFrame();
+				if(json.x<copythis.tagshuzhi){
+				   this.fangxiang = "left";				
+				}
+				else{
+				    this.fangxiang = "right";				
+				}
+				console.log("fangxiang:"+this.fangxiang);
+				
+				      var jsonData = {};
+						var aniAry = new Array();
+						//第一个动画
+						var jsonAni1 = {};
+						jsonAni1.delay = 0;
+						jsonAni1.duration = 200;
+						jsonAni1.curve = "linear";
+						jsonAni1.props = {};
+						
+					   if(this.fangxiang == "left"){	
+							if(json.x<-120){
+								//当超过距离时，up时自动回到合适位置							 
+								jsonAni1.props.x = 	-120;
+								copythis.tagshuzhi = -120;							
+							 }
+							 else if(json.x > -50){
+								 jsonAni1.props.x = 0; 
+								 copythis.tagshuzhi = 0;							 
+							 }
+							 else if(json.x>=-120 && json.x< -50){
+								 jsonAni1.props.x = -120;
+								 copythis.tagshuzhi = -120;
+								
+							 }
+						}
+						else{
+						    jsonAni1.props.x = 	0;
+							copythis.tagshuzhi = 0;
+						}
+						
+				        aniAry.push(jsonAni1);
+						jsonData.animators = aniAry;
+						this.startAnimator(jsonData,function(){						    
+                            						
+						});
+							
+				  				
+			});
+			
+			this.itembox.on("click",function(e){
+			    			  			    
+				var json = this.getFrame();
+				
+				if(json.x==-120){
+					//当超过距离时，up时自动还原
+					  var jsonData = {};
+						var aniAry = new Array();
+						//第一个动画
+						var jsonAni1 = {};
+						jsonAni1.delay = 0;
+						jsonAni1.duration = 200;
+						jsonAni1.curve = "linear";
+						jsonAni1.props = {};
+						jsonAni1.props.x = 0;
+						aniAry.push(jsonAni1);
+						jsonData.animators = aniAry;
+						this.startAnimator(jsonData,function(){							
+						});					
+				 }
+				 else{
+				   copythis.fire("click");
+				 }
+                 				 
+			});
+			
+			*/
+			
+			
+
+        },
+        //属性变更回调函数
+        attrChanged: function (attrName,attrValue){
+             if(attrName == "caption"){
+                 this.caption.setText(attrValue);
+                               
+             }
+             if(attrName == "sndcaption"){
+                
+                 this.sndcaption.setText(attrValue);
+                 
+             }
+             
+             if(attrName == "icon"){
+                 
+                 this.icon.setAttr("src",attrValue);               
+             }
+           
+        },
+        //样式变更回调函数
+        styleChanged: function (styleName, styleValue){
+
+        }
+    }
+    ]]>
+    </script>
+    <style>
+	    .itembox{
+			flex-direction:row;
+			flex-wrap:nowrap;
+			width:fill_screen;
+            align-items:center;
+			
+            width:fill_screen;
+			height:70;			
+			padding:0;
+			margin:0;
+        }
+
+        .hidebox{
+            flex-direction:row;
+			flex-wrap:nowrap;
+            width:fill_screen;
+			align-items:center;
+			justify-content:flex-end;
+			left:0;			
+			position:absolute;			
+		}
+		.caption{
+			font-size:17;
+			color:#565656;
+			singleline:true;
+			text-align:left;
+			text-overflow:ellipsis;
+			
+		}
+		.sndcaption{
+			font-size:14;
+			color:#a9a9a9;
+			singleline:false;
+			flex-wrap:wrap;
+		}
+    </style>
+   <ui>
+        <box id="slider_item" class="slider_item" >
+            <!--
+             <box class="hidebox" id="hidebox">
+			    <box style="width:60;height:70;background-color:#88D038;justify-content:center"><text style="text-align:center;;color:#ffffff">更多</text></box>
+			    <box style="width:60;height:70;background-color:red;justify-content:center"><text style="text-align:center;color:#ffffff">删除</text></box>				
+			 </box>
+			 -->
+            <box class="itembox" id="itembox">
+			   <box style="flex:2;justify-content:center;align-items:center">
+				   <image id="img" src="res:spritetest/image/touxiang.png" style="width:45;height:45;cacheType:memory;scaleType:cover;margin:10"/>		   
+			   </box>
+			   <box style="flex:8;flex-direction:column;justify-content:center">
+    			   <box style="justify-content:center">
+    				    <text id="caption" class="caption">收到了考试点附近开了两路口水电费水电费</text>
+    			   </box>
+    			   <box style="justify-content:center;margin:4 0 0 0">
+    				    <text id="sndcaption" class="sndcaption">水电费水电费水否123123水电费</text>
+    			   </box>
+			   </box>			  			
+			</box>
+        </box>
+    </ui>
+</page>

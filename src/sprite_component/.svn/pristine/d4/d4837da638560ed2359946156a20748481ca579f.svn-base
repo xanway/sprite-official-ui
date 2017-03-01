@@ -1,0 +1,558 @@
+<!-- 
+    样式：
+    textfield控件的所有样式；
+   
+    属性：
+    textfield控件的所有属性
+    (id属性必须带上，否者无法记录该控件的记忆值)
+    
+    方法：
+    继承了textfield原有的所有方法；
+
+    loadData(jsonDatas):加载初始数据；
+    hidepop():隐藏pop弹出框；
+    showpop():显示pop弹出框；
+    cacheData():缓存数据，以后还会有效，当用户觉得输入值可以下次利用，可以执行该方法把数据存起来，存起来后数据会和用户初始导入的数据在一起。缓存内部还会记录数据使用频率，数据按照使用频率高低进行排列；
+    clearCacheData():清除缓存数据，清除后只能显示用户初始导入的数据，并且使用频率排序也会清除；
+
+    事件：
+    继承了textfield所有事件
+
+ -->
+<page>
+    <module>
+    <![CDATA[
+     
+       
+    ]]>
+    </module>
+    <script>
+        <![CDATA[
+        var ui = require("UI");
+        var time = require("Time");
+        var ListAdapter = require("ListAdapter");
+        var diskCache = require("DiskCache");
+        var document = require("Document");
+        var window = require("Window");
+
+        var console = require("Console");
+        var rootDom = null;
+        var screenWidth = window.getScreenWidth();
+        var screenHeight = window.getScreenHeight();
+
+        function sortpinlv(a, b) {
+            // console.log(a.pinlv+";"+b.pinlv);
+            return b.pinlv - a.pinlv;
+        }
+
+        var Memoryfield = function () {
+            this.textfieldid = null;
+            this.value = "";
+
+            this.jsonDatas = [];
+            this.datas = []; //筛选后的数据，list需要
+            this.memorypop = null;
+            this.adapter = null;
+            this.memorylist = null;
+            this.jianpanheight = 258;//键盘高度
+            this.topTrans = 0;
+            this.scrolldom = null;
+
+           
+
+        };
+
+
+
+        Memoryfield.prototype = {
+            created: function () {
+                rootDom = document.getRootElement();
+                var copythis = this;
+
+                this.textfieldid = this.getElement("textfieldid");
+
+                this.textfieldid.on("textChanged", function (e) {
+                    // console.log("copythis.textfieldid.get"+ copythis.textfieldid.getAttr("value"));
+                    copythis.value = copythis.textfieldid.getAttr("value");
+                    if (copythis.value != "") {
+                        copythis.value = copythis.value.replace(/ /g, "");
+
+                    }
+
+
+
+                    copythis.setAttr("value", copythis.value);
+                    if (copythis.memorypop != null) {
+
+                        copythis.datas = [];
+                        for (var i = 0; i < copythis.jsonDatas.length; i++) {
+                            // console.log("copythis.jsonDatas[i].text"+copythis.jsonDatas[i].text);
+
+                            if (copythis.jsonDatas[i].text.indexOf(copythis.value) > -1) {
+
+                                copythis.datas.push(copythis.jsonDatas[i]);
+                            }
+
+                        }
+
+
+
+                        copythis.datas.sort(sortpinlv);
+
+                        copythis.showpop();
+
+                    }
+
+
+
+                });
+
+                this.textfieldid.on("focus", function (e) {
+                    copythis.datas = copythis.datas;
+
+
+                    //向上遍历找到scroll
+                    var parentdom = copythis;
+                    while (parentdom.getParent() != null) {
+
+
+                        parentdom = parentdom.getParent();
+                        if (parentdom.getTag() == "scroll") {
+
+                            break;
+                        }
+
+
+
+                    }
+                    copythis.scrolldom = parentdom;
+
+                    var bgcolor = copythis.scrolldom.getStyle("background-color");
+                    if (bgcolor == null) {
+                        bgcolor = "transparent";
+                    }
+
+
+                    //这里做动画是为了保护scroll不被刷新
+
+                    if (copythis.scrolldom.getTag() == "scroll") {
+
+                        var jsonData = {};
+                        var aniAry = new Array();
+                        var jsonAni1 = {};
+                        jsonAni1.delay = 0;
+                        jsonAni1.duration = 100;
+                        jsonAni1.curve = "linear";
+                        jsonAni1.props = {};
+                        jsonAni1.props.backgroundColor = bgcolor;
+                        aniAry.push(jsonAni1);
+                        jsonData.animators = aniAry;
+                        parentdom.startAnimator(jsonData, function () {
+
+
+                        });
+
+
+                    }
+                    /*var thisframe = copythis.getAbsoluteFrame();
+                    if( screenHeight - (thisframe.y+thisframe.height) <= copythis.jianpanheight){
+                       var parentdom = copythis.getParent();
+    
+                      copythis.topTrans = 0-( thisframe.y+thisframe.height - (screenHeight - copythis.jianpanheight) );
+    
+    
+                      if(parentdom.getTag() == "scroll"){
+                       // console.log("进来了");
+    
+                          parentdom.setStyle("height", screenHeight - copythis.jianpanheight-64);
+                          parentdom.setClassStyle(null);
+    
+                             document.refresh();
+                             var transYjson = {};
+                             transYjson.y = copythis.topTrans;
+                             transYjson.animated = false;
+                             parentdom.scrollBy(transYjson);
+                             document.refresh();
+    
+    
+    
+    
+                      }
+                      else{
+    
+                          
+                           parentdom.setStyle("top", copythis.topTrans);
+    
+                     
+                          document.refresh();
+    
+    
+                       }
+                       
+                      }*/
+                    //做延迟，然后弹出框pop才能根据位置弹出来 
+                    time.setTimeout(function () {
+
+                        if (copythis.getAttr("value") != "") {
+                            copythis.textfieldid.fire("textChanged");
+
+                        }
+                        else {
+                            copythis.showpop();
+                        }
+
+
+                    }, 600);
+
+
+
+                });
+
+                this.textfieldid.on("blur", function (e) {
+
+                    if (copythis.scrolldom.getTag() == "scroll") {
+
+                        copythis.scrolldom.releaseAnimator();
+                    }
+
+
+
+
+
+                    /* var parentdom = copythis.getParent();
+                                    
+                        if(parentdom.getTag() == "scroll"){
+                           
+                            parentdom.setClassStyle("flex1");
+                            document.refresh();
+      
+      
+      
+                        }
+                        else{
+                            parentdom.setStyle("top", 0);
+                            document.refresh();
+                        }  */
+                    // console.log("进入失去焦点"+copythis.memorypop.getStyle("display"));
+
+                    if (copythis.memorypop.getStyle("display") == "block") {
+                        //如果失去焦点弹出框还是显示，则重新定位位置;
+                        //console.log("进入失去焦点");
+                        copythis.showpop();
+                    }
+
+
+
+
+                });
+
+
+
+                this.init();
+
+
+            },
+            loadData: function (datas) {
+                var copythis = this;
+
+                //这里对数据增加一个使用频率的属性，并且复制一份json数据
+
+                for (var i = 0; i < datas.length; i++) {
+
+                    datas[i].pinlv = 0;
+
+
+                }
+                this.jsonDatas = datas;
+
+
+
+                if (diskCache.getItem("memoryfield_" + this.getAttr("id")) == null) {
+
+                    diskCache.setItem("memoryfield_" + this.getAttr("id"), this.jsonDatas);
+
+                }
+                else {
+
+                    this.jsonDatas = diskCache.getItem("memoryfield_" + this.getAttr("id"));
+
+
+                }
+
+
+
+
+                var thisframe = this.getAbsoluteFrame();
+                var width = thisframe.width;
+
+                var left = thisframe.x;
+                var height;
+                var h = datas.length * 40;
+                var hm = screenHeight - 20 - this.jianpanheight - this.textfieldid.getStyle("height");
+
+                if (h > hm) {
+                    height = hm;
+
+                }
+                else {
+                    height = h;
+                }
+
+                var top = thisframe.y + thisframe.height + 2;
+
+
+                if ((thisframe.y - 20 - 2) <= hm - top) {
+                    top = top;
+                }
+                else {
+
+                    top = thisframe.y - height - 2;
+                    if (top < 20) {
+                        top = 20;
+                        height = thisframe.y - 20 - 2;
+                    }
+                }
+
+
+
+
+                var strlistxml = ' <box id="memorypop_' + this.getAttr("id") + '" class="memorypop" style="top:' + top + ';left:' + left + ';width:' + width + ';height:' + height + '" ><list  id="memorylist_' + this.getAttr("id") + '" style="flex:1;" >'
+                    + '<cell id="cell" style="align-items:stretch;">'
+                    + ' <box id="cellbox" class="listcell" style="height:40;">'
+                    + ' <text id="text" style="flex:1;color:#000000;singleline:true;text-overflow:ellipsis;font-size:15"></text>'
+                    + '</box> '
+                    + '<line style="line-size:0.5dp"/>'
+                    + '</cell>'
+                    + ' </list></box>';
+                var popobj = document.createElementByXml(strlistxml, this);
+
+                rootDom.appendChild(popobj);
+                document.refresh();
+                this.memorypop = document.getElement("memorypop_" + this.getAttr("id"));
+                this.memorylist = document.getElement("memorylist_" + this.getAttr("id"));
+
+                this.memorylist.on("itemClick", function (e, position) {
+                    copythis.value = copythis.datas[position].text;
+                    copythis.datas[position].pinlv = copythis.datas[position].pinlv + 1;
+                    diskCache.setItem("memoryfield_" + copythis.getAttr("id"), copythis.jsonDatas);
+                    copythis.setAttr("value", copythis.value);
+                    copythis.hidepop();
+
+                    window.hideSip();
+                });
+
+                this.initdatas();
+            },
+            showpop: function () {
+
+
+                this.memorypop.setStyle("display", "block");
+
+
+                var thisframe = this.getAbsoluteFrame();
+                var height;
+                var h = this.datas.length * 40;
+                var hm = screenHeight - 20 - this.jianpanheight - thisframe.height;
+                // console.log("thisframe.y:"+thisframe.y);
+                if (h > hm) {
+                    height = hm;
+                }
+                else {
+                    height = h;
+                }
+
+                var top = thisframe.y + thisframe.height;
+                if ((thisframe.y - 20) <= hm - top) {
+                    top = top;
+                    if (h > hm) {
+                        height = hm - thisframe.y + 20;
+                    }
+
+
+                }
+                else {
+
+                    top = thisframe.y - height;
+
+
+                    if (top < 20) {
+                        top = 20;
+                        height = thisframe.y - 20;
+                    }
+                }
+
+
+
+
+
+
+                this.memorypop.setStyle("height", height);
+                this.memorypop.setStyle("top", top);
+
+
+                document.refresh();
+
+                this.adapter.refresh();
+
+
+
+
+
+            },
+            hidepop: function () {
+                this.memorypop.setStyle("display", "none");
+                document.refresh();
+
+
+            },
+            initdatas: function () {
+
+                this.datas = [];
+                this.datas = this.jsonDatas;
+
+
+                this.datas.sort(sortpinlv);
+
+
+                this.initAdapter();
+
+                this.adapter.refresh();
+
+
+
+            },
+            setFocus: function () {
+                //继承原有setFocus方法
+                this.textfieldid.setFocus();
+
+
+            },
+            isFocus: function () {
+                //继承原有isFocus方法
+                return this.textfieldid.isFocus();
+
+
+            },
+            clear: function () {
+                //继承原有sclear方法
+                this.textfieldid.clear();
+            },
+            cacheData: function () {
+                var m = 0;
+                for (var i = 0; i < this.datas.length; i++) {
+                    if (this.value == this.datas[i].text) {
+                        break;
+                    }
+                    m = m + 1;
+                }
+
+                if (m == this.datas.length) {
+
+                    var obj = {};
+                    obj.text = this.value;
+                    obj.pinlv = 1;
+
+                    this.jsonDatas.push(obj);
+                    diskCache.setItem("memoryfield_" + this.getAttr("id"), this.jsonDatas);
+
+                }
+
+
+            },
+            clearCacheData: function () {
+
+                diskCache.removeItem("memoryfield_" + this.getAttr("id"));
+            },
+            initAdapter: function () {
+                var copythis = this;
+                // console.log("进入了initAdapter");
+                if (this.adapter == null) {
+                    this.adapter = new ListAdapter();
+                    this.adapter.on("getCellId", function (e, position) {
+                        var data = copythis.datas[position];
+                        return "cell";
+
+                    });
+                    this.adapter.on("getSectionText", function (e, sectionindex) {
+                        return null;
+                    });
+                    this.adapter.on("getSectionCount", function (e) {
+                        return 1;
+                    });
+                    this.adapter.on("getView", function (e, position) {
+                        var data = copythis.datas[position];
+                        var text = e.target.getElement("text");
+                        var cellbox = e.target.getElement("cellbox");
+                        text.setText(data.text);
+
+                        //  console.log(data.text);                            
+                        //设置列表点击背景色          
+                        var event = cellbox.getOn("touchUp");
+                        if (event.length == 0) {
+                            cellbox.on("touchDown", function (e) {
+                                this.setStyle("background-color", "#F6F6F6");
+                            });
+                            cellbox.on("touchUp", function (e) {
+                                this.setStyle("background-color", "transparent");
+                            });
+
+                            cellbox.on("touchCancel", function (e) {
+                                this.setStyle("background-color", "transparent");
+                            });
+                        }
+                    });
+                    this.adapter.on("getCount", function (e) {
+                        return copythis.datas.length;
+                    });
+                    this.adapter.on("getItem", function (e, position) {
+                        return copythis.datas[position];
+                    });
+
+                    this.memorylist.setAdapter(this.adapter);
+                }
+
+
+
+
+            },
+            init: function () {
+
+                var attrs = this.getAttrs();
+
+                for (var ar in attrs) {
+                    if (ar != "style") {
+                        //console.log(ar+":"+attrs[ar]);
+                        this.setAttr(ar, attrs[ar]);
+                    }
+
+                }
+
+
+
+            },
+            //属性变更回调函数
+            attrChanged: function (attrName, attrValue) {
+                this.textfieldid.setAttr(attrName, attrValue);
+
+            },
+            //样式变更回调函数
+            styleChanged: function (styleName, styleValue) {
+
+
+            }
+        }
+
+        module.exports = Memoryfield;
+
+    ]]>
+    </script>
+    <style>
+        @import url("memoryfield.layout.css");
+        @import url("memoryfield.color.css");
+    </style>
+    <ui>
+        <textfield id="textfieldid" value="" style="height: 40;text-align: left;padding: 4 0 0 4">
+        </textfield>
+    </ui>
+
+</page>

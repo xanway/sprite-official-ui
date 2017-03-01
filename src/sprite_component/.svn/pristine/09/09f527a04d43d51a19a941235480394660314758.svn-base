@@ -1,0 +1,336 @@
+<!--
+样式：
+box公共样式;
+select-color：select时候的文字色;
+
+
+属性：无
+
+
+
+方法：
+pop(popjson)
+
+popjson.height = 180;
+popjson.width = 300;
+popjson.fontColor = "red";
+popjson.domobj = domobj;
+popjson.datas = [];
+
+var json = {};
+json.text = "菜单1";
+json.icon = "res:yuanhongqian/image/ncontact-active.png";
+popjson.datas.push(json);
+
+
+事件：select：监听select选中，
+-->
+<page>
+	<script>
+		<![CDATA[
+
+    	var window = require("Window");
+		var document = require("Document");
+		var ListAdapter = require("ListAdapter");
+		var console = require("Console");
+
+
+		var backGroundDom = null;
+		var popDom = null;
+		var screenWidth = window.getScreenWidth();
+		var screenHeight = window.getScreenHeight();
+		var popMenuSize = screenWidth * 0.8;
+		var x = (screenWidth - popMenuSize) / 2;
+		var y = (screenHeight - popMenuSize) / 2;
+		var thisDom = null;
+		var rootDom = null;
+		var datas;
+
+
+		function aniCallBack() {
+
+		}
+
+		var Selectpop = function () {
+			//初始化函数，用于处理组件属性及样式，入参为Json，包含两个参数：attributes（属性集，json格式），styles（样式集，json格式）
+			this.list = null;
+			this.adapter = null;
+			this.line = null;
+			this.title = "";
+			this.selectColor = "#549FF7";
+
+
+		};
+
+		module.exports = Selectpop;
+
+		Selectpop.prototype = {
+
+			created: function () {
+				//console.log("进入了created");
+			},
+			//属性变更回调函数
+			attrChanged: function (attrName, attrValue) {
+				if (attrName == "title") {
+					this.title.setText(attrValue);
+				}
+			},
+			//样式变更回调函数
+			styleChanged: function (styleName, styleValue) {
+
+				if (styleName == "select-color") {
+					this.selectColor = styleValue;
+				}
+
+			},
+			pop: function (options) {
+				rootDom = document.getRootElement();
+				datas = new Array();
+				thisDom = this;
+				this.list = this.getElement("list");
+				this.line = this.getElement("line");
+				this.title = this.getElement("title");
+
+
+				var json = {};
+				json.style = "background-color:black;width:fill_screen;height:fill_screen;position:absolute;top:0;left:0;opacity:0.5";
+				backGroundDom = document.createElement("box", json);
+
+
+				backGroundDom.on("click", function (e) {
+
+					/* var jsonData = {};
+					 jsonData.type = "fade";
+					 thisDom.hide(jsonData);
+					 backGroundDom.hide(jsonData);*/
+					backGroundDom.setStyle("visibility", "hidden");
+
+					// backGroundDom.remove();
+					thisDom.remove();
+					document.refresh();
+
+
+
+				});
+
+				popDom = this.getElement("box");
+				popDom.setStyle("width", popMenuSize);
+				this.list.setStyle("width", popMenuSize);
+				this.line.setStyle("line-length", popMenuSize);
+				this.getElement("line0").setStyle("line-length", popMenuSize);
+				popDom.setStyle("height", popMenuSize);
+				popDom.setStyle("top", y);
+				popDom.setStyle("left", x);
+
+				rootDom.appendChild(backGroundDom);
+				rootDom.appendChild(this);
+
+				backGroundDom.setStyle("visibility", "visible");
+
+				document.refresh();
+
+				this.initAdapter();
+				this.loadData(options);
+				this.adapter.refresh();
+
+				var jsonData = {};
+				jsonData.type = "scale";
+				jsonData.duration = 300;
+
+				var settings = new Array();
+
+				var json = {};
+				json.value = 0.01;
+				json.keyTimes = 0;
+				json.curve = "linear";
+				settings.push(json);
+
+				json = {};
+				json.value = 1.1;
+				json.keyTimes = 0.5;
+				json.curve = "linear";
+				settings.push(json);
+
+				json = {};
+				json.value = 1.0;
+				json.keyTimes = 1.0;
+				json.curve = "ease_out";
+				settings.push(json);
+
+				jsonData.settings = settings;
+				thisDom.startKeyFrameAnimator(jsonData, aniCallBack);
+
+
+				this.list.on("itemClick", function (e, position) {
+					var data = datas[position];
+
+					for (i = 0; i < datas.length; i++) {
+						if (i == position) {
+							datas[position].selected = "true";
+						}
+						else {
+							datas[i].selected = "false";
+						}
+
+					}
+
+					/* var jsonData = {};
+					 jsonData.type = "fade";
+					 thisDom.hide(jsonData);
+					 backGroundDom.hide(jsonData);*/
+
+
+
+					backGroundDom.setStyle("visibility", "hidden");
+
+
+
+
+					thisDom.remove();
+					document.refresh();
+
+					var params = new Array();
+					params.push(data.text);
+					params.push(data.value);
+					thisDom.fire("select", params);
+
+				});
+
+
+			},
+			initAdapter: function () {
+
+				if (this.adapter == null) {
+					this.adapter = new ListAdapter();
+					this.adapter.on("getCellId", function (e, position) {
+						var data = datas[position];
+						return data.type;
+
+					});
+					this.adapter.on("getSectionText", function (e, sectionindex) {
+						return null;
+					});
+					this.adapter.on("getSectionCount", function (e) {
+						return 1;
+					});
+					this.adapter.on("getView", function (e, position) {
+						var data = datas[position];
+						var text = e.target.getElement("text");
+						var selectedbox = e.target.getElement("selectedbox");
+						var cellbox = e.target.getElement("cellbox");
+						text.setText(data.text);
+						if (data.selected == "true") {
+							text.setStyle("color", thisDom.selectColor);
+							selectedbox.setStyle("background-color", thisDom.selectColor);
+
+
+						}
+						else {
+							selectedbox.setStyle("background-color", "transparent");
+							text.setStyle("color", "#000000");
+
+
+						}
+
+
+						//console.log(data.text);
+
+
+						//设置列表点击背景色
+						var boxObj = e.target;
+						var event = cellbox.getOn("touchUp");
+						if (event.length == 0) {
+							boxObj.on("touchDown", function (e) {
+								this.setStyle("background-color", "#F6F6F6");
+							});
+							boxObj.on("touchUp", function (e) {
+								this.setStyle("background-color", "transparent");
+							});
+
+							boxObj.on("touchCancel", function (e) {
+								this.setStyle("background-color", "transparent");
+							});
+						}
+					});
+					this.adapter.on("getCount", function (e) {
+						return datas.length;
+					});
+					this.adapter.on("getItem", function (e, position) {
+						return datas[position];
+					});
+
+					this.list.setAdapter(this.adapter);
+				}
+			},
+			loadData: function (options) {
+				datas = options;
+			}
+		}
+    ]]>
+	</script>
+	<style>
+		line {
+			line-color: #9c9c9c;
+			line-size: 0.5;
+			/*line-length:fill_screen;*/
+		}
+		
+		.box1 {
+			flex-direction: column;
+			background-color: #ffffff;
+			justify-content: flex-start;
+			flex-wrap: nowrap;
+			align-items: center;
+			border-radius: 4dp;
+			width: 0;
+			height: 0;
+			justify-content: flex-start;
+			position: absolute;
+			top: 20;
+			left: 20;
+		}
+		
+		.box2 {
+			height: 36;
+			margin: 8;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		.listcell {
+			flex-direction: row;
+			justify-content: flex-start;
+			flex-wrap: nowrap;
+			height: 45;
+			align-items: center;
+			padding: 10 4 10 4;
+		}
+		
+		text {
+			margin: 0 0 0 4;
+		}
+	</style>
+	<ui>
+		<box class="box1" id="box">
+			<box class="box2">
+				<text id="title" style="flex:1;text-align:center;font-weight:bold">选择</text>
+
+			</box>
+
+			<line id="line0" style="line-size:0.5;" />
+			<list id="list" style="flex:1;">
+				<cell id="cell">
+					<box id="cellbox" class="listcell">
+						<box id="selectedbox" style="height:10;width:10;border-radius:5dp;background-color:#549FF7;" />
+						<text id="text" style="flex:1;color:#333333;singleline:true;text-overflow:ellipsis"></text>
+
+					</box>
+					<line id="line" style="line-size:0.5;" />
+				</cell>
+			</list>
+
+
+		</box>
+	</ui>
+
+</page>

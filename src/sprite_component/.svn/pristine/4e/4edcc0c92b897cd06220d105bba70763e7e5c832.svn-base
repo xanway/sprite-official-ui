@@ -1,0 +1,9 @@
+.sliderbox_btn{
+	border-color:#909090;
+	background-color: #fcfcfc;
+}
+
+.audioplay{
+	background-color: #dddddd;
+}
+

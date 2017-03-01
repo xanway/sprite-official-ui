@@ -1,0 +1,269 @@
+<!-- 
+样式：
+    公共样式；
+    pop-background-color:弹出框背景色;
+    pop-text-color:弹出框字体颜色
+    indexbar-text-color:滑动条字体颜色
+
+    属性：
+    ispop:是否弹出pop，取值true,false
+   
+    方法：
+    公共方法；
+    loadData(arr) 数组格式["a","b","c"];如果不传值默认[A-Z]
+
+    事件：  
+    changeIndex 参数(e ,text) text返回对应字母
+
+ -->
+<page>
+    <module>
+
+    <![CDATA[
+      
+       
+    ]]>
+
+    </module>
+     <script>
+    <![CDATA[
+     var window = require("Window");
+      var document = require("Document");
+      var ui = require("UI");           
+      var console = require("Console");
+       var rootObj = null;
+
+     var Indexbar = function(){
+        this.zmdatas=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+         this.sliderIndex=null;
+         this.popBackgroundColor="#549FF7";
+         this.popTextColor="#ffffff";
+         this.indexbarTextColor="#549FF7";
+         this.popxml='';
+         this.downx=0;
+         this.downy=0;
+         this.zmbox_h=0;
+         this.sliderIndex_h=0;
+         this.start_h=0;
+         this.zmTextHeight=15;
+         this.childrenObj=null;
+         this.zm_pop_box=null;
+         this.ispop="true";
+
+
+     };  
+
+     module.exports = Indexbar;
+      
+     Indexbar.prototype = {
+       
+        created: function ()
+        {
+           rootObj = document.getRootElement();
+         
+           this.sliderIndex = this.getElement("sliderIndex");
+           this.init();
+
+           this.sliderIndex.clear();
+           for(i=0;i<this.zmdatas.length;i++){
+             var xmlstr = '<box >'
+                           +'<text style="height:'+this.zmTextHeight+';color:'+this.indexbarTextColor+'"  class="slider-index-text">'+this.zmdatas[i]+'</text>'
+                          +'</box>';
+                var zmdom =  document.createElementByXml(xmlstr,this);        
+
+              this.sliderIndex.appendChild(zmdom);
+           }
+
+           
+
+           var copythis = this;
+           this.sliderIndex.on("touchDown",function(event,param){
+                var ctrlobj = event.target;
+              var ctrltarget = ctrlobj.getTag();
+              if(ctrltarget == "box"){
+                     copythis.downx = param.x;
+                     copythis.downy = param.y;
+                    // console.log("touchDown"+ctrltarget+":param.y:"+param.y);
+
+              }
+              else if(ctrltarget == "text"){
+                  var z_y = ctrlobj.getParent().getFrame().y;
+                 // console.log("touchDown"+ctrltarget+":param.y:"+param.y+"z_y :"+z_y );
+                   copythis.downy = param.y + z_y;
+
+              }
+              
+                if(copythis.downy>copythis.start_h  && copythis.downy<copythis.end_h){
+                    var n = Math.ceil((copythis.downy-copythis.start_h)/copythis.zmTextHeight);
+                    copythis.getZM(n-1);
+                    //console.log("第几个:"+(n-1));
+               }  
+              
+              
+              
+
+          });
+
+           this.sliderIndex.on("touchMove",function(event,param){
+                   
+                // console.log("touchMoveparam.distanceY:"+param.distanceY+" param.y"+param.y); 
+                // console.log("touchMoveparam.distanceX:"+param.distanceX); 
+               var json =  copythis.sliderIndex.getFrame(); 
+              
+                copythis.downy = copythis.downy + param.distanceY;
+
+                if(copythis.downy>copythis.start_h  && copythis.downy<copythis.end_h){
+                    var n = Math.ceil((copythis.downy-copythis.start_h)/copythis.zmTextHeight);
+
+                  
+                //  console.log("ssssss:"+n);
+                if( copythis.ispop == "true"  ){
+                   copythis.zm_pop_box.setStyle("display","block");                 
+                   document.refresh();
+                }
+                  
+
+                  copythis.getZM(n-1);
+                    
+
+                }
+                
+
+                  
+
+          });
+
+
+          this.sliderIndex.on("touchUp",function(event,param){
+                
+                 copythis.zm_pop_box.setStyle("display","none");
+                 document.refresh();
+
+          });
+
+		    			 
+
+        },
+        init:function(){
+
+          this.setStyle("pop-background-color",this.getStyle("pop-background-color"));
+          this.setStyle("pop-text-color",this.getStyle("pop-text-color"));
+          this.setStyle("indexbar-text-color",this.getStyle("indexbar-text-color"));
+
+          this.setAttr("ispop",this.getAttr("ispop"));
+         
+        },
+        getZM:function(n){
+
+           var zm = this.childrenObj[n].getFirstChild().getText();
+
+           var zm_textdom = document.getElement("zm_text");
+           zm_textdom.setText(zm);
+
+            var arr = new Array();
+             arr.push(zm);
+
+            this.fire("changeIndex",arr);
+                                
+        },
+        loadData:function(zmdatas){
+
+           if(zmdatas != null){
+            this.zmdatas = zmdatas;
+               this.sliderIndex.clear();
+             for(i=0;i<this.zmdatas.length;i++){
+               var xmlstr = '<box >'
+                             +'<text style="height:'+this.zmTextHeight+';color:'+this.indexbarTextColor+'"  class="slider-index-text">'+this.zmdatas[i]+'</text>'
+                            +'</box>';
+                  var zmdom =  document.createElementByXml(xmlstr,this);        
+
+                this.sliderIndex.appendChild(zmdom);
+             }
+             document.getElement();
+           }
+
+
+           
+           this.popxml = '<box id="zm_pop_box"  style="align-items:center;justify-content:center;position:absolute;top:0;left:0;bottom:0;right:0;display:none">'               
+                +'<box style="width:120;height:120;background-color:'+this.popBackgroundColor+';border-width:1;justify-content:center;border-radius:10;">'
+                    +'<text id="zm_text" style="text-align:center;font-size:40;color:'+this.popTextColor+'">2222</text>'
+               +'</box>'
+              +'</box>'; 
+
+            var popdom = document.createElementByXml(this.popxml);
+           // console.log(popdom);
+            rootObj.appendChild(popdom);
+
+            document.refresh();
+
+            this.zm_pop_box = document.getElement("zm_pop_box");
+
+            this.childrenObj = this.sliderIndex.getChildren();
+            this.zmbox_h = this.zmdatas.length * this.zmTextHeight;
+            this.sliderIndex_h =  this.sliderIndex.getFrame().height;
+           
+            this.start_h = (this.sliderIndex_h-this.zmbox_h)/2;
+            this.end_h = this.start_h+this.zmbox_h;
+
+           // console.log("1sliderIndex_h:"+this.sliderIndex_h+";start_h:"+this.start_h+";end_h:"+this.end_h+";zmbox_h:"+this.zmbox_h);
+
+
+
+
+        },
+        //属性变更回调函数
+        attrChanged: function (attrName,attrValue){
+          if(attrName == "ispop"){
+             if(attrValue != null){
+                this.ispop = attrValue;
+             }
+          }
+            
+        },
+        //样式变更回调函数
+        styleChanged: function (styleName, styleValue){ 
+           if(styleName == "pop-background-color"){
+               if(styleValue!=null){
+                 this.popBackgroundColor = styleValue;
+                
+               }
+           }
+
+           if(styleName == "pop-text-color"){
+               if(styleValue!=null){
+                 this.popTextColor = styleValue;
+               }
+           }
+
+           if(styleName == "indexbar-text-color"){
+               if(styleValue!=null){
+                 this.indexbarTextColor = styleValue;
+               }
+           }
+
+
+
+
+
+        }
+    }
+    ]]>  
+    </script>
+    <style>
+         @import url("indexbar.layout.css");
+         @import url("indexbar.color.css"); 
+         text{
+
+            text-overflow:ellipsis;
+            singleline:true; 
+         }
+    
+    </style>
+   <ui>
+        <box id="sliderIndex"  class="indexbar">
+             
+                            
+        </box>
+    </ui>
+
+</page>
