@@ -235,3 +235,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 	</ui>
 </page>
 ```
+
+>代码效果图：  
+
+![](image/fengzhuangzhujian_3.png)  
