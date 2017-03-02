@@ -1,0 +1,85 @@
+{
+"contains": [
+	{
+		"group": "Sprite封装组件",
+		"contains": [
+			{
+				"subject": "button组件",
+				"mdlink": "button"
+			},
+			{
+				"subject": "titlebar组件",
+				"mdlink": "titlebar"
+			},
+			{
+				"subject": "memubar组件",
+				"mdlink": "memubar"
+			},
+			{
+				"subject": "gridmenu组件",
+				"mdlink": "gridmenu"
+			},
+			{
+				"subject": "newslider组件",
+				"mdlink": "newslider"
+			},
+			{
+				"subject": "tabbar组件",
+				"mdlink": "tabbar"
+			},
+			{
+				"subject": "popmenu组件",
+				"mdlink": "popmenu"
+			},
+			{
+				"subject": "popbottommenu组件",
+				"mdlink": "popbottommenu"
+			},
+			{
+				"subject": "switch组件",
+				"mdlink": "switch"
+			},
+			{
+				"subject": "radio组件",
+				"mdlink": "radio"
+			},
+			{
+				"subject": "checkbox组件",
+				"mdlink": "checkbox"
+			},
+			{
+				"subject": "select组件",
+				"mdlink": "select"
+			},
+			{
+				"subject": "indexbar组件",
+				"mdlink": "indexbar"
+			},
+			{
+				"subject": "sliderbar组件",
+				"mdlink": "sliderbar"
+			},
+			{
+				"subject": "organization组件",
+				"mdlink": "organization"
+			},
+			{
+				"subject": "audioplay组件",
+				"mdlink": "audioplay"
+			},
+			{
+				"subject": "superhandsign组件",
+				"mdlink": "superhandsign"
+			},
+			{
+				"subject": "memoryfield组件",
+				"mdlink": "memoryfield"
+			},
+			{
+				"subject": "audiorecord组件",
+				"mdlink": "audiorecord"
+			}
+		]
+        }
+    ]
+}
