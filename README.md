@@ -34,7 +34,7 @@ componentPaths:{
 "memoryfieldUI":"res:sprite_component/memoryfield/memoryfield.component",
 "audiorecordUI":"res:sprite_component/audiorecord/audiorecord.component"
 },
-cssPaths:{
+cssPaths:{ 
 
 }
 });
