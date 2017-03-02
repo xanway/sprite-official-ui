@@ -1,7 +1,5 @@
 # titlebar组件 
 
-----------
-
 [说明](#header1)  
  
 [属性](#header2) 
@@ -230,8 +228,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 				 <titlebar  id="title7" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />
 
 				  <box style="height:10;" class="full-width"></box>
-				 <titlebar  id="title8" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />
-				
+				 <titlebar  id="title8" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />			
 			</box>
 			</scroll>
 		</box>
