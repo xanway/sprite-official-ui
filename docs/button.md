@@ -43,7 +43,6 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
 <br/>
 <h2 id="header5">事件</h2>
 <table><tr><td>事件</td><td>描述说明</td><td>示例</td></tr><tr><td>box公共事件</td><td>见设计文档box章节</td><td></td></tr><tr><td>change</td><td>当按钮属性通过js修改发生变化时会触发。<br/>参数event对象包括： <br/>type：事件类型，字符串类型，固定值：change；<br/>target：触发事件的目标组件，dom对象；timestamp：事件触发的时间戳,单位毫秒，数字类型；</td><td>var btn = document. getElement(“buttonid”);<br/>btn.on(“change”,function(e){//to do});</td></tr></table>
-
 <br/>
 <h2 id="header6">示例</h2>
 ```html
