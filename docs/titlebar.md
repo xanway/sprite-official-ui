@@ -12,7 +12,7 @@
 
 [示例](#header6) 
 
-<br/>
+
 <h2 id="header1">说明</h2>
 titlebar主要用于页面的标题栏展示，为方便开发者布局，封装titlebar-hasstatus 含有系统状态栏高度样式可以直接使用，普通样式是不含状态栏高度的。在使用建议放在垂直布局容器中，宽度会自动填满父容器，如果放在水平布局容器中一定要给出width。
 
@@ -236,6 +236,8 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 </page>
 ```
 
->代码效果图：  
+>代码效果图： 
 
-<img src="image/fengzhuangzhujian_3.png" style="width:200;height:600"/> 
+<img src="image/fengzhuangzhujian_3.png" style="width:200;"/> 
+
+
