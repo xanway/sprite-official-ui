@@ -238,4 +238,4 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 
 >代码效果图：  
 
-![](image/fengzhuangzhujian_3.png)  
+<img src="image/fengzhuangzhujian_3.png" style="width:200;height:600"/> 
