@@ -291,5 +291,4 @@ newslider1.loadData(json);
 
 >代码效果图： 
 
-
 <img width="250" src="image/fengzhuangzhujian_8.png" style="width:250;"/> 
