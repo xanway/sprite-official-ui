@@ -11,7 +11,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 示例，含有titlebar-hasstatus  
  
 ```html
-	<titlebar  id="title7" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />
+<titlebar  id="title7" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />
 ``` 
 
 ## 属性  
@@ -85,7 +85,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 ## 示例  
 
 ```html
-	<page>
+<page>
 	<script><![CDATA[
     var window = require("Window");
     var document = require("Document");
@@ -229,6 +229,6 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 
 >代码效果图： 
 
-<img width="200" src="image/fengzhuangzhujian_3.png" style="width:200;"/> 
+<img width="250" src="image/fengzhuangzhujian_3.png" style="width:250;"/> 
 
 

@@ -10,7 +10,7 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
 示例代码：  
  
 ```html
-	<button class="margin4 radius8 submit outline"  value="提交"></button>
+<button class="margin4 radius8 submit outline"  value="提交"></button>
 ``` 
 
 
@@ -300,4 +300,4 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
 
 >代码效果图： 
 
-<img width="200" src="image/fengzhuangzhujian_2.png" style="width:200;"/> 
+<img width="250" src="image/fengzhuangzhujian_2.png" style="width:250;"/> 
