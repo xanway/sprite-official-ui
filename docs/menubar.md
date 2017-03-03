@@ -1,4 +1,4 @@
-# menubar组件 
+<h1>menubar组件 </h1> 
 
 ----------
 
@@ -82,9 +82,7 @@ menubar1.loadData(json);
       <td>menubar样式（取值normal, middleMain）</td>
       <td></td>
    </tr>
-   <tr>
-      <td></td>
-   </tr>
+  
 </table> 
 
  
@@ -160,7 +158,7 @@ menubar1.loadData(json);
       <td>icon-margin</td>
       <td>图片外边距,默认margin:0 25 0 25</td>
       <td></td>
-      <td></td>
+    
    </tr>
    
 </table>  
@@ -436,5 +434,3 @@ menubar1.loadData(json);
 
 <img width="250" src="image/fengzhuangzhujian_4.png" style="width:250;"/> 
 <img width="250" src="image/fengzhuangzhujian_5.png" style="width:250;"/> 
-
-
