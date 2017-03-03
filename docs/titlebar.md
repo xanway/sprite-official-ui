@@ -1,37 +1,24 @@
 # titlebar组件 
 
-[说明](#header1)  
+----------
+
+##说明
+titlebar主要用于页面的标题栏展示，为方便开发者布局，封装titlebar-hasstatus 含有系统状态栏高度样式可以直接使用，普通样式是不含状态栏高度的。在使用建议放在垂直布局容器中，宽度会自动填满父容器，如果放在水平布局容器中一定要给出width。  
+
+用法：在js里面引入require("titlebarUI");  
+
+示例，含有titlebar-hasstatus  
  
-[属性](#header2) 
 
-[样式](#header3) 
- 
-[js方法](#header4) 
-
-[事件](#header5) 
-
-[示例](#header6) 
-
-
-<h2 id="header1">说明</h2>
-titlebar主要用于页面的标题栏展示，为方便开发者布局，封装titlebar-hasstatus 含有系统状态栏高度样式可以直接使用，普通样式是不含状态栏高度的。在使用建议放在垂直布局容器中，宽度会自动填满父容器，如果放在水平布局容器中一定要给出width。
-
-用法：在js里面引入require("titlebarUI");
-
-示例，含有titlebar-hasstatus
- 
- 
 ```html
 	<titlebar  id="title7" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />
 ``` 
 
-<br/>
-<h2 id="header2">属性</h2>
-<table><tr><td>属性</td><td>描述说明</td><td>示例</td></tr><tr><td>公共属性</td><td>参见公共属性章节，包括：<br/>id；<br/> style；<br/>class；</td><td></td></tr><tr><td>title</td><td>title：标题 (通过js可以修改)；</td><td>var title = document.getElement(“titleid”);<br/>title.setAttr(“title”,”标题”);</td></tr><tr><td>licon</td><td>licon：左边图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr><tr><td>ltext</td><td>ltext: 左边文字(通过js可以修改)；</td><td>同上</td></tr><tr><td>rtext</td><td>rtext: 右边文字(通过js可以修改)；</td><td>同上</td></tr><tr><td>ricon</td><td>ricon：右边图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr><tr><td>riconsnd</td><td>riconsnd：右边第二张图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr></table>
+##属性
+<table><tr><td>属性</td><td>描述说明</td><td>示例</td></tr><tr><td>公共属性</td><td>参见公共属性章节，包括：<br/>id；<br/> style；<br/>class；</td><td></td></tr><tr><td>title</td><td>title：标题 (通过js可以修改)；</td><td>var title = document.getElement(“titleid”);<br/>title.setAttr(“title”,”标题”);</td></tr><tr><td>licon</td><td>licon：左边图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr><tr><td>ltext</td><td>ltext: 左边文字(通过js可以修改)；</td><td>同上</td></tr><tr><td>rtext</td><td>rtext: 右边文字(通过js可以修改)；</td><td>同上</td></tr><tr><td>ricon</td><td>ricon：右边图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr><tr><td>riconsnd</td><td>riconsnd：右边第二张图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr></table>  
 
-<br/>
-<h2 id="header3">样式</h2>
-
+ 
+##样式
 <table>
    <tr><td>样式</td><td>描述说明</td><td>示例</td></tr>
    <tr><td>box公共样式</td><td>尺寸:height默认44;<br/>定位;外边距;<br/>边框;<br/>背景:默认#f9f9f9;<br/>flexbox布局：align-self，flex</td><td></td></tr>
@@ -44,20 +31,19 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
    <tr><td>ricon-height</td><td>ricon-height:右边图片高度(通过js可以修改)；默认高度30</td><td>同title-color</td></tr>
    <tr><td>riconsnd-width</td><td>riconsnd-width:右边第二图片宽度(通过js可以修改)；默认高度30</td><td>同title-color</td></tr>
    <tr><td></td></tr>
-</table>
+</table>  
 
-<br/>
-<h2 id="header4">js方法</h2>
+##js方法
 <table>
    <tr><td>Js方法</td><td>描述说明</td><td>示例</td></tr>
    <tr><td>box公共方法</td><td>见设计文档box章节（不包括容器类Dom节点操作）</td><td></td></tr>
-   <tr><td>setTitleContent('自定义内容xml') </td><td>根据xml字符串自定义内容；把内容放入titlebar的title中间区域。<br/>注：标签要注入到组件内部，这里注入的标签里面如果有图片，路径不能是相对路径，否则组件内部会认为是基于组件目录的相对路径，所以只能写res:绝对路径</td><td>var xmlstr2 = '<button licon=”res:yuanhongqian/image/1.png” id="btn1" class="margin4 radius8 submit"  value="123"/>';<br/>var title8= document.getElement("title8");  title8.setTitleContent(xmlstr2);</td></tr>
+   <tr><td>setTitleContent('自定义内容xml') </td><td>根据xml字符串自定义内容；把内容放入titlebar的title中间区域。<br/>注：标签要注入到组件内部，这里注入的标签里面如果有图片，路径不能是相对路径，否则组件内部会认为是基于组件目录的相对路径，所以只能写res:绝对路径</td><td>var xmlstr2 = '&lt;button licon=”res:yuanhongqian/image/1.png” id="btn1" class="margin4 radius8 submit"  value="123"/&gt;';<br/>var title8= document.getElement("title8");  title8.setTitleContent(xmlstr2);</td></tr>
    <tr><td>getDomById("id")</td><td>根据id得到自定内容中控件的dom;</td><td>//btn1是自定义内容中按钮组件的id。<br/>var btn1 = title8.getDomById("btn1");</td></tr>
   
 </table>
 
-<br/>
-<h2 id="header5">事件</h2>
+
+##>事件
 <table>
    <tr>
       <td>事件</td>
@@ -91,8 +77,9 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
    </tr>
 </table>
 
-<br/>
-<h2 id="header6">示例</h2>
+
+##示例  
+
 ```html
 	<page>
 	<script><![CDATA[
