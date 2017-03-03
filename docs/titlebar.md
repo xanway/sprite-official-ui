@@ -9,7 +9,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 用法：在js里面引入require("titlebarUI");  
 
 示例，含有titlebar-hasstatus  
- 
+
 ```html
 <titlebar  id="title7" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />
 ``` 

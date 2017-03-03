@@ -6,9 +6,10 @@
 
 button组件主要用于按钮形式布局，为方便开发者使用，其封装一些常用样式包括：sumbit cancel outline 注意：混合使用时outline必需在最后。    
 
-用法：在使用button组件的时候需要在js里面引入 require("buttonUI");   
-示例代码：  
+用法：在使用button组件的时候需要在js里面引入 require("buttonUI");    
  
+示例代码：  
+
 ```html
 <button class="margin4 radius8 submit outline"  value="提交"></button>
 ``` 
