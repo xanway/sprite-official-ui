@@ -30,7 +30,7 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
    </tr>
    <tr>
       <td>box公共样式</td>
-      <td>尺寸:height默认40;<br/>定位;<br/>内边距:默认padding:0 8 0 8;<br/>外边距;边框:默认#549FF7;<br/>背景:默认#549FF7;<br/>flexbox布局：align-self，flex</td>
+      <td>尺寸:height默认40;<br/>定位;<br/>内边距:默认padding:0 8 0 8;<br/>外边距;<br/>边框:默认#549FF7;<br/>背景:默认#549FF7;<br/>flexbox布局:align-self，flex</td>
       <td></td>
    </tr>
    <tr>
