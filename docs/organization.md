@@ -113,7 +113,8 @@ json.userdata = {"phone":"12323232222","QQ":"233333333"}; //可以自定义一�
    <tr>
       <td>itemClick</td>
       <td>入参e,data,isgroup,ishaschild；<br/>
-data：得到单条记录的json数据；isgroup是否是部门；<br/>
+data：得到单条记录的json数据；<br/>
+isgroup是否是部门；<br/>
 ishaschild该节点下是否还有数据，如果是部门又没有数据可以发起ajax请求再次异步注入数据<br/>
 </td>
       <td></td>
