@@ -6,7 +6,7 @@ line{
 
 .boxselect {
 	flex: 1;
-	padding: 4;
+	padding: 0;
 }
 
 .box {
@@ -19,7 +19,7 @@ line{
 
 text {
 	font-size: 16;
-	margin: 0 0 0 4;
+	margin: 0 0 0 0;
 	text-align: left;
 	text-overflow: ellipsis;
 	singleline: true;
@@ -27,16 +27,15 @@ text {
 }
 
 image {
-	height: 20;
-	width: 20;
-	margin: 10;
+	height: 30;
+	width: 30;
+	margin: 4;
 }
 
 iconfont {
-	text-align: right;
-	height: 20;
-	width: 20;
-	margin: 10;
+	height: 30;
+	width: 30;
+	margin: 4;
 }
 
 .readonly {

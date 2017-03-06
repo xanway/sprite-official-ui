@@ -113,23 +113,23 @@ riconsndClick:监听右侧第二张图片点击事件；
 
 
                     var copythis = this;
-                    this.ltextboxObj.on("touchUp", function (e) {
+                    this.ltextboxObj.on("click", function (e) {
                         copythis.fire("ltextClick");
 
                     });
-                    this.rtextboxObj.on("touchUp", function (e) {
+                    this.rtextboxObj.on("click", function (e) {
                         copythis.fire("rtextClick");
 
                     });
-                    this.liconboxObj.on("touchUp", function (e) {
+                    this.liconboxObj.on("click", function (e) {
                         copythis.fire("liconClick");
 
                     });
-                    this.riconboxObj.on("touchUp", function (e) {
+                    this.riconboxObj.on("click", function (e) {
                         copythis.fire("riconClick");
 
                     });
-                    this.riconsndboxObj.on("touchUp", function (e) {
+                    this.riconsndboxObj.on("click", function (e) {
                         copythis.fire("riconsndClick");
 
                     });

@@ -257,11 +257,11 @@ change：监听select属性改变
 		<box id="box" class="box" style="flex-direction:row;">
 			<box id="readonly" class="readonly" />
 			<box class="boxselect" id="boxcheck" style="">
-				<text id="text"></text>
+				<text id="text" style="singleline:true;text-overflow:ellipsis;margin: 0 0 0 6"></text>
 			</box>
 			<!--  <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAARVBMVEUAAAC7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7swE7V+AAAAFnRSTlMACHwO/MS3o4+IA/fOmE/s6a1waGBaRYI0iAAAAHBJREFUKM/NzUkShCAUBNHPoIIoznn/ozZhEIQNvW9z+WpR8tf86lt0q5YAc8XjAEFmYBhrx0mzqO32lAM2VbwHfP4HevVwLTldFtMVL0tnsu/yaL8XMwGHfHUAU3J7StVpIfklTZeFEOVHcVmivLwPKBQHXHBrpN4AAAAASUVORK5CYII="/> -->
 
-			<iconfont id="imageid" style="font-family:Material Design Icons;font-size:25;color:#9d9d9d;width: 30;">\uF140</iconfont>
+			<iconfont id="imageid" style="font-family:Material Design Icons;font-size:25;color:#9d9d9d;width: 30;;text-align: center;">\uF140</iconfont>
 
 
 

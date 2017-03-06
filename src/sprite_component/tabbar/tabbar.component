@@ -395,7 +395,7 @@
         @import url("tabbar.color.css");
     </style>
     <ui>
-        <scroll id="sliderScroll" direction="horizontal" style="" class="tabbar bg-white">
+        <scroll id="sliderScroll" direction="horizontal" style="" class="tabbar">
         </scroll>
     </ui>
 </page>

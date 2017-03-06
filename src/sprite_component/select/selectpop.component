@@ -322,7 +322,7 @@ popjson.datas.push(json);
 				<cell id="cell">
 					<box id="cellbox" class="listcell">
 						<box id="selectedbox" style="height:10;width:10;border-radius:5dp;background-color:#549FF7;" />
-						<text id="text" style="flex:1;color:#333333;singleline:true;text-overflow:ellipsis"></text>
+						<text id="text" style="flex:1;color:#333333;"></text>
 
 					</box>
 					<line id="line" style="line-size:0.5;" />
