@@ -1,4 +1,4 @@
-<h1>popbottomenu组件 </h1> 
+<h1>popbottommenu组件 </h1> 
 
 ----------
 
