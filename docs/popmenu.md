@@ -103,7 +103,8 @@ popjson.domobj = domobj; //设置基于某个控件位置弹出<br/>
 //菜单子项数据<br/>
 popjson.datas = [;<br/>
 {<br/>
-text:"菜单1", icon:"res:yuanhongqian/image/ncontact-active.png",<br/>
+text:"菜单1", <br/>
+icon:"res:yuanhongqian/image/ncontact-active.png",<br/>
 handler:function(e){<br/>
 myappjs.alert("你点击了 菜单1");<br/>
      &emsp;&emsp;&emsp;popmenu.hide();<br/>
