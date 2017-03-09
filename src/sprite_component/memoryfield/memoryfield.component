@@ -79,8 +79,6 @@
 
                     }
 
-
-
                     copythis.setAttr("value", copythis.value);
                     if (copythis.memorypop != null) {
 
@@ -89,7 +87,6 @@
                             // console.log("copythis.jsonDatas[i].text"+copythis.jsonDatas[i].text);
 
                             if (copythis.jsonDatas[i].text.indexOf(copythis.value) > -1) {
-
                                 copythis.datas.push(copythis.jsonDatas[i]);
                             }
 

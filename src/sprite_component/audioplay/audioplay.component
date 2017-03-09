@@ -81,7 +81,7 @@ getStatus():得到播放状态 /*0：未播放状态；
                 this.slider_box = this.getElement("slider_box");
                 this.before_x = this.getElement("before_x");
                 this.after_x = this.getElement("after_x");
-                this.slider_box_w = this.slider_box.getStyle("width");
+               
                 this.sliderbox_btn = this.getElement("sliderbox_btn");
                 this.playBtn = this.getElement("playBtn");
                 this.time1 = this.getElement("time1");
@@ -229,6 +229,8 @@ getStatus():得到播放状态 /*0：未播放状态；
 
                 //由于页面没有加载完，在横屏切换的时候得不到frame，这里用定时器
                 time.setTimeout(function () {
+
+                    copythis.slider_box_w = copythis.slider_box.getFrame().width;
                     copythis.init();
 
 
@@ -507,12 +509,12 @@ getStatus():得到播放状态 /*0：未播放状态；
                 this.setStyle("sliderbar-after-color", this.getStyle("sliderbar-after-color"));
                 this.setStyle("button-background-color", this.getStyle("button-background-color"));
                 this.setStyle("button-border-color", this.getStyle("button-border-color"));
-
+                 document.refresh();
 
 
                 this.setAttr("x_progress", this.getAttr("x_progress"));
 
-                document.refresh();
+               
 
 
             },
@@ -615,9 +617,24 @@ getStatus():得到播放状态 /*0：未播放状态；
 
                 var x_w = ((x / 100) * this.x_max).toFixed(1);
                 //console.log("x_w:"+x_w);
-                this.before_x.setStyle("width", x_w);
-                this.after_x.setStyle("width", this.slider_box_w - x_w);
-                this.sliderbox_btn.setStyle("left", x_w);
+                //this.before_x.setStyle("width", x_w);
+                //this.after_x.setStyle("width", this.slider_box_w - x_w);
+               this.sliderbox_btn.setStyle("left", x_w);
+
+				//setFrame 可以修改style中的width和height, 刷新不会重置，只有x,y会重置对应样式的left,top
+				var before_x_json = this.before_x.getFrame();
+                before_x_json.width = x_w;
+				this.before_x.setFrame(before_x_json);
+				
+
+				var after_x_json = this.after_x.getFrame();
+				after_x_json.width = this.slider_box_w - x_w;
+				after_x_json.x=  x_w;
+				this.after_x.setFrame(after_x_json);
+
+				var sliderbox_btn_json = this.sliderbox_btn.getFrame();
+				sliderbox_btn_json.x = x_w;
+				this.sliderbox_btn.setFrame(sliderbox_btn_json);
 
                 var params = new Array();
                 params.push(x);
@@ -628,7 +645,7 @@ getStatus():得到播放状态 /*0：未播放状态；
 
             },
             orientationChanged: function (orientation, screenWidth, screenHeight) {
-                document.refresh();
+               // document.refresh();
                 //  console.log(this.slider_box.getFrame().width);
 
                 this.x_max = this.slider_box.getFrame().width - this.sliderbox_btn.getStyle("width");
