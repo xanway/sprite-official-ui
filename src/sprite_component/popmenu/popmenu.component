@@ -145,7 +145,7 @@ hide():隐藏pop
           var popxmlstr = '<box class="popmenu" style="height:' + popmenuHeight + ';width:' + popmenuWidth + ';top:' + top + ';left:' + left + ';padding:10 0 0 0">'
             + '<box class="popmenu-content" id="popcontent" style="height:' + popmenContentHeight + ';width:' + popmenuWidth + ';background-color:#ffffff;border-radius:4;">'
             // +'<image src="res:sprite_component/image/pop_bg.9.png" class="bgimage"/>'
-            + '<scroll class="flex1" id="scrollid" style="margin:8 0 8 0;" >'
+            + '<scroll class="flex1" id="scrollid" style="margin:8 0 8 0;" scrollbar="false">'
             + '' + popContent + ''
             + '</scroll >'
             + '</box> '

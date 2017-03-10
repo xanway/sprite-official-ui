@@ -178,7 +178,7 @@ x_progress:当前进度和总进度的百分比数值0-100 (可通过js动态修
 
 						this.buttonHeight = styleValue;
 					}
-					
+				
 					this.slider_box.setStyle("height", this.buttonHeight);
 					this.sliderbox_btn.setStyle("height", this.buttonHeight);
 					this.sliderbox_btn.setStyle("width", this.buttonHeight);

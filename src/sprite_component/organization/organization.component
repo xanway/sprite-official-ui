@@ -922,7 +922,7 @@
                         <text style="font-size: 15;color:#ffffff">已选</text>
                     </box>
 
-                    <scroll id="scrollselect" class="organization-select flex1" direction="horizontal">
+                    <scroll scrollbar="false" id="scrollselect" class="organization-select flex1" direction="horizontal">
 
 
                     </scroll>
@@ -931,7 +931,7 @@
                     </box>
                 </box>
                 <line style="line-size:0.5;" />
-                <scroll id="scrolltabbar" direction="horizontal" style="background-color:#f0f0f0" class="organization-tabbar">
+                <scroll id="scrolltabbar" scrollbar="false" direction="horizontal" style="background-color:#f0f0f0" class="organization-tabbar">
 
                 </scroll>
                 <line style="line-size:0.5;" />
