@@ -17,7 +17,7 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
 
 ## 属性  
 
-<table><tr><td>属性</td><td>描述说明</td><td>示例</td></tr><tr><td>公共属性</td><td>参见公共属性章节，包括：id，style，class</td><td></td></tr><tr><td>value</td><td>按钮文字（可以通过js修改）</td><td>var btn = document. getElement(“buttonid”);<br/>btn.setAttr(“value”,”按钮”);</td></tr><tr><td>tip</td><td>小气泡数字（可以通过js修改）</td><td>同上</td></tr><tr><td>licon</td><td>按钮上左侧的图片（可以通过js修改）</td><td>同上</td></tr><tr><td>ricon</td><td>按钮上右侧的图片（可以通过js修改）</td><td>同上</td></tr><tr><td>readonly</td><td>只读（可以通过js修改）</td><td>同上</td></tr><tr><td>loading</td><td>加载等待，取值true和false （可以通过js修改）</td><td>一般用于点击按钮时候的等待效果，btn.setAttr(“loading”,”true”);显示等待图标，过程执行结束后再调用btn.setAttr(“loading”,”false”);隐藏等待图标</td></tr></table>
+<table><tr><td>属性</td><td>描述说明</td><td>示例</td></tr><tr><td>公共属性</td><td>参见公共属性章节，包括：<br/>id，<br/>style，<br/>class</td><td></td></tr><tr><td>value</td><td>按钮文字（可以通过js修改）</td><td>var btn = document. getElement(“buttonid”);<br/>btn.setAttr(“value”,”按钮”);</td></tr><tr><td>tip</td><td>小气泡数字（可以通过js修改）</td><td>同上</td></tr><tr><td>licon</td><td>按钮上左侧的图片（可以通过js修改）</td><td>同上</td></tr><tr><td>ricon</td><td>按钮上右侧的图片（可以通过js修改）</td><td>同上</td></tr><tr><td>readonly</td><td>只读（可以通过js修改）</td><td>同上</td></tr><tr><td>loading</td><td>加载等待，取值true和false （可以通过js修改）</td><td>一般用于点击按钮时候的等待效果，btn.setAttr(“loading”,”true”);显示等待图标，过程执行结束后再调用btn.setAttr(“loading”,”false”);隐藏等待图标</td></tr></table>
 
 
 ## 样式  
@@ -127,7 +127,7 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
    <tr>
       <td>change</td>
       <td>当按钮属性通过js修改发生变化时会触发。<br/>
-     参数event对象包括： 。<br/> type：事件类型，字符串类型，固定值：change；。<br/>target：触发事件的目标组件，dom对象；<br/>timestamp：事件触发的时间戳,单位毫秒，数字类型；</td>
+     参数event对象包括： <br/> type：事件类型，字符串类型，固定值：change；<br/>target：触发事件的目标组件，dom对象；<br/>timestamp：事件触发的时间戳,单位毫秒，数字类型；</td>
       <td>var btn = document.getElement(“buttonid”);<br/>btn.on(“change”,function(e){//to do});</td>
    </tr>
 </table>  
