@@ -1,8 +1,8 @@
-<h1>popmenu组件 </h1> 
+# popmenu组件  
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 popmenu主要用于气泡弹出框，效果类似点击QQ右上角菜单，菜单弹出效果。该控件一般用于页面头部菜单点击弹出效果，暂未考虑底部弹出菜单，如果需要底部弹出菜单请使用popbottommenu组件。  
 
@@ -66,16 +66,16 @@ popmenu.show();
 
 ``` 
   
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 无
 
  
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 无  
 
-## js方法  
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -128,12 +128,12 @@ popmenu.popinit(popjson);
 </table>
 
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 无
 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

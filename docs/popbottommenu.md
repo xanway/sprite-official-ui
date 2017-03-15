@@ -1,8 +1,8 @@
-<h1>popbottommenu组件 </h1> 
+# popbottommenu组件  
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 popbottommenu组件主要用于页面底部弹出菜单，效果类似微信钱包里面的弹出菜单。  
 
@@ -53,16 +53,16 @@ popbottommenu.show();
 
 ``` 
   
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 无
 
  
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 无  
 
-## js方法  
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -107,12 +107,12 @@ popbottommenu.popinit(popjson);
 </table>
 
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 无
 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

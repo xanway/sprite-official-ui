@@ -1,8 +1,8 @@
-<h1>audioplay组件</h1>
+# audioplay组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 audioplay组件是一个播放器组件，可以支持本地音频播放和网络音频播放音频格式建议mp3,其余音频格式要看手机系统自身能否支持。  
 
@@ -29,7 +29,7 @@ play1.start();
 
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -44,7 +44,7 @@ play1.start();
    </tr>
 </table>
 
-## 样式   
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -91,7 +91,7 @@ flexbox布局:align-self<br/>
    </tr>
 </table>
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -148,11 +148,11 @@ play1.playinit(json);
   
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 无
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 该示例和list组件混合使用，list需要用到section。
 

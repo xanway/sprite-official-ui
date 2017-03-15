@@ -1,8 +1,8 @@
-<h1>gridmenu组件 </h1> 
+# gridmenu组件  
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 gridmenu组件主要用于网格布局的暂时，该组件是基于基础组件grid进行封装，基本上具备grid所有属性和样式，除了具备grid本身属性和样式外，该组件还扩展了一些自己的属性和样式，方便开发者布局使用。  
 
@@ -63,7 +63,7 @@ json.datas = arr;
 gridmenu1.loadData(json);
 ``` 
   
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -89,7 +89,7 @@ gridmenu1.loadData(json);
 </table>
 
  
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -152,7 +152,7 @@ gridmenu1.loadData(json);
 
 注：除了box公共样式以外，其他菜单样式通过js修改后，需重新执行loadData()才生效。  
 
-## js方法  
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -178,7 +178,7 @@ gridmenu1.loadData(json);
 </table>
 
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -199,7 +199,7 @@ gridmenu1.loadData(json);
 </table>
 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

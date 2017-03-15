@@ -1,8 +1,8 @@
-<h1>audiorecord组件</h1>
+# audiorecord组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 audiorecord组件为录音组件，该组件提供一个录音弹出窗口，类似于微信发送录音效果的弹出框。
 该组件有两种使用场景：  
@@ -31,15 +31,15 @@ audiorecord1.start();
 
 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 无
 
-## 样式   
+<h2 id="cid_2">样式</h2>
 
 无
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -86,7 +86,7 @@ audiorecord1.recordinit(jsondata);<br/>
    </tr>
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -102,7 +102,7 @@ audiorecord1.recordinit(jsondata);<br/>
  
 </table>
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 
 ```html

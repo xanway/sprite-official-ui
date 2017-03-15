@@ -1,8 +1,8 @@
-<h1>sliderbar组件</h1>
+# sliderbar组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 sliderbar是滑动条组件，类似控制播放的进度条，一般用于拖动滑动条来设置一个区间范围值。  
 
@@ -15,7 +15,7 @@ sliderbar是滑动条组件，类似控制播放的进度条，一般用于拖�
 <sliderbar id="slidebar_id"  style="sliderbar-color:red;height:36;width:fill_screen" x_progress="30"  />
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -36,7 +36,7 @@ sliderbar是滑动条组件，类似控制播放的进度条，一般用于拖�
 </table>
 
 
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -76,7 +76,7 @@ sliderbar是滑动条组件，类似控制播放的进度条，一般用于拖�
    </tr>
 </table>
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -91,7 +91,7 @@ sliderbar是滑动条组件，类似控制播放的进度条，一般用于拖�
    </tr>
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -106,7 +106,7 @@ sliderbar是滑动条组件，类似控制播放的进度条，一般用于拖�
    </tr>
 </table>  
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 该示例和list组件混合使用，list需要用到section。
 

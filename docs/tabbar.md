@@ -1,8 +1,8 @@
-<h1>tabbar组件 </h1> 
+# tabbar组件  
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 tabbar组件主要用于页签切换，类似于网易新闻等应用的页签，该组件需要和基础组件slider绑定使用，绑定后通过设置slider的index可以切换tabbar，或者滑动slider来切换tabbar。同时点击tabbar某一个页签也可以切换slider滑动。  
 
@@ -71,7 +71,7 @@ json.datas = datas;
 tabbarid1.loadData(json);
 ``` 
   
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -92,7 +92,7 @@ tabbarid1.loadData(json);
 </table>
 
  
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -119,7 +119,7 @@ tabbarid1.loadData(json);
 
 注：除了box公共样式以外，其他菜单样式通过js修改后，需重新执行loadData()才生效。  
 
-## js方法  
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -139,12 +139,12 @@ tabbarid1.loadData(json);
 </table>
 
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 无
 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

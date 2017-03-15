@@ -1,8 +1,8 @@
-<h1>menubar组件 </h1> 
+# menubar组件  
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 menubar组件主要用于页面底部菜单展示，一般建议菜单个数不要超过5个，menubar封装了两种菜单类型normal和middleMain，其中middleMain菜单可以在中间定义一个圆形的大菜单，在点击的时候，组件内部会旋转135度，类似QQ空间的底部菜单效果。  
 
@@ -54,7 +54,7 @@ json.datas = arr;
 menubar1.loadData(json);
 ``` 
   
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -86,7 +86,7 @@ menubar1.loadData(json);
 </table> 
 
  
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -163,7 +163,7 @@ menubar1.loadData(json);
    
 </table>  
 
-## js方法  
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -190,7 +190,7 @@ menubar1.loadData(json);
 </table>
 
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -212,7 +212,7 @@ menubar1.loadData(json);
 </table>
 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

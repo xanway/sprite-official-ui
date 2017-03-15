@@ -1,8 +1,8 @@
-<h1>memoryfield组件</h1>
+# memoryfield组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，在输入一个关键词时会弹出关键词相关内容。需要注意的是建议在屏幕键盘上方区域使用该控件，比如页面头部，如果在内容区域使用，建议放在scroll容器中。避免键盘弹起时整个页面往上移动。  
 
@@ -21,7 +21,7 @@ memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，
 
 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -41,7 +41,7 @@ memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，
    </tr>
 </table>
 
-## 样式   
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -56,7 +56,7 @@ memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，
    </tr>
 </table>
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -97,11 +97,11 @@ memoryfield.loadData(jsonData);<br/>
    </tr>
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 继承了textfield所有事件
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 该示例和list组件混合使用，list需要用到section。
 

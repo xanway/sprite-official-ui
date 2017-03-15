@@ -1,8 +1,8 @@
-<h1>select组件</h1>
+# select组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 select组件主要用于弹出框选项效果，该组件可作为表单控件使用。该组件封装了change事件，只要该控件内部定义的属性发生变化都会触发该事件（用户自己写的属性改变不会触发change事件）。  
 
@@ -41,7 +41,7 @@ select1.loadData(datas);
 
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -72,7 +72,7 @@ select1.loadData(datas);
 </table>
 
 
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -92,7 +92,7 @@ select1.loadData(datas);
    </tr>
 </table>
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -117,7 +117,7 @@ select1.loadData(datas);
    </tr>
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 
 <table>
@@ -138,7 +138,7 @@ select1.loadData(datas);
    </tr>
 </table>  
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

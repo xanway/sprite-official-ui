@@ -1,8 +1,8 @@
-<h1>checkbox组件</h1>
+# checkbox组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 checkbox组件主要用于多选场景，除了自身样式外，开发者还可以自己设置图片当做状态样式，该组件可作为表单控件使用。该组件封装了change事件，只要该控件内部定义的属性发生变化都会触发该事件（用户自己写的属性改变不会触发change事件）。  
 
@@ -14,7 +14,7 @@ checkbox组件主要用于多选场景，除了自身样式外，开发者还可
 <checkbox id="checkbox1"   checked="true" caption="男" />
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -61,7 +61,7 @@ checkbox组件主要用于多选场景，除了自身样式外，开发者还可
 </table>
 
 
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -111,7 +111,7 @@ checkbox组件主要用于多选场景，除了自身样式外，开发者还可
    </tr>
 </table>
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -131,7 +131,7 @@ checkbox组件主要用于多选场景，除了自身样式外，开发者还可
    </tr>
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 
 <table>
@@ -152,7 +152,7 @@ checkbox组件主要用于多选场景，除了自身样式外，开发者还可
    </tr>
 </table>  
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

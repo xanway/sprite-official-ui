@@ -1,8 +1,8 @@
-<h1>superhandsign组件</h1>
+# superhandsign组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 superhandsign组件为增强型手写签名组件，此组件是在基础组件handsign组件之上封装，可以支持选择16种常用画笔颜色，支持拖动滑条改变画笔粗细，以及撤销功能。  
 
@@ -17,7 +17,7 @@ superhandsign组件为增强型手写签名组件，此组件是在基础组件h
 <superhandsign id="superhandsign" folderpah="res:page/handsign/"/>
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -38,11 +38,11 @@ superhandsign组件为增强型手写签名组件，此组件是在基础组件h
    </tr>
 </table>
 
-## 样式   
+<h2 id="cid_2">样式</h2>
 
 无
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -56,7 +56,7 @@ superhandsign组件为增强型手写签名组件，此组件是在基础组件h
    </tr>
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -76,7 +76,7 @@ superhandsign组件为增强型手写签名组件，此组件是在基础组件h
    </tr>
 </table>
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 首先创建一个测试用的uixml文件，用来调用签名控件
 

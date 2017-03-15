@@ -1,8 +1,8 @@
-<h1>switch组件</h1>
+# switch组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 switch控件主要用于开关效果，可作为表单控件使用。该组件封装了change事件，只要该控件内部定义的属性发生变化都会触发该事件（用户自己写的属性改变不会触发change事件）。  
 
@@ -14,7 +14,7 @@ switch控件主要用于开关效果，可作为表单控件使用。该组件�
 <switch id="switch1" onText="是" offText="否"  checked="false" style="on-background-color:red;margin:8"/>
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -56,7 +56,7 @@ switch控件主要用于开关效果，可作为表单控件使用。该组件�
 </table>
 
 
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -76,7 +76,7 @@ switch控件主要用于开关效果，可作为表单控件使用。该组件�
    </tr>
 </table>
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -96,7 +96,7 @@ switch控件主要用于开关效果，可作为表单控件使用。该组件�
    </tr>
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 
 <table>
@@ -117,7 +117,7 @@ switch控件主要用于开关效果，可作为表单控件使用。该组件�
    </tr>
 </table>  
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

@@ -2,7 +2,7 @@
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 titlebar主要用于页面的标题栏展示，为方便开发者布局，封装titlebar-hasstatus 含有系统状态栏高度样式可以直接使用，普通样式是不含状态栏高度的。在使用建议放在垂直布局容器中，宽度会自动填满父容器，如果放在水平布局容器中一定要给出width。  
 
@@ -14,12 +14,12 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 <titlebar  id="title7" licon="res:yuanhongqian/image/touxiang.png" ricon="res:yuanhongqian/image/gou.png" style="background-color:#549FF7;" class="titlebar-hasstatus"  />
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table><tr><td>属性</td><td>描述说明</td><td>示例</td></tr><tr><td>公共属性</td><td>参见公共属性章节，包括：<br/>id；<br/> style；<br/>class；</td><td></td></tr><tr><td>title</td><td>title：标题 (通过js可以修改)；</td><td>var title = document.getElement(“titleid”);<br/>title.setAttr(“title”,”标题”);</td></tr><tr><td>licon</td><td>licon：左边图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr><tr><td>ltext</td><td>ltext: 左边文字(通过js可以修改)；</td><td>同上</td></tr><tr><td>rtext</td><td>rtext: 右边文字(通过js可以修改)；</td><td>同上</td></tr><tr><td>ricon</td><td>ricon：右边图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr><tr><td>riconsnd</td><td>riconsnd：右边第二张图片地址(通过js可以修改)；支持res:</td><td>同上</td></tr></table>  
 
  
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr><td>样式</td><td>描述说明</td><td>示例</td></tr>
@@ -35,7 +35,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
    <tr><td></td></tr>
 </table>  
 
-## js方法  
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr><td>Js方法</td><td>描述说明</td><td>示例</td></tr>
@@ -46,7 +46,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 </table>
 
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -82,7 +82,7 @@ titlebar主要用于页面的标题栏展示，为方便开发者布局，封装
 </table>
 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

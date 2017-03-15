@@ -1,8 +1,8 @@
-<h1>newslider组件 </h1> 
+# newslider组件  
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 newslider主要用于主页广告滑动栏效果布局，基于基础组件slider进行封装，具有slider组件全部属性，该控件建议放在垂直布局的容器中使用，如果放在水平布局的容器中，一定要给出width，否则组件可能不显示。组件内部已经给出了默认高度height值为180dp，使用是可以根据自己的实际情况通过样式进行调整。  
 
@@ -39,7 +39,7 @@ json.datas = datas;
 newslider1.loadData(json);
 ``` 
   
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -95,7 +95,7 @@ newslider1.loadData(json);
 </table>
 
  
-## 样式  
+<h2 id="cid_2">样式</h2>
 
 <table>
    <tr>
@@ -143,7 +143,7 @@ newslider1.loadData(json);
 
 注：除了box公共样式以外，其他菜单样式通过js修改后，需重新执行loadData()才生效。  
 
-## js方法  
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -170,7 +170,7 @@ newslider1.loadData(json);
 </table>
 
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -191,7 +191,7 @@ newslider1.loadData(json);
 </table>
 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 ```html
 <page>

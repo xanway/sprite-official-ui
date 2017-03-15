@@ -1,8 +1,8 @@
-<h1>organization组件</h1>
+# organization组件
 
 ----------
 
-## 说明  
+<h2 id="cid_0">说明</h2>
 
 organization组件是专门为组织架构选人场景封装的，该组件支持一次性导入所有数据，也支持异步方式一级级的导入。  
 
@@ -16,7 +16,7 @@ organization组件是专门为组织架构选人场景封装的，该组件支�
 <organization id="organization" rootid="root" ischeckbox="false" rootname="南京烽火星空通信发展有限公司"/>
 ``` 
 
-## 属性  
+<h2 id="cid_1">属性</h2>
 
 <table>
    <tr>
@@ -47,11 +47,11 @@ organization组件是专门为组织架构选人场景封装的，该组件支�
    </tr>
 </table>
 
-## 样式   
+<h2 id="cid_2">样式</h2>
 
 无
 
-## js方法 
+<h2 id="cid_3">js方法</h2>
 
 <table>
    <tr>
@@ -102,7 +102,7 @@ json.userdata = {"phone":"12323232222","QQ":"233333333"}; //可以自定义一�
   
 </table>
 
-## 事件  
+<h2 id="cid_4">事件</h2>
 
 <table>
    <tr>
@@ -122,7 +122,7 @@ ishaschild该节点下是否还有数据，如果是部门又没有数据可以�
 
 </table> 
 
-## 示例  
+<h2 id="cid_5">示例</h2>
 
 该示例和list组件混合使用，list需要用到section。
 
