@@ -281,4 +281,4 @@ tabbarid1.loadData(json);
 
 >代码效果图： 
 
-<img width="250" src="image/fengzhuangzhujian_9.png" style="width:250;"/> 
+<img width="250" src="image/fengzhuangzhujian_9.gif" style="width:250;"/> 
