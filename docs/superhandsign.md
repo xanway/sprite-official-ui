@@ -292,8 +292,6 @@ superhandsign组件为增强型手写签名组件，此组件是在基础组件h
 ```
 >代码效果图： 
 
-<img width="250" src="image/fengzhuangzhujian_23.png" style="width:250;"/> 
-<img width="250" src="image/fengzhuangzhujian_24.png" style="width:250;"/> 
-<img width="250" src="image/fengzhuangzhujian_25.png" style="width:250;"/> 
-<img width="250" src="image/fengzhuangzhujian_26.png" style="width:250;"/>
+<img width="250" src="image/fengzhuangzhujian_23.gif" style="width:250;"/>  <img width="250" src="image/fengzhuangzhujian_25.png" style="width:250;"/> 
+
 
