@@ -135,7 +135,9 @@ click()：模拟点击；
                                 }
                             }
                         }
-
+                        if (this.taginit == false) {
+                            this.box.refresh();
+                        }
                     }
 
                     if (attrName == "checked") {
@@ -164,6 +166,9 @@ click()：模拟点击；
 
                         }
                         this.captiondom.setText(this.caption);
+                        if (this.taginit == false) {
+                            document.refresh();
+                        }
 
                     }
 
@@ -208,11 +213,7 @@ click()：模拟点击；
 
                     }
 
-                    if (this.taginit == false) {
-                        document.refresh();
-
-
-                    }
+                   
 
                     if (changetag == true) {
                         this.fire("change");
@@ -230,6 +231,9 @@ click()：模拟点击；
                                 this.readonlydom.setStyle("border-radius", this.checkboxBorderRadius);
 
                             }
+                        }
+                        if (this.taginit == false) {
+                            this.box.refresh();
                         }
                     }
                     if (styleName == "checked-color") {
@@ -261,6 +265,10 @@ click()：模拟点击；
                         }
                         this.captiondom.setStyle("font-size", this.fontSize);
 
+                        if (this.taginit == false) {
+                            document.refresh();
+                        }
+
 
                     }
 
@@ -270,6 +278,9 @@ click()：模拟点击；
                             this.readonlyRadius = styleValue;
                         }
                         this.readonlydom.setStyle("border-radius", this.readonlyRadius);
+                        if (this.taginit == false) {
+                            this.box.refresh();
+                        }
 
 
                     }
@@ -282,17 +293,15 @@ click()：模拟点击；
                         }
                          this.boxcheck.setStyle("height",  this.height);
                             this.boxcheck.setStyle("width",  this.height);
-                            this.checkimage.setStyle("height", this.height);
-                            this.checkimage.setStyle("width",  this.height);
+                            this.checkimage.setStyle("height", this.height-1);
+                            this.checkimage.setStyle("width",  this.height-1);
                             this.readonlydom.setStyle("height",  this.height);
                             this.readonlydom.setStyle("width",  this.height);
+
+                        if (this.taginit == false) {
+                            this.box.refresh();
+                        }
                     }
-
-
-                    if (this.taginit == false) {
-                        document.refresh();
-                    }
-
                 },
                 init: function () {
 

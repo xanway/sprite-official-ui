@@ -56,6 +56,7 @@ finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件
             this.imageid = null;
             this.voluembox = null;
             this.t = 0;
+            this.t1 = 0;
             this.jsondata = null;
             this.audiorecordtime = null
         };
@@ -79,7 +80,7 @@ finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件
                     /* var oo = rootDom.getElements("audiorecord");
                      console.log("有多少个audiorecord"+oo.length);*/
                     rootDom.appendChild(this);
-                    document.refresh();
+                    rootDom.refresh();
                     //重复点击事件会注册多次，这里判断下
                     var event = audiorecord.getOn("finish");
                     if (event.length == 0) {
@@ -125,16 +126,17 @@ finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件
             start: function () {
                 var copythis = this;
                 this.readycanceltag = false;
-                this.box1.setStyle("display", "block");
+                this.box1.setStyle("visibility", "visible");
                 this.voluembox.setStyle("display", "block");
                 this.imageid.setText("\uF36C");
                 this.textsm.setStyle("background-color", "transparent");
                 if (this.jsondata.recordingtext != null) {
                     this.textsm.setText(this.jsondata.recordingtext);
                 }
-                document.refresh();
+                 this.box1.refresh();
                 if (this.audiorecordtime == null) {
                     this.t = 0;
+                    this.t1 = 0;
                     //生成音频文件，根据时间毫秒加上随机数生成保证唯一
                     var datetime = new Date();
                     var randnum = Math.floor(Math.random() * 1000);
@@ -171,7 +173,7 @@ finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件
                         else {
                             copythis.biaoshi.setStyle("background-color", "#ffffff");
                         }
-                        document.refresh();
+                         copythis.box1.refresh();
                         if (copythis.t > copythis.jsondata.maxTime) {
                             copythis.stop();
                         }
@@ -181,8 +183,8 @@ finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件
             stop: function () {
                 audiorecord.stop();
                 if (this.box1 != null) {
-                    this.box1.setStyle("display", "none");
-                    document.refresh();
+                    this.box1.setStyle("visibility", "hidden");
+                   // document.refresh();
                 }
                 time.clearInterval(this.audiorecordtime);
                 this.audiorecordtime = null;
@@ -195,7 +197,7 @@ finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件
                 if (this.jsondata.readyendtext != null) {
                     this.textsm.setText(this.jsondata.readyendtext);
                 }
-                document.refresh();
+                 this.box1.refresh();
             },
             cancelrecord: function () {
                 //取消发送，停止录音的同上，删除刚才的录音文件

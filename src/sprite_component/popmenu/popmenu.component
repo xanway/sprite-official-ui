@@ -156,7 +156,9 @@ hide():隐藏pop
           var popmenuobj = document.createElementByXml(popxmlstr, this);
           this.popbgid.appendChild(popmenuobj);
           rootDom.appendChild(this);
+          
           document.refresh();
+
           this.popcontent = this.getElement("popcontent");
           var copythis = this;
           this.popbgid.on("touchUp", function (e) {
@@ -196,6 +198,9 @@ hide():隐藏pop
           });
         },
         show: function () {
+
+          screenWidth = window.getScreenWidth();
+          screenHeight = window.getScreenHeight();
           var copythis = this;
           if (this.popshow == false) {
 
@@ -213,7 +218,7 @@ hide():隐藏pop
             aniAry1.push(jsonAni1);
             jsonData1.animators = aniAry1;
             this.popbgid.startAnimator(jsonData1, function () {
-
+              copythis.popbgid.releaseAnimator();
             });
 
             //移动之前先把内容放到到不可见区域
@@ -234,6 +239,7 @@ hide():隐藏pop
             jsonData2.animators = aniAry2;
             this.popcontent.startAnimator(jsonData2, function () {
               copythis.popshow = true;
+              copythis.popcontent.releaseAnimator();
             });
           }
         },
@@ -254,6 +260,7 @@ hide():隐藏pop
             jsonData1.animators = aniAry1;
             this.popbgid.startAnimator(jsonData1, function () {
               copythis.popbgid.setStyle("visibility", "hidden");
+               copythis.popbgid.releaseAnimator();
             });
 
 
@@ -274,6 +281,7 @@ hide():隐藏pop
               /*framejson.y = framejson.y + framejson.height;*/
               //console.log(JSON.stringify(framejson));
               //直接用变化之前的值赋值,动画结束后设置成原来的值，下次显影的时候重新开始。如果不设置回去，那么该pop窗口就会在-framejson.height的位置上。
+              copythis.popcontent.releaseAnimator();
               copythis.popcontent.setFrame(framejson);
               copythis.popshow = false;
             });

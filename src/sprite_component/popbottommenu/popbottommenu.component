@@ -20,8 +20,8 @@ var popjson = {};
     var ListAdapter = require("ListAdapter");
     var console = require("Console");
     var time = require("Time");
-    var screenWidth = window.getScreenWidth();
-    var screenHeight = window.getScreenHeight();
+    var screenWidth_s = window.getScreenWidth();
+    var screenHeight_s = window.getScreenHeight();
     //var datas;
 
     var Popbottommenu = function () {
@@ -77,8 +77,8 @@ var popjson = {};
         }
 
 
-        var popxmlstr = '<box class="column-flex-end" id="popcontent" style="position:absolute;bottom:0;left:0;background-color:#ececec;visibility:hidden">'
-          + '<scroll id="scrollid" scrollbar="false" class="flex1" style="background-color:#ffffff;padding:0;width:fill_screen">'
+        var popxmlstr = '<box class="column-flex-end" id="popcontent" style="position:absolute;bottom:0;left:0;right:0;background-color:#ececec;visibility:hidden">'
+          + '<scroll id="scrollid" scrollbar="false" class="flex1" style="background-color:#ffffff;padding:0">'
           + '' + popContent + ''
           + ' </scroll >'
           + ' <box style="height:6"/>'
@@ -159,20 +159,10 @@ var popjson = {};
 
       },
       show: function () {
-        /*var copythis = this;
-                     var jsonData = {};
-                     jsonData.type = "fade";             
-                     this.popbgid.show(jsonData);
+
+         screenWidth_s = window.getScreenWidth();
+        screenHeight_s = window.getScreenHeight();
         
-                     time.setTimeout(function(){
-        
-                       var jsonData2 = {};
-                       jsonData2.type = "slide_b2t";
-                       jsonData2.duration = 100;
-        
-                        copythis.popcontent.show(jsonData2);
-                                   
-                     },100);*/
 
         var copythis = this;
         this.popbgid.setStyle("visibility", "visible");
@@ -190,12 +180,14 @@ var popjson = {};
         jsonData1.animators = aniAry1;
         this.popbgid.startAnimator(jsonData1, function () {
 
+          copythis.popbgid.releaseAnimator();
+
         });
 
         this.popcontent.setStyle("visibility", "visible");
         //移动之前先把内容放到到屏幕的下边缘
         var framejson = this.popcontent.getFrame();
-        framejson.y = screenHeight;
+        framejson.y = screenHeight_s;
         this.popcontent.setFrame(framejson);
         var jsonData2 = {};
         var aniAry2 = new Array();
@@ -210,29 +202,13 @@ var popjson = {};
         aniAry2.push(jsonAni2);
         jsonData2.animators = aniAry2;
         this.popcontent.startAnimator(jsonData2, function () {
-
+             copythis.popcontent.releaseAnimator();
         });
       },
       hide: function () {
 
         var copythis = this;
-        /*var copythis = this;
-        var jsonData2 = {};
-        jsonData2.type = "slide_t2b";
-        jsonData2.duration = 100;
-
-        copythis.popcontent.hide(jsonData2);
-        // document.refresh();       
-        time.setTimeout(function(){
-            var jsonData = {};
-            jsonData.type = "fade";
-           
-            copythis.popbgid.hide(jsonData);
-            // copythis.remove();
-                   
-         },150);*/
-
-
+       
         var jsonData1 = {};
         var aniAry1 = new Array();
 
@@ -247,6 +223,7 @@ var popjson = {};
         jsonData1.animators = aniAry1;
         this.popbgid.startAnimator(jsonData1, function () {
           copythis.popbgid.setStyle("visibility", "hidden");
+          copythis.popbgid.releaseAnimator();
         });
 
         var framejson = this.popcontent.getFrame();
@@ -263,9 +240,17 @@ var popjson = {};
         jsonData2.animators = aniAry2;
         this.popcontent.startAnimator(jsonData2, function () {
           copythis.popcontent.setStyle("visibility", "hidden");
+          copythis.popcontent.releaseAnimator();
         });
       },
       loadData: function (options) {
+      },
+      orientationChanged: function (orientation, screenWidth, screenHeight) {
+
+            this.popcontent.setStyle("width",screenWidth);
+            this.popbgid.refresh();
+
+
       }
     }
     ]]>

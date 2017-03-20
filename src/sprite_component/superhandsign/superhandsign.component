@@ -157,38 +157,29 @@
           this.daxiaoprogeress.on("change",function(e,param1){
 
                 var sethuabidaxiao =2+ (copythis.huabiMax-2) * (param1/100);
-                console.log(sethuabidaxiao);
+               
 
                 copythis.huabidaxiao.setStyle("height",sethuabidaxiao);
-                 copythis.huabidaxiao.setStyle("width",sethuabidaxiao);
-                  copythis.huabidaxiao.setStyle("border-radius",sethuabidaxiao/2);
+                copythis.huabidaxiao.setStyle("width",sethuabidaxiao);
+                copythis.huabidaxiao.setStyle("border-radius",sethuabidaxiao/2);
 
                   copythis.handsign.setStyle("line-size",sethuabidaxiao);
-                  document.refresh();
+                   copythis.huabicaidan.refresh();
 
 
           });
 
           this.colorxuanxiang.on("click",function(e){
               var dom = e.target;
-              console.log(dom.getStyle("background-color"));
+             
             if(dom.getStyle("background-color") != null){
                 copythis.huabidaxiao.setStyle("background-color",dom.getStyle("background-color"));
 
-              copythis.handsign.setStyle("line-color",dom.getStyle("background-color"));
+                copythis.handsign.setStyle("line-color",dom.getStyle("background-color"));
 
-              document.refresh();
+             // document.refresh();
             }
              
-              
-
-
-
-
-
-
-
-
           });
 
 

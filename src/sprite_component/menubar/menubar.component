@@ -41,7 +41,7 @@
  -->
 <page>
     <module>
-    <![CDATA[
+        <![CDATA[
     
     ]]>
     </module>
@@ -53,8 +53,8 @@
         var ui = require("UI");
         var console = require("Console");
 
-        var screenWidth = window.getScreenWidth();
-        var screenHeight = window.getScreenHeight();
+        var screenWidth_s = window.getScreenWidth();
+        var screenHeight_s = window.getScreenHeight();
         var root = null;
 
         var Menubar = function () {
@@ -104,6 +104,7 @@
                     if (item.hasAttr("itemindex")) {
                         var id = item.getAttr("itemindex");
                         var num = parseInt(id);
+                        copythis.index = num;
                         copythis.changeIndex(num);
                     }
                 });
@@ -319,21 +320,11 @@
                         }
                     }
                 }
-                document.refresh();
+                this.menubar.refresh();
                 if (this.type == "middleMain") {
                     var mainitem = this.getElement("mainitem");
                     //console.log(mainitem);
                     var n = 0;
-                    var copythis = this;
-                    var json = mainitem.getAbsoluteFrame();
-                    root.appendChild(mainitem);
-                    mainitem.setStyle("position", "absolute");
-                    mainitem.setStyle("left", json.x + Number(this.mainTransferX));
-                    // var yy = json.y + Number(this.mainTransferY);
-                    mainitem.setStyle("top", json.y + Number(this.mainTransferY));
-                    // console.log(json.y+"this.mainTransferY:"+ yy+";;"+this.mainTransferY);
-                    document.refresh();
-                    //console.log(mainitem);
                     mainitem.on('touchUp', function (e) {
                         var jsonData = {};
                         var aniAry = new Array();
@@ -363,6 +354,21 @@
                             // document.refresh();
                         });
                     });
+
+
+                    var copythis = this;
+                    time.setTimeout(function () {
+                       //android 在动态加载dom的时候getAbsoluteFrame 需要通过定时，才能获取到
+                        var json = mainitem.getAbsoluteFrame();
+                        root.appendChild(mainitem);
+                        mainitem.setStyle("position", "absolute");
+                        mainitem.setStyle("left", json.x + Number(copythis.mainTransferX));
+
+                        mainitem.setStyle("top", json.y + Number(copythis.mainTransferY));
+
+                        root.refresh();
+                    }, 50);
+
                 }
                 //发送menubar切换事件监听 因为同步回传信息有问题，这里需要用定时
                 var copythis = this;
@@ -371,6 +377,7 @@
                 }, 50);
             },
             orientationChanged: function (orientation, screenWidth, screenHeight) {
+                 document.refresh();
                 if (this.type == "middleMain") {
                     var mainitem = null;
                     if (this.getElement("mainitem") != null) {
@@ -379,19 +386,24 @@
                     else {
                         mainitem = document.getElement("mainitem");
                     }
-                    root.appendChild(mainitem);
-                    document.refresh();
-                    mainitem.setStyle("position", "absolute");
+
+                    var nn = screenWidth / 2 - mainitem.getStyle("width") / 2 + Number(this.mainTransferX);
+
+                    var mm = this.menubar.getAbsoluteFrame().y + Number(this.mainTransferY);
+                   
                     mainitem.setStyle("left", screenWidth / 2 - mainitem.getStyle("width") / 2 + Number(this.mainTransferX));
                     mainitem.setStyle("top", this.menubar.getAbsoluteFrame().y + Number(this.mainTransferY));
-                    //console.log(mainitem.getAbsoluteFrame().x+"======="+this.menubar.getAbsoluteFrame().y);
                     document.refresh();
+                    
+                    
+
+
                 }
             },
             changeIndex: function (num) {
                 var list = this.menubar.getChildren();
                 var ll = list.length;
-               
+
                 if (this.type == "middleMain") {
                     ll = ll - 1;
                 }
@@ -473,8 +485,7 @@
                         textdom.setText(itemJson.text);
                     }
                 }
-
-                document.refresh();
+                this.menubar.refresh();
             }
         }
     ]]>

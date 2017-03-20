@@ -37,6 +37,7 @@ x_progress:当前进度和总进度的百分比数值0-100 (可通过js动态修
 			this.buttonBorderColor = "#d9d9d9";
 
 			this.height = 30;
+			this.buttonHeight = 30;
 			this.width = 0;
 
 

@@ -34,7 +34,7 @@
  -->
 <page>
     <module>
-    <![CDATA[
+        <![CDATA[
       require("checkbox/checkbox.component");
     ]]>
     </module>
@@ -72,7 +72,7 @@
             this.selectindex = 0;
             this.currentid = null;//记录当前结构的id,一般复位用。
 
-            	this.pathLocation = "";
+            this.pathLocation = "";
 
         };
 
@@ -81,7 +81,7 @@
         Organization.prototype = {
             created: function () {
                 //这里是得到组件所在的uixml页面的绝对路径目录
-				this.pathLocation = document.getPathLocation();
+                this.pathLocation = document.getPathLocation();
                 var copythis = this;
                 this.list = this.getElement("list");
                 this.scrolltabbar = this.getElement("scrolltabbar");
@@ -129,57 +129,58 @@
                     var children = copythis.scrolltabbar.getChildren();
                     var userid = ctrlobj.getAttr("userid");
 
+                    if (ctrlobj.hasAttr("userid")) {
 
-                    for (var i = 0; i < copythis.selectedarr.length; i++) {
+                        for (var i = 0; i < copythis.selectedarr.length; i++) {
 
-                        if (copythis.selectedarr[i].id == userid) {
+                            if (copythis.selectedarr[i].id == userid) {
 
-                            copythis.selectedarr[i].selected = false;
-                            copythis.selectedarr.splice(i, 1);
+                                copythis.selectedarr[i].selected = false;
+                                copythis.selectedarr.splice(i, 1);
 
-                            //这里做删除动画
-                            copythis.selectAnimator(copythis.scrollselect, i);
-
-                            break;
-                        }
-                    }
-
-
-                    if (copythis.searcharr.length > 0) {
-                        //如果搜索出来的数组里面有数据，则同时也对这里面的数据做操作
-
-                        for (var i = 0; i < copythis.searcharr.length; i++) {
-
-                            if (copythis.searcharr[i].id == userid) {
-                                copythis.searcharr[i].selected = false;
                                 //这里做删除动画
-                                // copythis.selectAnimator(copythis.scrollselect,i);
-                                break;
-                            }
-                        }
-                    }
-
-
-                    if (copythis.datas.length > 0) {
-                        //如果搜索出来的数组里面有数据，则同时也对这里面的数据做操作
-
-                        for (var i = 0; i < copythis.datas.length; i++) {
-
-                            if (copythis.datas[i].id == userid) {
-                                copythis.datas[i].selected = false;
+                                copythis.selectAnimator(copythis.scrollselect, i);
 
                                 break;
                             }
                         }
+
+
+                        if (copythis.searcharr.length > 0) {
+                            //如果搜索出来的数组里面有数据，则同时也对这里面的数据做操作
+
+                            for (var i = 0; i < copythis.searcharr.length; i++) {
+
+                                if (copythis.searcharr[i].id == userid) {
+                                    copythis.searcharr[i].selected = false;
+                                    //这里做删除动画
+                                    // copythis.selectAnimator(copythis.scrollselect,i);
+                                    break;
+                                }
+                            }
+                        }
+
+
+                        if (copythis.datas.length > 0) {
+                            //如果搜索出来的数组里面有数据，则同时也对这里面的数据做操作
+
+                            for (var i = 0; i < copythis.datas.length; i++) {
+
+                                if (copythis.datas[i].id == userid) {
+                                    copythis.datas[i].selected = false;
+
+                                    break;
+                                }
+                            }
+                        }
+
+                        copythis.adapter.refresh();
+                        copythis.selectindex = copythis.selectindex - 1;
+
+                        copythis.selecttip.setText(copythis.selectindex);
+                        //document.refresh(); 
+
                     }
-
-                    copythis.adapter.refresh();
-                    copythis.selectindex = copythis.selectindex - 1;
-
-                    copythis.selecttip.setText(copythis.selectindex);
-                    document.refresh();
-
-
 
 
                 });
@@ -207,6 +208,7 @@
 
                         var widthx = 0;
                         for (var j = 0; j < lh; j++) {
+                            //这里是为了计算出，删除后，scroll移动的距离。
                             widthx = widthx + children[children.length - 1 - j].getFrame().width;
                             children[children.length - 1 - j].setStyle("visibility", "hidden");
                         }
@@ -223,22 +225,15 @@
 
 
                         time.setTimeout(function () {
+                            //这里做真正的删除操作。
                             for (var j = 0; j < lh; j++) {
-
                                 children[children.length - 1].remove();
                                 children.splice(children.length - 1, 1);
-
                             }
-                            document.refresh();
+                            copythis.scrolltabbar.refresh();
 
                         }, 500);
-
-
-
-
                         copythis.currentid = ctrlobj.getAttr("index");
-                        console.log("tabar点击 this.currentid：" + copythis.currentid);
-
                         copythis.addTabbar2(ctrlobj.getAttr("index"));
 
                     }
@@ -355,13 +350,7 @@
                         // console.log((caption.charCodeAt()+"").substring(0,2));
                         //通过ASCII码计算某个人的专属颜色
                         var n = Number((caption.charCodeAt() + "").substring(0, 2)) % 4;
-
-
-                     
                         var icon = data.icon;
-
-
-
                         var limagedom = e.target.getElement("limage");
                         var userbox = e.target.getElement("userbox");
                         var usertext = e.target.getElement("usertext");
@@ -370,20 +359,13 @@
 
                             if (e.target.getElement("limage") != null) {
 
-                                if(data.icon.indexOf("res:")>-1 ||data.icon.indexOf("http://")>-1 || data.icon.indexOf("https://")>-1 ){
-
-
+                                if (data.icon.indexOf("res:") > -1 || data.icon.indexOf("http://") > -1 || data.icon.indexOf("https://") > -1) {
                                 }
-                                else{
-                                  data.icon =   copythis.pathLocation +"/"+ data.icon;
-
-
+                                else {
+                                    data.icon = copythis.pathLocation + "/" + data.icon;
                                 }
-                               
+
                                 limagedom.setAttr("src", data.icon);
-
-                                
-                               
                                 limagedom.setStyle("visibility", "visible");
                             }
                             if (e.target.getElement("userbox") != null) {
@@ -551,7 +533,7 @@
                     this.scrollselect.appendChild(dom);
 
 
-                    document.refresh();
+                    this.scrollselect.refresh();
 
                     var json = {};
                     json.animated = true;
@@ -578,16 +560,10 @@
                             break;
                         }
                     }
-
-
                     this.selectindex = this.selectindex - 1;
-
-
                 }
-
-
                 this.selecttip.setText(this.selectindex);
-                document.refresh();
+                //document.refresh();
 
 
 
@@ -626,7 +602,7 @@
                         thisselectdom.startAnimator(jsonData, function () {
 
                             thisselectdom.releaseAnimator();
-                            document.refresh();
+                            copythis.scrollselect.refresh();
                             thisselectdom.setFrame(json);
 
                         });
@@ -635,36 +611,18 @@
 
 
                     time.setTimeout(function () {
-
                         selectChildren[i].remove();
                         //document.refresh();
                         var json2 = {};
                         json2.animated = true;
                         json2.x = -34;
                         copythis.scrollselect.scrollBy(json2);
-
-
                     }, 10);
-
-                    // 
-
-
                 }
                 else {
-
-
-
                     selectChildren[i].remove();
-
-
                 }
-
-
-                document.refresh();
-
-
-
-
+                this.boxselect.refresh();
             },
 
 
@@ -753,7 +711,7 @@
                     + '</box>';
                 var dom = document.createElementByXml(xmlstr, this);
                 this.scrolltabbar.appendChild(dom);
-                document.refresh();
+                this.scrolltabbar.refresh();
 
                 var copythis = this;
 
@@ -814,7 +772,7 @@
                 }
                 this.selectedarr.splice(0, this.selectedarr.length);
                 this.adapter.refresh();
-                document.refresh();
+                this.scrollselect.refresh();
             },
             loadSearchData: function (jsondatas) {
                 this.searcharr = jsondatas;

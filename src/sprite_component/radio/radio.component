@@ -225,7 +225,9 @@ click(): 模拟radio点击方法；
 
 					}
 
-
+					if (this.taginit == false) {
+						this.box.refresh();
+					}
 
 				}
 
@@ -257,6 +259,9 @@ click(): 模拟radio点击方法；
 						this.checkimage.setStyle("display", "none");
 						this.btn.setStyle("display", "block");
 					}
+					if (this.taginit == false) {
+						this.box.refresh();
+					}
 				}
 
 				if (attrName == "nocheckedimage") {
@@ -280,6 +285,9 @@ click(): 模拟radio点击方法；
 					else {
 						this.checkimage.setStyle("display", "none");
 
+					}
+					if (this.taginit == false) {
+						this.box.refresh();
 					}
 				}
 
@@ -318,6 +326,10 @@ click(): 模拟radio点击方法；
 					}
 					this.captiondom.setText(this.caption);
 
+					if (this.taginit == false) {
+						document.refresh();
+					}
+
 				}
 
 				if (attrName == "group") {
@@ -330,14 +342,7 @@ click(): 模拟radio点击方法；
 					if (attrValue != null) {
 						this.value = attrValue;
 					}
-				}
-
-
-
-
-				if (this.taginit == false) {
-					document.refresh();
-				}
+				}				
 
 				if (changetag == true) {
 					this.fire("change");
@@ -368,6 +373,10 @@ click(): 模拟radio点击方法；
 					}
 
 					this.captiondom.setStyle("font-size", this.fontSize);
+
+					if (this.taginit == false) {
+						this.box.refresh();
+					}
 				}
 
 
@@ -384,7 +393,9 @@ click(): 模拟radio点击方法；
 						this.readonlyRadius = styleValue;
 					}
 					this.readonlydom.setStyle("border-radius", this.readonlyRadius);
-
+					if (this.taginit == false) {
+						this.box.refresh();
+					}
 
 				}
 
@@ -412,15 +423,16 @@ click(): 模拟radio点击方法；
 					}
 					else {
 
-						this.checkimage.setStyle("height", this.getStyle("height"));
-						this.checkimage.setStyle("width", this.getStyle("height"));
+						this.checkimage.setStyle("height", this.height-1);
+						this.checkimage.setStyle("width", this.height-1);
+					}
+
+					if (this.taginit == false) {
+						this.box.refresh();
 					}
 
 				}
-
-				if (this.taginit == false) {
-					document.refresh();
-				}
+				
 
 			}
 		}

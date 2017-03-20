@@ -88,7 +88,7 @@
                                 copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
                             }
                         }
-                        document.refresh();
+                          copythis.sliderScroll.refresh();
                     }
                     else if (ctrltarget == "box") {
                         for (var i = 0; i < copythis.childrenObj.length; i++) {
@@ -102,7 +102,7 @@
                                 copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
                             }
                         }
-                        document.refresh();
+                         copythis.sliderScroll.refresh();
                     }
 
                     //sliderid.setAttr("index",position_index); 这里要传出去
@@ -164,7 +164,8 @@
                     var dom = document.createElementByXml(xmlstr, this);
                     this.sliderScroll.appendChild(dom);
                 }
-                document.refresh();
+                 this.sliderScroll.refresh();
+
                 this.childrenObj = this.sliderScroll.getChildren();
                 this.sliderIndex = this.getElement("sliderIndex");
                 this.sliderScroll.appendChild(this.sliderIndex);
@@ -195,7 +196,7 @@
                         this.childrenObj[i].setStyle("width", screenWidth / this.childrenObj.length);
                     }
                 }
-                document.refresh();
+                copythis.sliderScroll.refresh();
             },
             setPageScroll: function (param) {
                 var position = param.position;

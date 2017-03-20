@@ -64,7 +64,7 @@ click()：模拟点击；
             this.nocheckedimage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTM1MUFCM0MwNzdDMTFFMjlGOTNCMUJEMDg1MTRERDYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTM1MUFCM0QwNzdDMTFFMjlGOTNCMUJEMDg1MTRERDYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MzUxQUIzQTA3N0MxMUUyOUY5M0IxQkQwODUxNERENiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MzUxQUIzQjA3N0MxMUUyOUY5M0IxQkQwODUxNERENiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Plm90DwAAABQSURBVHja7M9BDQAACAQgtX/nM4UPN2hAJ6nPpp4TEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQuLcCDAByqgN9RLSaOQAAAABJRU5ErkJggg==";
 
             this.taginit = true;
-
+            this.pathLocation = "";
 
         };
 
@@ -75,18 +75,15 @@ click()：模拟点击；
             {
 
                 created: function () {
+                    //这里是得到组件所在的uixml页面的绝对路径目录
+				    this.pathLocation = document.getPathLocation();
                     this.box = this.getElement("box");
                     this.checkimage = this.getElement("checkimage");
                     this.boxcheck = this.getElement("boxcheck");
                     this.captiondom = this.getElement("caption");
                     this.readonlydom = this.getElement("readonly");
-
                     this.init();
-
-
-
                     var copythis = this;
-
                     this.box.on("touchUp", function (e) {
 
                         if (copythis.readonly == "false") {
@@ -97,22 +94,17 @@ click()：模拟点击；
                                 copythis.setAttr("checked", "true");
                             }
                         }
-
                     });
-
-
                 },
                 //属性变更回调函数
                 attrChanged: function (attrName, attrValue) {
                     var changetag = false;
 
                     if (this.taginit == false) {
-
                         if (this.getAttr(attrName) != this[attrName] && this[attrName] != null) {
                             //this.fire("change"); 
                             changetag = true;
                         }
-
                     }
 
                     if (attrName == "value") {
@@ -143,7 +135,9 @@ click()：模拟点击；
                                 }
                             }
                         }
-
+                        if (this.taginit == false) {
+                            this.box.refresh();
+                        }
                     }
 
                     if (attrName == "checked") {
@@ -172,12 +166,20 @@ click()：模拟点击；
 
                         }
                         this.captiondom.setText(this.caption);
+                        if (this.taginit == false) {
+                            document.refresh();
+                        }
 
                     }
 
                     if (attrName == "checkedimage") {
                         if (attrValue != null) {
-                            this.checkedimage = attrValue;
+                            if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
+                                this.checkedimage = attrValue;
+                            }
+                            else {
+                                this.checkedimage = this.pathLocation + "/" + attrValue;
+                            }
                             this.boxcheck.setStyle("background-color", "transparent");
                             this.boxcheck.setStyle("border-color", "transparent");
                             this.checkedColor = "transparent";
@@ -192,7 +194,13 @@ click()：模拟点击；
 
                     if (attrName == "nocheckedimage") {
                         if (attrValue != null) {
-                            this.nocheckedimage = attrValue;
+
+                            if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
+                                this.nocheckedimage = attrValue;
+                            }
+                            else {
+                                this.nocheckedimage = this.pathLocation + "/" + attrValue;
+                            }
                             this.boxcheck.setStyle("background-color", "transparent");
                             this.boxcheck.setStyle("border-color", "transparent");
                             this.boxcheck.setStyle("border-radius", "0");
@@ -205,11 +213,7 @@ click()：模拟点击；
 
                     }
 
-                    if (this.taginit == false) {
-                        document.refresh();
-
-
-                    }
+                   
 
                     if (changetag == true) {
                         this.fire("change");
@@ -227,6 +231,9 @@ click()：模拟点击；
                                 this.readonlydom.setStyle("border-radius", this.checkboxBorderRadius);
 
                             }
+                        }
+                        if (this.taginit == false) {
+                            this.box.refresh();
                         }
                     }
                     if (styleName == "checked-color") {
@@ -258,6 +265,10 @@ click()：模拟点击；
                         }
                         this.captiondom.setStyle("font-size", this.fontSize);
 
+                        if (this.taginit == false) {
+                            document.refresh();
+                        }
+
 
                     }
 
@@ -267,6 +278,9 @@ click()：模拟点击；
                             this.readonlyRadius = styleValue;
                         }
                         this.readonlydom.setStyle("border-radius", this.readonlyRadius);
+                        if (this.taginit == false) {
+                            this.box.refresh();
+                        }
 
 
                     }
@@ -275,23 +289,19 @@ click()：模拟点击；
 
                     if (styleName == "height") {
                         if (styleValue != null) {
+                            this.height =  styleValue;                       
+                        }
+                         this.boxcheck.setStyle("height",  this.height);
+                            this.boxcheck.setStyle("width",  this.height);
+                            this.checkimage.setStyle("height", this.height-1);
+                            this.checkimage.setStyle("width",  this.height-1);
+                            this.readonlydom.setStyle("height",  this.height);
+                            this.readonlydom.setStyle("width",  this.height);
 
-                            this.boxcheck.setStyle("height", this.getStyle("height"));
-                            this.boxcheck.setStyle("width", this.getStyle("height"));
-                            this.checkimage.setStyle("height", this.getStyle("height"));
-                            this.checkimage.setStyle("width", this.getStyle("height"));
-                            this.readonlydom.setStyle("height", this.getStyle("height"));
-                            this.readonlydom.setStyle("width", this.getStyle("height"));
-
-
+                        if (this.taginit == false) {
+                            this.box.refresh();
                         }
                     }
-
-
-                    if (this.taginit == false) {
-                        document.refresh();
-                    }
-
                 },
                 init: function () {
 
@@ -335,8 +345,5 @@ click()：模拟点击；
             </box>
             <text id="caption"></text>
         </box>
-
-
     </ui>
-
 </page>

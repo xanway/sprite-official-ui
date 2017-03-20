@@ -21,7 +21,7 @@
  -->
 <page>
     <module>
-    <![CDATA[
+        <![CDATA[
      
        
     ]]>
@@ -58,7 +58,7 @@
             this.topTrans = 0;
             this.scrolldom = null;
 
-           
+
 
         };
 
@@ -81,7 +81,6 @@
 
                     copythis.setAttr("value", copythis.value);
                     if (copythis.memorypop != null) {
-
                         copythis.datas = [];
                         for (var i = 0; i < copythis.jsonDatas.length; i++) {
                             // console.log("copythis.jsonDatas[i].text"+copythis.jsonDatas[i].text);
@@ -92,12 +91,8 @@
 
                         }
 
-
-
                         copythis.datas.sort(sortpinlv);
-
                         copythis.showpop();
-
                     }
 
 
@@ -517,7 +512,7 @@
                 var attrs = this.getAttrs();
 
                 for (var ar in attrs) {
-                    if (ar != "style") {
+                    if (ar != "style" && ar != "id" && ar != "class") {
                         //console.log(ar+":"+attrs[ar]);
                         this.setAttr(ar, attrs[ar]);
                     }

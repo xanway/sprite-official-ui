@@ -35,21 +35,22 @@ popjson.datas.push(json);
 		var console = require("Console");
 
 
-		var backGroundDom = null;
-		var popDom = null;
-		var screenWidth = window.getScreenWidth();
-		var screenHeight = window.getScreenHeight();
-		var popMenuSize = screenWidth * 0.8;
-		var x = (screenWidth - popMenuSize) / 2;
-		var y = (screenHeight - popMenuSize) / 2;
+
+		var screenWidth_s = window.getScreenWidth();
+		var screenHeight_s = window.getScreenHeight();
+		var popMenuSize = screenWidth_s * 0.8;
+		if (screenWidth_s > screenHeight_s) {
+			popMenuSize = screenHeight_s * 0.8;
+		}
+
+		var x = (screenWidth_s - popMenuSize) / 2;
+		var y = (screenHeight_s - popMenuSize) / 2;
 		var thisDom = null;
 		var rootDom = null;
 		var datas;
 
 
-		function aniCallBack() {
 
-		}
 
 		var Selectpop = function () {
 			//初始化函数，用于处理组件属性及样式，入参为Json，包含两个参数：attributes（属性集，json格式），styles（样式集，json格式）
@@ -58,6 +59,9 @@ popjson.datas.push(json);
 			this.line = null;
 			this.title = "";
 			this.selectColor = "#549FF7";
+
+			this.backGroundDom = null;
+			this.popDom = null;
 
 
 		};
@@ -84,6 +88,22 @@ popjson.datas.push(json);
 
 			},
 			pop: function (options) {
+				var copythis = this;
+			
+
+				screenWidth_s = window.getScreenWidth();
+				screenHeight_s = window.getScreenHeight();
+				popMenuSize = screenWidth_s * 0.8;
+				if (screenWidth_s > screenHeight_s) {
+					popMenuSize = screenHeight_s * 0.8;
+				}
+
+				x = (screenWidth_s - popMenuSize) / 2;
+				y = (screenHeight_s - popMenuSize) / 2;
+
+
+
+
 				rootDom = document.getRootElement();
 				datas = new Array();
 				thisDom = this;
@@ -94,38 +114,37 @@ popjson.datas.push(json);
 
 				var json = {};
 				json.style = "background-color:black;width:fill_screen;height:fill_screen;position:absolute;top:0;left:0;opacity:0.5";
-				backGroundDom = document.createElement("box", json);
+				this.backGroundDom = document.createElement("box", json);
 
 
-				backGroundDom.on("click", function (e) {
+				this.backGroundDom.on("click", function (e) {
 
 					/* var jsonData = {};
 					 jsonData.type = "fade";
 					 thisDom.hide(jsonData);
 					 backGroundDom.hide(jsonData);*/
-					backGroundDom.setStyle("visibility", "hidden");
-
 					// backGroundDom.remove();
 					thisDom.remove();
-					document.refresh();
 
+					copythis.backGroundDom.setStyle("visibility", "hidden");
+					copythis.backGroundDom.refresh();
 
 
 				});
 
-				popDom = this.getElement("box");
-				popDom.setStyle("width", popMenuSize);
+				this.popDom = this.getElement("box");
+				this.popDom.setStyle("width", popMenuSize);
 				this.list.setStyle("width", popMenuSize);
 				this.line.setStyle("line-length", popMenuSize);
 				this.getElement("line0").setStyle("line-length", popMenuSize);
-				popDom.setStyle("height", popMenuSize);
-				popDom.setStyle("top", y);
-				popDom.setStyle("left", x);
+				this.popDom.setStyle("height", popMenuSize);
+				this.popDom.setStyle("top", y);
+				this.popDom.setStyle("left", x);
 
-				rootDom.appendChild(backGroundDom);
+				rootDom.appendChild(this.backGroundDom);
 				rootDom.appendChild(this);
 
-				backGroundDom.setStyle("visibility", "visible");
+				this.backGroundDom.setStyle("visibility", "visible");
 
 				document.refresh();
 
@@ -158,7 +177,10 @@ popjson.datas.push(json);
 				settings.push(json);
 
 				jsonData.settings = settings;
-				thisDom.startKeyFrameAnimator(jsonData, aniCallBack);
+				thisDom.startKeyFrameAnimator(jsonData, function () {
+
+					thisDom.releaseAnimator();
+				});
 
 
 				this.list.on("itemClick", function (e, position) {
@@ -181,10 +203,7 @@ popjson.datas.push(json);
 
 
 
-					backGroundDom.setStyle("visibility", "hidden");
-
-
-
+					copythis.backGroundDom.setStyle("visibility", "hidden");
 
 					thisDom.remove();
 					document.refresh();
@@ -222,20 +241,13 @@ popjson.datas.push(json);
 						if (data.selected == "true") {
 							text.setStyle("color", thisDom.selectColor);
 							selectedbox.setStyle("background-color", thisDom.selectColor);
-
-
 						}
 						else {
 							selectedbox.setStyle("background-color", "transparent");
 							text.setStyle("color", "#000000");
-
-
 						}
 
-
 						//console.log(data.text);
-
-
 						//设置列表点击背景色
 						var boxObj = e.target;
 						var event = cellbox.getOn("touchUp");
@@ -264,6 +276,24 @@ popjson.datas.push(json);
 			},
 			loadData: function (options) {
 				datas = options;
+			},
+			orientationChanged: function (orientation, screenWidth, screenHeight) {
+				screenWidth_s = screenWidth;
+				screenHeight_s = screenHeight;
+				if (screenWidth_s > screenHeight_s) {
+					popMenuSize = screenHeight_s * 0.8;
+				}
+
+				x = (screenWidth_s - popMenuSize) / 2;
+				y = (screenHeight_s - popMenuSize) / 2;
+
+				console.log("x:" + x + "y:" + y);
+
+
+				this.popDom.setStyle("top", y);
+				this.popDom.setStyle("left", x);
+				document.refresh();
+			
 			}
 		}
     ]]>

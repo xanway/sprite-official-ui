@@ -66,8 +66,14 @@ click():模拟点击
                 var copythis = this;
 
                 this.btn.on("touchMove", function (e, param) {
-                    copythis.movetag = true;
-                    // console.log("param.distanceX:"+param.distanceX);
+
+
+                    
+                    if(Math.abs(param.distanceX) >= 1){
+                        copythis.movetag = true;
+                    }
+
+                
                     var json = this.getFrame();
                     json.x += param.distanceX;
                     // console.log("json.x:"+json.x);
@@ -187,6 +193,11 @@ click():模拟点击
                         ctrlbox.appendChild(this.box);
                     }
 
+                    if (this.taginit == false) {
+
+                        ctrlbox.refresh();
+                    }
+
                 }
 
                 if (attrName == "value") {
@@ -200,10 +211,7 @@ click():模拟点击
                     this.fire("change");
                 }
 
-                if (this.taginit == false) {
 
-                    document.refresh();
-                }
             },
             //样式变更回调函数
             styleChanged: function (styleName, styleValue) {

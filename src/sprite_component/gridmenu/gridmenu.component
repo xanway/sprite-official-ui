@@ -45,10 +45,10 @@
     </module>
     <script>
         <![CDATA[
-    var document = require("Document");
+        var document = require("Document");
         var window = require("Window");
-        var screenWidth = window.getScreenWidth();
-        var screenHeight = window.getScreenHeight();
+        var screenWidth_s = window.getScreenWidth();
+        var screenHeight_s = window.getScreenHeight();
         var console = require("Console");
         var ui = require("UI");
 
@@ -159,19 +159,13 @@
                     this.setStyle("icon-height", this.getStyle("icon-height"));
                     this.setStyle("font-size", this.getStyle("font-size"));
 
-                    if (screenWidth > screenHeight) {
+                    if (screenWidth_s > screenHeight_s) {
                         this.setAttr("landcol", this.getAttr("landcol"));
 
                     }
                     else {
                         this.setAttr("col", this.getAttr("col"));
                     }
-
-
-
-
-
-
                 },
                 loadData: function (jsondatas) {
                     this.jsondatas = jsondatas;
@@ -220,7 +214,7 @@
                         this.gridmenu.appendChild(dom);
 
                     }
-                    document.refresh();
+                    this.gridmenu.refresh();
 
                 },
                 refresh: function () {
@@ -238,42 +232,28 @@
                         var textdom = childarr[i].getElements("text")[0];
                         var rule = '[type="tip"]';
                         var tipdom = childarr[i].getElements(rule)[0];
-
-
                         var tiptextdom = null;
-
                         tiptextdom = tipdom.getFirstChild();
                         if (itemJson.tip != null && itemJson.tip != "" && itemJson.tip != "0") {
                             tiptextdom.setText(itemJson.tip);
                             tipdom.setStyle("display", "block");
-
                         } else {
 
                             tipdom.setStyle("display", "none");
                         }
 
-
                         var tipsmalldom = childarr[i].getElements('[type="tipsmall"]')[0];
-
-
-
                         if (itemJson.isSmallTip != null && itemJson.isSmallTip == true) {
 
 
                             tipsmalldom.setStyle("display", "block");
                             tipdom.setStyle("display", "none");
 
-                            console.log(tipsmalldom);
+                           // console.log(tipsmalldom);
                         }
                         else {
-
-
                             tipsmalldom.setStyle("display", "none");
-
                         }
-
-
-
 
                         if (itemJson.icon != null) {
                             imagedom.setAttr("src", itemJson.icon);
@@ -284,23 +264,19 @@
                             textdom.setText(itemJson.text);
 
                         }
-
-
-
-
-
-
                     }
 
-                    document.refresh();
+                    this.gridmenu.refresh();
 
 
 
                 },
                 orientationChanged: function (orientation, screenWidth, screenHeight) {
-                    screenWidth = screenWidth;
-                    screenHeight = screenHeight;
+                    screenWidth_s = screenWidth;
+                    screenHeight_s = screenHeight;
+                    //console.log("screenWidth_s:"+screenWidth_s);
                     if (orientation == "landscape") {
+                      
                         this.setAttr("landcol", this.getAttr("landcol"));
                     }
 
@@ -320,8 +296,6 @@
                         }
                         // console.log("this.col:"+this.col);
                         this.gridmenu.setAttr("col", this.col);
-
-
                     }
 
                     if (attrName == "landcol") {
@@ -329,18 +303,15 @@
                             this.landcol = attrValue;
                         }
                         else {
-
                             this.landcol = this.col;
                         }
                         // console.log("this.col:"+this.col);
-                        if (screenWidth > screenHeight) {
+                        if (screenWidth_s > screenHeight_s) {
+                             console.log("this.col:"+this.col);
                             this.gridmenu.setAttr("col", this.landcol);
                         }
-
-
-
-
                     }
+
 
                 },
                 //样式变更回调函数
@@ -389,20 +360,13 @@
                         if (styleValue != null) {
                             this.iconHeight = styleValue;
                         }
-
                     }
 
                     if (styleName == "font-size") {
                         if (styleValue != null) {
                             this.fontSize = styleValue;
                         }
-
                     }
-
-
-
-
-
                 }
             }
     ]]>
@@ -416,5 +380,4 @@
 
         </grid>
     </ui>
-
 </page>

@@ -70,7 +70,7 @@ riconsndClick:监听右侧第二张图片点击事件；
             this.liconWidth = "30";
             this.liconHeight = "30";
             this.riconWidth = "30",
-            this.riconHeight = "30";
+                this.riconHeight = "30";
             this.riconsndWidth = "30";
             this.riconsndHeight = "30";
 
@@ -160,6 +160,11 @@ riconsndClick:监听右侧第二张图片点击事件；
                             this.ltextObj.setStyle("display", "none");
                         }
 
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
+
                     }
 
                     if (attrName == "rtext") {
@@ -171,6 +176,11 @@ riconsndClick:监听右侧第二张图片点击事件；
                         else {
 
                             this.rtextObj.setStyle("display", "none");
+                        }
+
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
                         }
 
                     }
@@ -195,33 +205,43 @@ riconsndClick:监听右侧第二张图片点击事件；
                             this.liconObj.setStyle("display", "none");
                         }
 
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
+
                     }
 
                     if (attrName == "ricon") {
                         if (attrValue != null) {
-                             //通过js进来的图片地址，都认为是基于uixml页面的相对路径，符合开发者思维
-                            if(attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1){
+                            //通过js进来的图片地址，都认为是基于uixml页面的相对路径，符合开发者思维
+                            if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
                                 this.ricon = attrValue;
                             }
-                            else{
+                            else {
                                 this.ricon = this.pathLocation + "/" + attrValue;
                             }
-                            this.riconObj.setStyle("display", "block");                           
+                            this.riconObj.setStyle("display", "block");
                             this.riconObj.setAttr("src", this.ricon);
                         }
                         else {
                             this.riconObj.setStyle("display", "none");
                         }
 
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
+
                     }
                     if (attrName == "riconsnd") {
                         if (attrValue != null) {
 
-                             //通过js进来的图片地址，都认为是基于uixml页面的相对路径，符合开发者思维
-                            if(attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1){
+                            //通过js进来的图片地址，都认为是基于uixml页面的相对路径，符合开发者思维
+                            if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
                                 this.riconsnd = attrValue;
                             }
-                            else{
+                            else {
                                 this.riconsnd = this.pathLocation + "/" + attrValue;
                             }
                             this.riconsndObj.setStyle("display", "block");
@@ -230,12 +250,14 @@ riconsndClick:监听右侧第二张图片点击事件；
                         else {
                             this.riconsndObj.setStyle("display", "none");
                         }
+
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
                     }
 
-                    if (this.taginit == false) {
 
-                        document.refresh();
-                    }
 
                 },
                 //样式变更回调函数
@@ -252,6 +274,11 @@ riconsndClick:监听右侧第二张图片点击事件；
                             this.titleFontSize = styleValue;
                         }
                         this.titletext.setStyle("font-size", this.titleFontSize);
+
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
 
                     }
 
@@ -278,12 +305,22 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.liconObj.setStyle("width", this.liconWidth);
 
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
+
                     }
                     if (styleName == "licon-height") {
                         if (styleValue != null) {
                             this.liconHeight = styleValue;
                         }
                         this.liconObj.setStyle("height", this.liconHeight);
+
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
 
                     }
 
@@ -294,12 +331,22 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.riconObj.setStyle("width", this.riconWidth);
 
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
+
                     }
                     if (styleName == "ricon-height") {
                         if (styleValue != null) {
                             this.riconHeight = styleValue;
                         }
                         this.riconObj.setStyle("height", this.riconHeight);
+
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
 
                     }
 
@@ -310,17 +357,24 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.riconsndObj.setStyle("width", this.riconsndWidth);
 
+                        if (this.taginit == false) {
+
+                            this.titlebarbox.refresh();
+                        }
+
                     }
                     if (styleName == "riconsnd-height") {
                         if (styleValue != null) {
                             this.riconsndHeight = styleValue;
                         }
                         this.riconsndObj.setStyle("height", this.riconsndHeight);
+
+                        if (this.taginit == false) {
+                            this.titlebarbox.refresh();
+                        }
                     }
 
-                    if (this.taginit == false) {
-                        document.refresh();
-                    }
+
                 },
                 //外部调用js方法
                 init: function () {

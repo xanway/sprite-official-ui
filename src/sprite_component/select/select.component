@@ -16,7 +16,7 @@ change：监听select属性改变
 -->
 <page>
 	<module>
-	<![CDATA[
+		<![CDATA[
        require("selectpop.component");
     ]]>
 
@@ -165,16 +165,14 @@ change：监听select属性改变
 						else {
 							this.readonly = "false";
 							this.box.insertBefore(this.readonlydom, this.boxcheck);
-
 						}
 
-
-
+						if (this.taginit == false) {
+							this.box.refresh();
+						}
 					}
 
-					if (this.taginit == false) {
-						document.refresh();
-					}
+
 
 					if (changetag == true) {
 						this.fire("change");
@@ -251,7 +249,6 @@ change：监听select属性改变
 	<style>
 		@import url("select.layout.css");
 		@import url("select.color.css");
-		
 	</style>
 	<ui>
 		<box id="box" class="box" style="flex-direction:row;">

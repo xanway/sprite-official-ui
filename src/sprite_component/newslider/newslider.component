@@ -39,7 +39,7 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
     </module>
     <script>
         <![CDATA[
-    var document = require("Document");
+        var document = require("Document");
         var window = require("Window");
         var time = require("Time");
         var console = require("Console");
@@ -293,7 +293,7 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
                     var markbox = document.createElementByXml(markstr, this);
                     beforeDomObj.appendChild(markbox);
                 }
-                document.refresh();
+                this.sliderHeader.refresh();
 
 
                 var copythis = this;
@@ -325,7 +325,7 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
                     copythis.index = param;
 
 
-                    document.refresh();
+                    copythis.sliderHeader.refresh();
 
                     var arr = new Array();
                     arr.push(param);
