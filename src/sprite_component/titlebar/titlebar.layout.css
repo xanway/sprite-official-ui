@@ -90,9 +90,9 @@
 
 .titlebar{
    justify-content:flex-start;
-   flex-wrap:nowrap;
-   flex-direction:row;
-    align-items:center;
+  
+   flex-direction:column;
+   
 	width:fill_screen;
 	height:44; 
 }

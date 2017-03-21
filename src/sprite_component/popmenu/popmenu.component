@@ -37,7 +37,7 @@ hide():隐藏pop
     var console = require("Console");
     var time = require("Time");
 
-    var rootDom = null;
+   
     var screenWidth = window.getScreenWidth();
     var screenHeight = window.getScreenHeight();
 
@@ -49,6 +49,7 @@ hide():隐藏pop
       this.arrowIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAASCAMAAAAewWyUAAAANlBMVEVHcEz///////////////////////////////////////////////////////////////////+GUsxbAAAAEXRSTlMA2yOMM6Ra8swM6EX5F3IGuS9J5U8AAABsSURBVHhejdBHDsJAAMXQTO0l//6XBSGEQDjlrb3yBpzb7lhBCuu6K7ue9nLVjayXPM47a/Rm7Fnnqz6qP+5a0pfUjrrY9aNH7qb+TNws4GgzCgs2o73AZpQHbEbGwmZUPWxGqcFm1CNsZvMBGGUX6R6TXGkAAAAASUVORK5CYII=";
 
       this.pathLocation = "";
+      this.rootDom = null;
 
       this.popshow = false;
 
@@ -73,7 +74,7 @@ hide():隐藏pop
         popinit: function (popjson) {
           //这里是得到组件所在的uixml页面的绝对路径目录
           this.pathLocation = document.getPathLocation();
-          rootDom = document.getRootElement();
+          this.rootDom = document.getRootElement();
           this.popbgid = this.getElement("popbgid");
           this.popjson = popjson;
 
@@ -154,10 +155,10 @@ hide():隐藏pop
 
           this.popbgid.clear();
           var popmenuobj = document.createElementByXml(popxmlstr, this);
-          this.popbgid.appendChild(popmenuobj);
-          rootDom.appendChild(this);
-          
-          document.refresh();
+          this.popbgid.appendChild(popmenuobj);        
+          this.rootDom.appendChild(this); 
+                     
+          this.rootDom.refresh();
 
           this.popcontent = this.getElement("popcontent");
           var copythis = this;
@@ -165,6 +166,7 @@ hide():隐藏pop
             var objid = e.target.getId();
             if (objid == "popbgid") {
               copythis.hide();
+              
             }
           });
 
@@ -196,6 +198,8 @@ hide():隐藏pop
               copythis.popjson.datas[index].handler(e);
             }
           });
+
+
         },
         show: function () {
 

@@ -533,8 +533,6 @@
                     this.scrollselect.appendChild(dom);
 
 
-                    this.scrollselect.refresh();
-
                     var json = {};
                     json.animated = true;
                     json.x = dom.getFrame().width + 8;
@@ -564,7 +562,7 @@
                 }
                 this.selecttip.setText(this.selectindex);
                 //document.refresh();
-
+                 this.boxselect.refresh();
 
 
             },
