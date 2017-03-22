@@ -18,6 +18,8 @@
     ricon-height: 按钮右侧图片高度（可以通过js修改）
 
     属性：
+    builtInClass 使用内置样式
+
     value：按钮文字（可以通过js修改）；
     tip：小气泡数字（可以通过js修改）；
     licon；按钮上的图片（可以通过js修改）；
@@ -200,23 +202,49 @@
             init: function () {
 
                 this.taginit = true;
-                this.setAttr("readonly", this.getAttr("readonly"));
+                 
+
+                if (this.getAttr("builtInClass") != null) {
+
+                    if ((this.getAttr("builtInClass")).indexOf("outline") > -1 && (this.getAttr("builtInClass")).indexOf("submit") < 0  && (this.getAttr("builtInClass")).indexOf("cancel") < 0 ) {                      
+                        this.setClassStyle(this.classStyle + " outline", this);
+                        this.classStyle = this.classStyle + " outline";
+                    }
+
+                    if ((this.getAttr("builtInClass")).indexOf("submit") > -1 ) {
+                        
+                        this.setClassStyle(this.classStyle + " submit", this);
+
+                         this.classStyle = this.classStyle + " submit";
+
+                    }
+                    else if ((this.getAttr("builtInClass")).indexOf("submit") > -1 && this.getAttr("builtInClass").indexOf("outline") > -1) {
+                        
+                        this.setClassStyle(this.classStyle + " submit outline outline-submit-text", this);
+
+                         this.classStyle = this.classStyle + "  submit outline outline-submit-text";
+                    }
+
+                    if ((this.getAttr("builtInClass")).indexOf("cancel") > -1 ) {
+                       
+                         this.setClassStyle(this.classStyle + " cancel", this);
+                         this.classStyle = this.classStyle + "  cancel";
+                    }
+
+                    else if ((this.classStyle).indexOf("cancel") > -1 && this.classStyle.indexOf("outline") > -1) {
+                        this.setClassStyle(this.classStyle + " cancel outline outline-cancel-text", this);
+                        this.classStyle = this.classStyle + "   cancel outline outline-cancel-text";
+                    }
+                }
+
+
+                 this.setAttr("readonly", this.getAttr("readonly"));
 
                 //设置按钮的value值
                 this.setAttr("value", this.getAttr("value"));
+
                 this.setStyle("color", this.getStyle("color"));
                 this.setStyle("color-click", this.getStyle("color-click"));
-
-                if ((this.classStyle).indexOf("submit") > -1 && this.classStyle.indexOf("outline") > -1) {
-                    //console.log("进来了submit");
-                    // this.text.setClassStyle("outline-submit-text",this);
-                    this.setClassStyle(this.classStyle + " outline-submit-text", this);
-
-                }
-                if ((this.classStyle).indexOf("cancel") > -1 && this.classStyle.indexOf("outline") > -1) {
-                    this.setClassStyle(this.classStyle + " outline-cancel-text", this);
-                    //this.text.setClassStyle("outline-cancel-text",this);
-                }
 
                 this.setStyle("background-color", this.getStyle("background-color"));
 
@@ -243,14 +271,14 @@
 
                 this.setAttr("loading", this.getAttr("loading"));
 
-                if(this.getStyle("width") != null ){
+                if (this.getStyle("width") != null) {
 
-                     this.btn_content.setStyle("flex","1");
+                    this.btn_content.setStyle("flex", "1");
                 }
 
-                if(this.getStyle("flex") != null ){
+                if (this.getStyle("flex") != null) {
 
-                     this.btn_content.setStyle("flex","1");
+                    this.btn_content.setStyle("flex", "1");
                 }
 
 
@@ -303,6 +331,7 @@
                     if (this.readonly == "true") {
 
                         var clasststr = this.classStyle;
+                        console.log("this.classStyle:"+this.classStyle); 
 
                         if (clasststr.indexOf("outline") > -1) {
                             clasststr = this.classStyle + " outline-disable";
@@ -429,6 +458,7 @@
                 if (styleName == "background-color") {
                     if (styleValue != null) {
                         this.backgroundColor = styleValue;
+                       
                     }
 
                     if (this.taginit == false) {

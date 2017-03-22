@@ -288,11 +288,8 @@
                                 data.selected = true;
 
                             }
-
-
                             copythis.adapter.refresh();
                             copythis.addSelected(data);
-
 
                         }
                         else if (copythis.ischeckbox == "false") {
