@@ -53,3 +53,6 @@ cssPaths:{
 不过如果有开发者自己开发模板，在模板里面又套用了组件模板，开发者需要在自己的模板里面通过this.getPathLocation()方法得到自己当前模板的绝对位置，然后拼接完整路径传给调用的模板。比如开发者自己开发了一个组件模板xxx.component, 在里面用到了button组件，如果给button组件设置licon属性的时候，开发者需要拼接一个机遇自己模板的完整图片路径。如果开发者不作处理在官方封装的组件里面都会处理成uixml页面的相对地址（有些控件的特殊处理会在下面的文档里面说明，比如titlebar组件）。
 
 
+组件源码查看地址：[https://github.com/yuanhongqian/SpriteUI](https://github.com/yuanhongqian/SpriteUI)  
+
+实例中用的样式文件： [https://github.com/yuanhongqian/SpriteUI/blob/master/src/css.zip](https://github.com/yuanhongqian/SpriteUI/blob/master/src/css.zip)
