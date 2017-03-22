@@ -331,7 +331,7 @@
                     if (this.readonly == "true") {
 
                         var clasststr = this.classStyle;
-                        console.log("this.classStyle:"+this.classStyle); 
+                       // console.log("this.classStyle:"+this.classStyle); 
 
                         if (clasststr.indexOf("outline") > -1) {
                             clasststr = this.classStyle + " outline-disable";
