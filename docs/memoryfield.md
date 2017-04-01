@@ -10,6 +10,8 @@ memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，
 
 该组件会记住用户选择的某一项的使用次数，使用多的排在前面 。
 
+**注：** 由于该控件有记忆功能，并且是靠控件id作为存储数据的key值，所以使用该控件是必须具有id属性。
+
 用法：在js里面引入require("superhandsignUI");  
 
 示例：
@@ -23,83 +25,90 @@ memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，
 
 <h2 id="cid_1">属性</h2>
 
-<table>
-   <tr>
-      <td>属性</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>公共属性</td>
-      <td>参见公共属性章节，包括：<br/>id<br/>style<br/>class<br/>注：id属性必须带上，否者无法记录该控件的记忆值</td>
-      <td></td>
-   </tr>
- <tr>
-      <td>textfield控件的所有属性</td>
-      <td>详细见sprite详细设计手册</td>
-      <td></td>
-   </tr>
-</table>
+<span id="sx_0">**公共属性**</span>  
+
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+
+<span id="sx_1">**textfield组件的所有属性**</span>
+
+[详细见textfield组件属性](https://gitdocument.exmobi.cn/sprite_advanced/textfield.html)
+
 
 <h2 id="cid_2">样式</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>textfield控件的所有样式</td>
-      <td>详细见sprite详细设计文档</td>
-      <td></td>
-   </tr>
-</table>
+**textfield控件的所有样式**
+
+[详细见textfield控件样式](https://gitdocument.exmobi.cn/sprite_advanced/textfield.html#cid_1)
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>loadData(jsonDatas)</td>
-      <td>加载初始数据，注意该方法一定要执行，如果什么数据都不想注入，只写执行loadData([])即可。<br/>
-jsonData 是json数组，<br/>
-子项数据格式：<br/>
-Jsondata.text: 文字内容<br/>
-</td>
-      <td>var jsonData =[ {'text':'北京'}, {'text':'天津'}]<br/>
-memoryfield.loadData(jsonData);<br/>
-</td>
-   </tr>
-   <tr>
-      <td>hidepop()</td>
-      <td>隐藏pop弹出框</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>showpop()</td>
-      <td>显示pop弹出框</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>cacheData()</td>
-      <td>缓存数据，以后还会有效，当用户觉得输入值可以下次利用，可以执行该方法把数据存起来，存起来后数据会和用户初始导入的数据在一起。缓存内部还会记录数据使用频率，数据按照使用频率高低进行排列</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>clearCacheData()</td>
-      <td>清除缓存数据，清除后只能显示用户初始导入的数据，并且使用频率排序也会清除；清除后下次重新进入页面才会生效。</td>
-      <td></td>
-   </tr>
-</table>
+**textfield控件的所有方法**
+
+[详细见textfield控件样式](https://gitdocument.exmobi.cn/sprite_advanced/textfield.html#cid_3)
+
+
+**void loadData(jsonDatas)**
+
+<code>加载初始数据</code>
+
+注意该方法一定要执行，如果什么数据都不想注入，只写执行loadData([])即可。
+
+参数：
+
+jsonData 是json数组，各子项属性为：
+
+> text: 文字内容
+> 
+> 其他key值
+
+返回值： 无
+
+**void hidepop()**
+
+<code>隐藏pop弹出框</code
+
+参数： 无 
+
+返回值： 无
+
+
+**void showpop()**
+
+<code>显示pop弹出框</code>
+
+参数： 无 
+
+返回值： 无
+
+
+**void cacheData()**
+
+<code>缓存数据</code> 
+
+缓存数据，以后还会有效，当用户觉得输入值可以下次利用，可以执行该方法把数据存起来，存起来后数据会和用户初始导入的数据在一起。缓存内部还会记录数据使用频率，数据按照使用频率高低进行排列。
+
+参数： 无 
+
+返回值： 无
+
+
+**void clearCacheData()**
+
+<code>清除缓存数据</code> 
+
+清除后只能显示用户初始导入的数据，并且使用频率排序也会清除；清除后下次重新进入页面才会生效。
+
+参数： 无 
+
+返回值： 无
+
+
 
 <h2 id="cid_4">事件</h2>
 
-继承了textfield所有事件
+**继承了textfield所有事件**
+
+[详细见textfield组件事件](https://gitdocument.exmobi.cn/sprite_advanced/textfield.html#cid_2)
 
 <h2 id="cid_5">示例</h2>
 
