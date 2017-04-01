@@ -182,8 +182,8 @@ menubar1.loadData(json);
       <td></td>
    </tr>
    <tr>
-      <td>refresh()</td>
-      <td>修改菜单json数据属性后，执行refresh()，才可生效。</td>
+      <td>menubarRefresh()</td>
+      <td>修改菜单json数据属性后，执行menubarRefresh()，才可生效。</td>
       <td></td>
    </tr>
    
