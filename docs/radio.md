@@ -19,140 +19,237 @@ radio组件主要用于单项选择，radio除了自己的状态样式外，开�
 
 <h2 id="cid_1">属性</h2>
 
-<table>
-   <tr>
-      <td>属性</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>公共属性</td>
-      <td>参考详细设计文档公共属性章节，包括：<br/>id<br/>style<br/>class</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>checked</td>
-      <td>选择状态，true选中，false 未选中(通过js可以修改), 注意通过js设置checked如果存在同组的radio不具备排斥性，如需通过js控制可以调用click()方法，模拟radio点击；不写默认false</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>group</td>
-      <td>radion组，同组的radion选择状态排斥；</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>caption</td>
-      <td>文字内容(通过js可以修改)；</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>checkedimage</td>
-      <td>选中状态的图片路径；设置后默认选中样式失效</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>nocheckedimage： </td>
-      <td>未选中状态的图片路径；设置后默认未选择状态失效</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>readonly</td>
-      <td>是否只读，取值true和false，不写默认false；(通过js可以修改)；</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>value</td>
-      <td>提交值</td>
-      <td></td>
-   </tr>
-</table>
 
+本节目录：
+
+> [公共属性](#sx_0)	
+> 
+> [checked	选择状态](#sx_1)
+>
+>[group	radion组](#sx_2)
+>
+>[caption  文字内容（可以通过js修改）	](#sx_3)
+>
+>[checkedimage	选中状态的图片路径](#sx_4)
+>
+>[nocheckedimage	未选中状态的图片路径](#sx_5)
+>
+>[readonly	是否只读（可以通过js修改）](#sx_6)
+>
+>[value  提交值](#sx_7)
+
+
+
+<span id="sx_0">**公共属性**</span>  
+
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+
+<span id="sx_1">**checked**</span>
+
+<code>选择状态</code>
+
+true选中，false 未选中(通过js可以修改)
+
+**注： **  通过js设置checked如果存在同组的radio不具备排斥性，如需通过js控制可以调用click()方法，模拟radio点击；不写默认false。
+
+
+<span id="sx_2">**group**</span>
+
+<code>radion组</code>
+
+radion组，同组的radion选择状态排斥
+
+
+<span id="sx_3">**caption**</span>
+
+<code>文字内容</code>
+
+文字内容(通过js可以修改)
+
+
+
+<span id="sx_4">**checkedimage**</span>
+
+<code>选中状态的图片路径</code>
+
+选中状态的图片路径，设置后默认选中样式失效
+
+
+
+<span id="sx_5">**nocheckedimage**</span>
+
+<code>未选中状态的图片路径</code>
+
+未选中状态的图片路径，设置后默认未选择状态失效
+
+
+<span id="sx_6">**readonly**</span>
+
+<code>是否只读</code> 
+
+是否只读，取值true和false，不写默认false；(通过js可以修改)；
+
+
+
+<span id="sx_7">**value**</span>
+
+<code>提交值</code> 
+
+用于记录需要提交的值
 
 <h2 id="cid_2">样式</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共样式</td>
-      <td>尺寸:默认height:30<br/>定位<br/>外边距<br/>内边距<br/>边框<br/>背景<br/>flexbox布局：align-self</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>color</td>
-      <td>文字颜色(通过js可以修改); 默认#000000</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>height</td>
-      <td>radio图标的高度(通过js可以修改); 设置后图标的高宽同时生效，一定保证是正方形或者圆形。默认30dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>font-size</td>
-      <td>字体大小(通过js可以修改)；默认16dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>readonly-radius </td>
-      <td>只读状态遮罩区域的弧度，一般用于有图片的时候设置，比如如果用的图片是圆形为了保证效果只读状态下遮罩区域也是圆形可以设置该值,默认0</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>checked-color</td>
-      <td>checked时候的背景色; 默认#549FF7</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>nochecked-color</td>
-      <td>为未选中状态下背景色(对于radio效果在边框上)；默认#9B9C9C</td>
-      <td></td>
-   </tr>
-</table>
+[参见公共样式章节](https://gitdocument.exmobi.cn/sprite-begin/ggys.html)，包括：  
+
+> 尺寸：height默认30;
+> 
+> 定位
+> 
+> 内边距
+> 
+> 外边距
+> 
+> 边框
+> 
+> 背景
+> 
+> flexbox布局：align-self，flex
+
+**color**	
+
+<code>文字颜色</code>
+
+文字颜色(通过js可以修改); 默认#000000
+	
+**height**	
+
+<code>radio的高度</code>
+
+radio图标的高度(通过js可以修改); 设置后图标的高宽同时生效，一定保证是正方形或者圆形。默认30dp
+	
+**font-size**	
+
+<code>字体大小</code>
+
+字体大小(通过js可以修改)；默认16dp	
+
+**readonly-radius**	
+
+<code>只读状态遮罩区域的弧度</code>
+
+只读状态遮罩区域的弧度，一般用于有图片的时候设置，比如如果用的图片是圆形为了保证效果只读状态下遮罩区域也是圆形可以设置该值,默认0	
+
+**checked-color**	
+
+<code>checked时候的背景色</code>
+
+checked时候的背景色; 默认#549FF7；
+
+**nochecked-color**	
+
+<code>未选中状态下背景色(</code>
+
+未选中状态下背景色(对于radio效果在边框上)；默认#9B9C9C；
+
+
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>Js方法</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共方法</td>
-      <td>见详细设计文档box章节（不包括容器类Dom节点操作）</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>click()</td>
-      <td>模拟点击radio组件，执行click()方法，相当于手动点击了一下radio</td>
-      <td></td>
-   </tr>
-</table>
+
+**公共方法**  
+
+[事件相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_0)，包括：
+
+> [void on(messageName,function)   组件注册事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_1)   
+> 
+> [void fire(messageName,params)  组件事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_2)   
+> 
+> [void off(messageName,function)  组件移除事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_3)  
+>  
+> [Array getOn(messageName)  获取已绑定的事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_4)   
+
+[动画相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_1)，包括： 
+
+> [void startAnimation(jsonData,function)  启动UI组件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_1)   
+> 
+> [void startAnimator(jsonData,function)  启动UI组件属性动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_2)   
+> 
+> [void startKeyFrameAnimator(jsonData,function)  启动UI组件关键帧动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_3)  
+>  
+> [void  releaseAnimator()  结束控件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_4)   
+
+[尺寸和位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_2)，包括：  
+
+> [jsonData getFrame()  获取组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_1)   
+> 
+> [void setFrame(frame)  设置组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_2)   
+> 
+> [jsonData getCenter()  获取组件中心点在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_3)  
+>  
+> [jsonData getAbsoluteFrame()  获取组件在绘制窗口中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_4)   
+
+[普通Dom节点操作](https://gitdocument.exmobi.cn/sprite-begin/ggff.htmll#cid_3)，包括：  
+
+> [domObj getParent()  获取父节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_1)   
+> 
+> [domObj getNext()  获取同级下一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_2)   
+> 
+> [domObj getPrevious()  获取同级前一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_3)  
+> 
+> [void remove()  从父容器中移除自身](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_4)  
+> 
+> [domObj clone(isDeep)  对当前Dom节点进行克隆](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_5)  
+>  
+> [void setAttr(attrName,attrValue)  设置节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_6)   
+>
+> [String getAttr(attrName)  获取节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_7) 
+>
+> [Json getAttrs()  获取节点所有属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_8) 
+>
+> [void removeAttr(attrName)  移除节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_9) 
+>
+> [bool hasAttr(attrName)  节点是否具有该属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_10) 
+>
+> [void setStyle(styleName,styleValue)  设置节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_13)  
+>
+> [String getStyle(styleName)  获取节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_14)   
+>
+> [void clearStyle(styleName)  移除节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_15)    
+>
+> [void setClassStyle(className，domobj)   设置节点对应Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_16) 
+>  
+> [String getClassStyle()  获取节点已设置Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_17)  
+>  
+> [String getTag()  获取UI组件类型](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_18)  
+>  
+> [String getId()  获取UI组件Id标识](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_19) 
+
+
+**void click()**
+
+<code>模拟点击一次radio</code>
+
+模拟点击radio组件，执行click()方法，相当于手动点击了一下radio
+
+参数：无
+
+返回值：无
+
 
 <h2 id="cid_4">事件</h2>
 
 
-<table>
-   <tr>
-      <td>事件</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共事件</td>
-      <td>见详细设计文档box章节</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>change</td>
-      <td>监听radio属性改变</td>
-      <td></td>
-   </tr>
-</table>  
+**change**  
+
+<code>监听radio属性改变</code>
+
+event对象包括：  
+ 
+type：事件类型，字符串类型，固定值：change；  
+
+target：触发事件的目标组件，dom对象；  
+
+timestamp：事件触发的时间戳,单位毫秒，数字类型；
 
 <h2 id="cid_5">示例</h2>
 

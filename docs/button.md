@@ -28,11 +28,11 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
 >
 >[value	按钮文字（可以通过js修改）](#sx_2)
 >
->[tip	小气泡数字（可以通过js修改）	](#sx_3)
+>[tip  小气泡数字（可以通过js修改）	](#sx_3)
 >
 >[licon	按钮上左侧的图片（可以通过js修改）](#sx_4)
 >
-[ricon	按钮上右侧的图片（可以通过js修改）](#sx_5)
+>[ricon	按钮上右侧的图片（可以通过js修改）](#sx_5)
 >
 >[readonly	只读（可以通过js修改）](#sx_6)
 >
@@ -43,14 +43,14 @@ button组件主要用于按钮形式布局，为方便开发者使用，其封�
 
 [参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
 
-<span id="sx_0">**builtInClass**</span>
+<span id="sx_1">**builtInClass**</span>
 
 <code>使用内置样式</code>
 
 submit cancel outline 注意：混合使用时outline必需在最后
 
 
-<span id="sx_1">**value**</span>
+<span id="sx_2">**value**</span>
 
 <code>按钮文字</code> 
 
@@ -63,29 +63,23 @@ var btn = document. getElement(“buttonid”);
 btn.setAttr(“value”,”按钮”);
 ```
 
-<span id="sx_2">**tip**</span>
+<span id="sx_3">**tip**</span>
 
 <code>小气泡数字</code> 
 
 小气泡数字（可以通过js修改）
 
 
-<span id="sx_3">**licon**</span>
+<span id="sx_4">**licon**</span>
 
 <code>按钮上左侧的图片</code>  
 
 按钮上左侧的图片（可以通过js修改）
 
 
-<span id="sx_4">**ricon**</span>
-
-<code>按钮上右侧的图片</code>  
-
-按钮上右侧的图片（可以通过js修改）
-
 <span id="sx_5">**ricon**</span>
 
-<code>按钮上右侧的图片</code> 
+<code>按钮上右侧的图片</code>  
 
 按钮上右侧的图片（可以通过js修改）
 
