@@ -65,7 +65,7 @@ jsonData 是json数组，各子项属性为：
 
 **void hidepop()**
 
-<code>隐藏pop弹出框</code
+<code>隐藏pop弹出框</code>
 
 参数： 无 
 
