@@ -274,7 +274,6 @@ btn.setStyle("color","red");
 >  
 > [String getId()  获取UI组件Id标识](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_19) 
 
-
 **void click()**
 
 <code>模拟点击一次按钮</code>
@@ -292,14 +291,11 @@ var btn = document. getElement("buttonid");
 btn.click();
 ```
 
-
 <h2 id="cid_4">事件</h2>
 
 **box所有事件**
 
 由box封装而成，具有box所有事件，[具体见box组件章节](https://gitdocument.exmobi.cn/sprite_advanced/box.html#cid_2)。
-
-
 
 **change**  
 
