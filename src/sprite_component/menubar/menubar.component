@@ -32,7 +32,7 @@
         itemJson.isSmallTip = true; 设置后tip值无效
         itemJson.tip = "4";
 
-    refresh(): 如需通过js动态修改某个菜单的json属性值，可执行refresh()属性数据    
+    menubarRefresh(): 如需通过js动态修改某个菜单的json属性值，可执行menubarRefresh()属性数据    
 
     事件：
     
@@ -425,7 +425,7 @@
                 ary.push(num);
                 this.fire("selectedItem", ary);
             },
-            refresh: function () {
+            menubarRefresh: function () {
                 var childarr = this.menubar.getChildren();
                 if (this.type == "middleMain") {
                     childarr.splice((childarr.length - 1) / 2, 1);

@@ -422,8 +422,6 @@
             isFocus: function () {
                 //继承原有isFocus方法
                 return this.textfieldid.isFocus();
-
-
             },
             clear: function () {
                 //继承原有sclear方法

@@ -60,8 +60,8 @@ click()：模拟点击；
             this.readonly = "false";
             this.caption = "";
             this.checked = "false";
-            this.checkedimage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODJDRjcxNEIwNzdDMTFFMjkxQUZDQTEzRTgwQjQ3NzEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6ODJDRjcxNEMwNzdDMTFFMjkxQUZDQTEzRTgwQjQ3NzEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4MkNGNzE0OTA3N0MxMUUyOTFBRkNBMTNFODBCNDc3MSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4MkNGNzE0QTA3N0MxMUUyOTFBRkNBMTNFODBCNDc3MSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtnSSMkAAAIqSURBVHja7FvRcYJAEMVUQAnYgekAOyAdaAViBWIFJBUkHWAH2oF2AB1IB+Ru5mWGOA4s3B13HvtmdvIDkX28fXu7jotGIJgx3oKZgwlgApgAJoAJYAKYACaACWACmICXQD1nAt5FLEUc50iATPoGBWQg4qLjHy9eYB9Q4e0/k38iIhcR+ayAfUftn0DOj68KkDJfE65bibj6qIAt8bqdjyVwRP33IRax8a0EuozvEVeUgFcK2BKTT1WSd1UB0tk/CNeFIkr89eYgVKPtUfCtmryLBHwNML7Et5NghSMuBaXK6c9VBVB7fqYreZcUQDW+CG0v1PXBLihgiPHlOpN3hYDJjc+lErBifLoVICe2z2DcusqK8f1Do4a7iFCKSEQkohhwb4H7+iLC5xiBKgGbJw8ciygHENcXRWMQKgScex4863hzKTH5uDEMFRNcEtw7Qutqu/cNo64149NhgtRlRYUDzrp1/d668Sm2wSHLisfxNcapj3LiK6fow2MUUI9seTUx+b9RN3CVALmBKQzKM4FSJoGKCdY4xmYanyfEsBO5rID2wx5Qq7reWDpl8rpngRMcvhp5/2TGZ2oaTCDfsSWxCyzA1DRYYdC5DDDWqw0CTO0DpJzP6BaUBUZuax43vRBJUNdpxzWbKduezYXIDSZ5eegkyl9uvMpKbIWyaH+hcbCZvM2VWA2jXAWWseCfzMwcTAATwAQwAUwAE8AEMAFMABMwU/wKMACk22LckDAq9QAAAABJRU5ErkJggg==";
-            this.nocheckedimage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTM1MUFCM0MwNzdDMTFFMjlGOTNCMUJEMDg1MTRERDYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTM1MUFCM0QwNzdDMTFFMjlGOTNCMUJEMDg1MTRERDYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5MzUxQUIzQTA3N0MxMUUyOUY5M0IxQkQwODUxNERENiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5MzUxQUIzQjA3N0MxMUUyOUY5M0IxQkQwODUxNERENiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Plm90DwAAABQSURBVHja7M9BDQAACAQgtX/nM4UPN2hAJ6nPpp4TEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQuLcCDAByqgN9RLSaOQAAAABJRU5ErkJggg==";
+            this.checkedimage = "checkbox_c.png";
+            this.nocheckedimage = "checkbox.png";
 
             this.taginit = true;
             this.pathLocation = "";
@@ -266,7 +266,7 @@ click()：模拟点击；
                         this.captiondom.setStyle("font-size", this.fontSize);
 
                         if (this.taginit == false) {
-                            document.refresh();
+                            this.box.refresh();
                         }
 
 
@@ -289,7 +289,10 @@ click()：模拟点击；
 
                     if (styleName == "height") {
                         if (styleValue != null) {
-                            this.height =  styleValue;                       
+                            this.height =  styleValue;   
+
+                             this.height = (this.height).replace(/(\d+).*/g,"$1"); 
+                                          
                         }
                          this.boxcheck.setStyle("height",  this.height);
                             this.boxcheck.setStyle("width",  this.height);

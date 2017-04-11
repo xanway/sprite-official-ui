@@ -89,7 +89,7 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
 
                 this.init();
                 var copythis = this;
-                this.sliderImgNew.on('click', function (e) {
+                 this.sliderHeader.on('click', function (e) {
                     // myappjs.alert(this.getAttr("index"));
                     var arr = new Array();
                     arr.push(copythis.index);
@@ -349,7 +349,7 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
     </style>
     <ui>
         <box id="sliderHeader" class="newslider">
-            <slider id="sliderImgNew" style="flex:1;">
+            <slider id="sliderImgNew" style="flex:1;" >
 
             </slider>
 

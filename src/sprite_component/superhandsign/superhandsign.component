@@ -104,29 +104,17 @@
                         var arr = new Array();
                         arr.push(json.path);
                         copythis.fire("okClick",arr);
-
-
                     }
                     else{
-
-
                        var jsonData= {};
                         jsonData.content="保存失败！";
                         ui.toast(jsonData);
                     }
-
-
               });
-
-
-
-
           });
 
           this.chexiao.on("click",function(){
               copythis.handsign.undo();
-
-
 
           });
           this.qingchu.on("click",function(){

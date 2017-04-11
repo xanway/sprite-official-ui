@@ -27,7 +27,7 @@
         itemJson.isSmallTip = true; 设置后tip值无效
         itemJson.tip = "4"; 
 
-     refresh():  如果动态修改tip等值，需要执行refresh()
+     gridmenuRefresh():  如果动态修改tip等值，需要执行gridmenuRefresh()
 
 
     事件：
@@ -217,7 +217,7 @@
                     this.gridmenu.refresh();
 
                 },
-                refresh: function () {
+                gridmenuRefresh: function () {
                     var childarr = this.gridmenu.getChildren();
                     for (var i = 0; i < childarr.length; i++) {
                         if ((this.jsondatas.datas[i].icon).indexOf("res:") > -1 || (this.jsondatas.datas[i].icon).indexOf("http:") > -1 || (this.jsondatas.datas[i].icon).indexOf("https://") > -1) {

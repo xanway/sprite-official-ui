@@ -128,6 +128,7 @@
                     var ctrlobj = e.target;
                     var children = copythis.scrolltabbar.getChildren();
                     var userid = ctrlobj.getAttr("userid");
+                    var position;
 
                     if (ctrlobj.hasAttr("userid")) {
 
@@ -153,6 +154,7 @@
 
                                 if (copythis.searcharr[i].id == userid) {
                                     copythis.searcharr[i].selected = false;
+                                   
                                     //这里做删除动画
                                     // copythis.selectAnimator(copythis.scrollselect,i);
                                     break;
@@ -162,19 +164,25 @@
 
 
                         if (copythis.datas.length > 0) {
-                            //如果搜索出来的数组里面有数据，则同时也对这里面的数据做操作
 
                             for (var i = 0; i < copythis.datas.length; i++) {
 
                                 if (copythis.datas[i].id == userid) {
                                     copythis.datas[i].selected = false;
-
+                                    position = i;
                                     break;
                                 }
                             }
                         }
+ 
+                        // copythis.adapter.refresh();
+                        var adapterData = {};
+                        adapterData.sectionIndex = 0;
+                        adapterData.index = position;
+                        adapterData.count = 1;
 
-                        copythis.adapter.refresh();
+                        copythis.adapter.notifyItemRangeChanged(adapterData);
+
                         copythis.selectindex = copythis.selectindex - 1;
 
                         copythis.selecttip.setText(copythis.selectindex);
@@ -288,7 +296,15 @@
                                 data.selected = true;
 
                             }
-                            copythis.adapter.refresh();
+                            // copythis.adapter.refresh();
+                            var adapterData = {};
+                            adapterData.sectionIndex = 0;
+                            adapterData.index = position;
+                            adapterData.count = 1;
+                            copythis.adapter.notifyItemRangeChanged(adapterData);
+
+
+
                             copythis.addSelected(data);
 
                         }
@@ -559,7 +575,7 @@
                 }
                 this.selecttip.setText(this.selectindex);
                 //document.refresh();
-                 this.boxselect.refresh();
+                this.boxselect.refresh();
 
 
             },
@@ -568,15 +584,12 @@
                 var copythis = this;
                 //做删除位移动画
                 var selectChildren = dom.getChildren();
-
-
                 selectChildren[i].setStyle("visibility", "hidden");
-
-
 
                 if (i + 1 < selectChildren.length) {
 
-                    for (var j = i + 1; j < selectChildren.length; j++) {
+                    for (var j = selectChildren.length - 1; j >= i + 1; j--) {
+                        // for (var j = i + 1; j < selectChildren.length; j++) {
 
                         var json = selectChildren[j - 1].getFrame();
                         var jsonData = {};
@@ -604,7 +617,7 @@
 
                     }
 
-
+                    //这里考虑异步处理，因为前面有动画，不能马上删除
                     time.setTimeout(function () {
                         selectChildren[i].remove();
                         //document.refresh();

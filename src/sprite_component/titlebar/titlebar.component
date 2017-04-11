@@ -1,5 +1,5 @@
 <!--
-样式(titlebar-hasstatus 含有系统状态栏高度)：
+样式：
 box公共样式:
 title-color:标题颜色(通过js可以修改)；
 left-color:左边为文字颜色(通过js可以修改)；

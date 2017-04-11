@@ -88,7 +88,7 @@
                                 copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
                             }
                         }
-                          copythis.sliderScroll.refresh();
+                        copythis.sliderScroll.refresh();
                     }
                     else if (ctrltarget == "box") {
                         for (var i = 0; i < copythis.childrenObj.length; i++) {
@@ -102,7 +102,7 @@
                                 copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
                             }
                         }
-                         copythis.sliderScroll.refresh();
+                        copythis.sliderScroll.refresh();
                     }
 
                     //sliderid.setAttr("index",position_index); 这里要传出去
@@ -123,7 +123,10 @@
                 var copythis = this;
                 if (this.getAttr("bindid") != null) {
                     this.bindid = this.getAttr("bindid");
-                    this.sliderdom = document.getElement(this.bindid);
+
+                    var pd = this.getParent(); 
+
+                    this.sliderdom = pd.getElement(this.bindid);
                     if (this.sliderdom.getAttr("index") == null) {
                         this.position_index = 0;
                     }
@@ -133,6 +136,7 @@
                     //为防止多次执行loadData时，多次注册事件，这里先执行清除
                     this.sliderdom.off("pageScroll", callbackscoll);
                     this.sliderdom.on("pageScroll", callbackscoll);
+
                     function callbackscoll(e, param) {
                         var position = param.position;
                         var direction = param.direction;
@@ -157,14 +161,14 @@
                         indexxmlstr = '<box id="sliderIndex"  class="tabbar-text-box-line-index" style="background-color:' + this.currentColor + '"/>';
                         color = this.currentColor;
                     }
-                    var xmlstr = '<box id="tabbaritem_'+i+'"  class="tabbar-text-box" >'
+                    var xmlstr = '<box id="tabbaritem_' + i + '"  class="tabbar-text-box" >'
                         + '<text   class="' + indexclass + '" style="color:' + color + '">' + jsondatas.datas[i].text + '</text>'
                         + '' + indexxmlstr + ''
                         + '</box>';
                     var dom = document.createElementByXml(xmlstr, this);
                     this.sliderScroll.appendChild(dom);
                 }
-                 this.sliderScroll.refresh();
+                this.sliderScroll.refresh();
 
                 this.childrenObj = this.sliderScroll.getChildren();
                 this.sliderIndex = this.getElement("sliderIndex");
@@ -188,12 +192,17 @@
                     var cw = this.childrenObj[i].getFrame().width;
                     // console.log("cw:"+cw);
                     this.childrenObj[i].setStyle("width", cw + 20);
-                     this.childrenObj[i].getFirstChild().setStyle("width", cw + 20);
+                    this.childrenObj[i].getFirstChild().setStyle("width", cw + 20);
+                    ;
                     tabbarw = tabbarw + cw + 20;
                 }
                 //  console.log("tabbarw:"+tabbarw+";screenWidth:"+screenWidth);
                 if (screenWidth >= tabbarw) {
                     for (var i = 0; i < this.childrenObj.length; i++) {
+
+                        if (this.position_index == i) {
+                            this.sliderIndex.setStyle("width", screenWidth / this.childrenObj.length);
+                        }
                         this.childrenObj[i].setStyle("width", screenWidth / this.childrenObj.length);
                     }
                 }
@@ -204,10 +213,9 @@
                 var direction = param.direction;
                 var offset = param.offset;
 
-
-                 //console.log(";position:"+position+";direction:"+direction+";offset:"+offset);  
+                //console.log(";position:"+position+";direction:"+direction+";offset:"+offset);  
                 var slider_index_json = this.sliderIndex.getFrame();
-                  
+
                 var red = Number(this.currentRed);
                 var green = Number(this.currentGreen);
                 var blue = Number(this.currentBlue);
@@ -216,7 +224,7 @@
                     return;
 
 
-                  
+
                 //左滑
                 if (direction == 0) {
                     //得到当前滑动了第几个容器，由于快速滑动postion不会变，根据offset+postion一起判断
@@ -239,12 +247,12 @@
                         this.childrenObj[n].getFirstChild().setStyle("font-size", 18);
                         this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", 15);
                         this.oldposition = n;
-                       // document.refresh();
+                        // document.refresh();
                         //console.log(";position:"+position+";direction:"+direction+";offset:"+offset);
                         return;
                     }
 
-                  
+
                     //记录当前滑动条离容器最左边的距离
                     var x_length = 0;
                     for (i = 0; i < n; i++) {
@@ -285,10 +293,17 @@
                     }
                     this.oldposition = n;
                     if ((n + 1) != this.childrenObj.length) {
-                        var json = {};
-                        json.animated = true;
-                        json.domObj = this.childrenObj[n + 1];
-                        this.sliderScroll.scrollToCtrl(json);
+                        // console.log(n+":n :"+(offset+position));
+                        if (n == (offset + position)) {
+                            //松手的时候 判断下 是否相等，然后做容器滑动
+                            var json = {};
+                            json.animated = true;
+                            json.domObj = this.childrenObj[n + 1];
+                            this.sliderScroll.scrollToCtrl(json);
+
+
+                        }
+
                     }
                 }
                 else {
@@ -312,7 +327,7 @@
                         this.childrenObj[0].getFirstChild().setStyle("font-size", 18);
                         this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", 15);
                         this.oldposition = 0;
-                       // document.refresh();
+                        // document.refresh();
                         return;
                     }
 
@@ -349,12 +364,18 @@
                     this.childrenObj[n - 1].getFirstChild().setStyle("color", color);
                     //var ctrlid =  childrenObj[n-1].getId();
                     //通过控对象滚动
-                    var json = {};
-                    json.animated = true;
-                    json.domObj = this.childrenObj[n - 1];
-                    this.sliderScroll.scrollToCtrl(json);
+                    // console.log(n+":n :"+(position - offset));
+                    if (n == (position - offset)) {
+                        //松手的时候 判断下 是否相等，然后做容器滑动
+                        var json = {};
+                        json.animated = true;
+                        json.domObj = this.childrenObj[n - 1];
+                        this.sliderScroll.scrollToCtrl(json);
+                    }
+
+
                 }
-               // document.refresh();
+                // document.refresh();
             },
             //属性变更回调函数
             attrChanged: function (attrName, attrValue) {
@@ -367,11 +388,22 @@
                     if (styleValue != null) {
                         this.currentColor = styleValue;
                     }
-                    var rgbstr = encryption.hexToRgb(this.currentColor);
-                    if (rgbstr == null) {
-                        var jsondata = { "content": "选中颜色只能设置#xxxxxx形式", "duration": "1" };
-                        ui.toast(jsondata);
-                        return;
+
+                     var rgbstr = {};
+                     if (this.currentColor.indexOf("#")>-1) {
+                        rgbstr = encryption.hexToRgb(this.currentColor);
+                        if (rgbstr == null) {
+                            var jsondata = { "content": "颜色只能设置#xxxxxx形式", "duration": "1" };
+                            ui.toast(jsondata);
+                            return;
+                        }
+                    }
+                    else if(this.currentColor.indexOf("rgb")>-1){
+                      var  colorstr =  this.currentColor.replace(/rgba?\((.*)\)/g,"$1"); 
+                      rgbstr.red =  colorstr.split(",")[0];
+                      rgbstr.green =  colorstr.split(",")[1];
+                      rgbstr.blue =  colorstr.split(",")[2];
+
                     }
                     this.currentRed = rgbstr.red;
                     this.currentGreen = rgbstr.green;
@@ -383,13 +415,27 @@
                     if (styleValue != null) {
                         this.color = styleValue;
                     }
-                    var rgbstr = encryption.hexToRgb(this.color);
-                    if (rgbstr == null) {
-                        var jsondata = { "content": "颜色只能设置#xxxxxx形式", "duration": "1" };
-                        ui.toast(jsondata);
-                        return;
+                    var rgbstr = {};
+                    if (this.color.indexOf("#")>-1) {
+                        rgbstr = encryption.hexToRgb(this.color);
+                        if (rgbstr == null) {
+                            var jsondata = { "content": "颜色只能设置#xxxxxx形式", "duration": "1" };
+                            ui.toast(jsondata);
+                            return;
+                        }
                     }
+                    else if(this.color.indexOf("rgb")>-1){
+                      var  colorstr =    this.color.replace(/rgb\((.*)\)/g,"$1"); 
+                      rgbstr.red =  colorstr.split(",")[0];
+                      rgbstr.green =  colorstr.split(",")[1];
+                      rgbstr.blue =  colorstr.split(",")[2];
+
+
+                    }
+
                     //rgbstr =    rgbstr.replace(/rgb\((.*)\)/g,"$1");  
+
+
                     this.normalRed = rgbstr.red;
                     this.normalGreen = rgbstr.green;
                     this.normalBlue = rgbstr.blue;
@@ -403,7 +449,7 @@
         @import url("tabbar.color.css");
     </style>
     <ui>
-        <scroll id="sliderScroll" direction="horizontal" scrollbar="false"  style="" class="tabbar">
+        <scroll id="sliderScroll" direction="horizontal" scrollbar="false" style="" class="tabbar">
         </scroll>
     </ui>
 </page>

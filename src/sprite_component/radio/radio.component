@@ -295,6 +295,9 @@ click(): 模拟radio点击方法；
 				if (attrName == "checked") {
 					//console.log("222222222;"+attrValue);			
 					if (attrValue == "true") {
+
+
+						
 						if (this.checkedimage != null) {
 							this.checkimage.setAttr("src", this.checkedimage);
 						}
@@ -327,7 +330,7 @@ click(): 模拟radio点击方法；
 					this.captiondom.setText(this.caption);
 
 					if (this.taginit == false) {
-						document.refresh();
+						this.box.refresh();
 					}
 
 				}
