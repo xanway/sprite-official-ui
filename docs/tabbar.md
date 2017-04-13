@@ -13,8 +13,6 @@ tabbar组件主要用于页签切换，类似于网易新闻等应用的页签�
 用法：在js里面引入require("tabbarUI");  
 
 示例：
-  
-
 ```html
 <tabbar id="tabbarid1" bindid="sliderid" style="color:#909090"/>
 <slider class="flex1"   id="sliderid" >
@@ -148,136 +146,134 @@ tabbarid1.loadData(json);
 
 ```html
 <page>
-    <script><![CDATA[
-    var index = 1;
-    var window = require("Window");
-    var document = require("Document");
-    var ui = require("UI");           
-    var console = require("Console");
-     var app = require("App");
+    <script>
+        <![CDATA[
+        var index = 1;
+        var window = require("Window");
+        var document = require("Document");
+        var ui = require("UI");
+        var console = require("Console");
+        var app = require("App");
 
-    require("titlebarUI");
-    require("tabbarUI");
-    var myappjs = require("myapp");
-   
-   
-    window.on("loaded",function(){
-          //关闭页面
-        var titlebarid = document.getElement("titlebarid");
-        var  tabbarid1 = document.getElement("tabbarid1");
-        
-        var  sliderid = document.getElement("sliderid");
-        titlebarid.on("liconClick",function(e)
-        {
+        require("titlebarUI");
+        require("tabbarUI");
+        var myappjs = require("myapp");
+
+        window.on("loaded", function () {
+            //关闭页面
+            var titlebarid = document.getElement("titlebarid");
+            var tabbarid1 = document.getElement("tabbarid1");
+            var sliderid = document.getElement("sliderid");
+            titlebarid.on("liconClick", function (e) {
+                var json = {};
+                window.close(json);
+            });
+            titlebarid.on("ltextClick", function (e) {
+                var json = {};
+                window.close(json);
+            });
+
+            titlebarid.on("rtextClick", function (e) {
+                sliderid.setAttr("index", 3);
+            });
+
             var json = {};
-            window.close(json);      
+            var datas = new Array();
+            var itemJson = {};
+            itemJson.text = "头条";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "精选";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "娱乐";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "热点";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "新闻";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "视频";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "军事";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "南京";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "网易号";
+            datas.push(itemJson);
+            var itemJson = {};
+            itemJson.text = "房产";
+            datas.push(itemJson);
+            json.datas = datas;
+            sliderid.on("pageSelected", function (e, position) {
+                //该监听事件需要放在document.refresh()方法之前， tabbarid1.loadData里面有刷新，故要放在前面
+                var jsondata = { "content": position, "duration": "1" };
+                ui.toast(jsondata);
+
+            });
+            tabbarid1.loadData(json);
         });
-        titlebarid.on("ltextClick",function(e)
-        {
-            var json = {};
-            window.close(json);      
+        app.on("orientation", function (e, orientation) {
+            var screenWidth = window.getScreenWidth();
+
         });
-
-        titlebarid.on("rtextClick",function(e)
-        {
-            sliderid.setAttr("index",3);
-        });
-
-       var json = {};
-       var datas = new Array();
-
-        var itemJson = {}; 
-        itemJson.text = "头条";   
-        datas.push(itemJson);
-
-         var itemJson = {}; 
-        itemJson.text = "精选";   
-        datas.push(itemJson);
-
-         var itemJson = {}; 
-        itemJson.text = "娱乐";   
-        datas.push(itemJson);
-
-        var itemJson = {}; 
-        itemJson.text = "热点";   
-        datas.push(itemJson);
-
-
-        var itemJson = {}; 
-        itemJson.text = "新闻";   
-        datas.push(itemJson);
-
-
-         var itemJson = {}; 
-        itemJson.text = "视频";   
-        datas.push(itemJson);
-
-        var itemJson = {}; 
-        itemJson.text = "军事";   
-        datas.push(itemJson);
-
-         var itemJson = {}; 
-        itemJson.text = "南京";   
-        datas.push(itemJson);
-
-        var itemJson = {}; 
-        itemJson.text = "网易号";   
-        datas.push(itemJson);
-
-
-         var itemJson = {}; 
-        itemJson.text = "房产";   
-        datas.push(itemJson);
-
-       
-
-        json.datas = datas;
-        tabbarid1.loadData(json);
-        sliderid.on("pageSelected",function(e,position){
-              
-            var jsondata = {"content":position,"duration":"1"};
-            ui.toast(jsondata);
-       
-      });
-    
- });
-    
     ]]>
     </script>
     <style>
-       @import url("spriteLayout");
-       @import url("spriteColor");  
-      .full
-        {
-            width:fill_screen;
-            height:fill_screen;
+        @import url("spriteLayout");
+        @import url("spriteColor");
+        .full {
+            width: fill_screen;
+            height: fill_screen;
         }
-   
     </style>
     <ui>
-        <box  class="full" style="background-color:#ececec" id="box">           
-            <titlebar id="titlebarid" ltext="返回" rtext="设置索引" title="tabbar"   licon="res:yuanhongqian/image/back1.png"   class="titlebar-hasstatus bg-peter-river" style="title-color:#ffffff;left-color:#ffffff;right-color:#ffffff"/>
+        <box class="full" style="background-color:#ececec" id="box">
+            <titlebar id="titlebarid" ltext="返回" rtext="设置索引" title="tabbar" licon="res:yuanhongqian/image/back1.png" class="titlebar-hasstatus bg-peter-river"
+                style="title-color:#ffffff;left-color:#ffffff;right-color:#ffffff" />
             <line />
-                    
-            <tabbar id="tabbarid1" bindid="sliderid" style="color:#909090;background-color: #ffffff;current-color:rgb(255, 0, 0)"/>
-            <slider class="flex1"   id="sliderid" >
-                <box><text>第1页</text></box>
-                <box><text>第2页</text></box> 
-                <box><text>第3页</text></box>     
-                <box><text>第4页</text></box>   
-                <box><text>第5页</text></box>  
-                <box><text>第6页</text></box>
-                <box><text>第7页</text></box> 
-                <box><text>第8页</text></box>     
-                <box><text>第9页</text></box>   
-                <box><text>第10页</text></box> 
-                                      
-            </slider> 
-                  
+
+            <tabbar id="tabbarid1" bindid="sliderid" style="color:#909090;background-color: #ffffff;current-color:rgb(255, 0, 0)" />
+            <slider class="flex1" id="sliderid">
+                <box>
+                    <text>第1页</text>
+                </box>
+                <box>
+                    <text>第2页</text>
+                </box>
+                <box>
+                    <text>第3页</text>
+                </box>
+                <box>
+                    <text>第4页</text>
+                </box>
+                <box>
+                    <text>第5页</text>
+                </box>
+                <box>
+                    <text>第6页</text>
+                </box>
+                <box>
+                    <text>第7页</text>
+                </box>
+                <box>
+                    <text>第8页</text>
+                </box>
+                <box>
+                    <text>第9页</text>
+                </box>
+                <box>
+                    <text>第10页</text>
+                </box>
+            </slider>
         </box>
     </ui>
 </page>
-
 ```
 
 >代码效果图： 
