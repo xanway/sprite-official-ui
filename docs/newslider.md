@@ -161,11 +161,7 @@ newslider1.loadData(json);
       <td>格式json.datas数组，属性如下:<br/>data.text = "华中师大教授讽范冰冰 不欢迎这样戏子";<br/>data.imageurl = "http://cms-bucket.nosdn.127.net/d325d6e7b40e45598aadb2fcc67249c220161028103329.png"; //支持本地res: 和网络http: 图片;<br/>data.defaulturl = "res:spritetest/image/wangyi/default_null_big_src.png";</td>
       <td></td>
    </tr>
-   <tr>
-      <td>refresh()</td>
-      <td>修改菜单json数据属性后，执行refresh()，才可生效。</td>
-      <td></td>
-   </tr>
+  
   
 </table>
 

@@ -51,7 +51,7 @@ superhandsign组件为增强型手写签名组件，此组件是在基础组件h
       <td>示例</td>
    </tr>
    <tr>
-      <td>load(json)</td>
+      <td>loadData(json)</td>
       <td>加载已有图片 json格式 json.path；<br/>如果想在某一个图片之上作画，要导入一个图片路径，如果是新建一个白板这个方法可以不用执行。</td>
    </tr>
 </table>
@@ -261,7 +261,7 @@ superhandsign组件为增强型手写签名组件，此组件是在基础组件h
             if (window.getData() != null) {
                 var json = {};
                 json.path = window.getData().imageurl;
-                superhandsign.load(json);
+                superhandsign.loadData(json);
             }
         }); 
     ]]>

@@ -47,7 +47,7 @@ memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，
 [详细见textfield控件样式](https://gitdocument.exmobi.cn/sprite_advanced/textfield.html#cid_3)
 
 
-**void loadData(jsonDatas)**
+**loadData(jsonDatas:Object):void**
 
 <code>加载初始数据</code>
 
@@ -63,7 +63,7 @@ jsonData 是json数组，各子项属性为：
 
 返回值： 无
 
-**void hidepop()**
+** hidepop():void**
 
 <code>隐藏pop弹出框</code>
 
@@ -72,7 +72,7 @@ jsonData 是json数组，各子项属性为：
 返回值： 无
 
 
-**void showpop()**
+** showpop():void**
 
 <code>显示pop弹出框</code>
 
@@ -81,7 +81,7 @@ jsonData 是json数组，各子项属性为：
 返回值： 无
 
 
-**void cacheData()**
+** cacheData():void**
 
 <code>缓存数据</code> 
 
@@ -92,7 +92,7 @@ jsonData 是json数组，各子项属性为：
 返回值： 无
 
 
-**void clearCacheData()**
+**clearCacheData():void**
 
 <code>清除缓存数据</code> 
 
