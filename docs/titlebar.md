@@ -168,13 +168,13 @@ title.setStyle("title-color”,"red");
 右边图片宽度(通过js可以修改)；默认宽度30dp
 
 
-<span id="ys_7">ricon-height</span>
+<span id="ys_7">**ricon-height**</span>
 
 <code>右边图片高度</code>
 
 右边图片高度(通过js可以修改)；默认高度30
 
-<span id="ys_8">riconsnd-width</span>
+<span id="ys_8">**riconsnd-width**</span>
 
 <code>右边第二图片宽度</code>
 
@@ -275,7 +275,7 @@ var title8= document.getElement("title8");
 title8.setTitleContent(xmlstr2);
 ```
 
-getDomById(id:string):void
+**getDomById(id:string):void**
 
 <code>根据id得到自定内容中控件的dom</code>
 
@@ -355,7 +355,7 @@ event对象包括：
 
 **riconsndClick**
 
-<code>监听右侧第二张图片点击事件；</code>
+<code>监听右侧第二张图片点击事件</code>
 
 > event对象包括：  
 >  
