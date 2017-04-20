@@ -77,56 +77,65 @@ popmenu.show();
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>Js方法</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-     <td>popinit(popjson) </td>
-	 <td>初始化pop数据，参数为json数据。<br/>
-	var popjson = {};<br/>  
-	popjson.height ; //自身高度<br/>
-	popjson.width;  //自身宽度<br/>
-	popjson.domobj; //设置基于某个控件位置弹出<br/>
-	popjson.datas; //菜单子项数据，格式数组。<br/>
-	子项数据格式为json：<br/>
-	Jsonitem.text; //菜单文字内容<br/>
-	Jsonitem.icon; //菜单图标<br/>
-	Jsonitem.handler:function(e){};点击菜单回调方法<br/>
-	</td>
-	 <td>var popjson = {};<br/>
-popjson.height = 180; //自身高度<br/>
-popjson.width = 300;  //自身宽度<br/>
-popjson.domobj = domobj; //设置基于某个控件位置弹出<br/>
-//菜单子项数据<br/>
-popjson.datas = [;<br/>
-{<br/>
-text:"菜单1", <br/>
-icon:"res:yuanhongqian/image/ncontact-active.png",<br/>
-handler:function(e){<br/>
-myappjs.alert("你点击了 菜单1");<br/>
-     &emsp;&emsp;&emsp;popmenu.hide();<br/>
-   &emsp; &emsp;}<br/>
- &emsp;}<br/>
-]<br/>
-popmenu.popinit(popjson);
-</td>
-   </tr>
-   <tr>
-      <td>show()</td>
-      <td>显示pop弹窗 </td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>hide()</td>
-      <td>隐藏pop窗口</td>
-      <td></td>
-   </tr>
- 
-</table>
+**popinit(popjson:Object):void** 
 
+<code>初始化pop数据</code>
+
+参数为json数据：
+
+> height : 自身高度  
+> 
+> width：自身宽度  
+> 
+> domobj：设置基于某个控件位置弹出  
+> 
+> datas：菜单子项数据，格式json数组。子项数据格式为json：  
+> 
+> - text：菜单文字内容  
+> 
+> - icon：菜单图标  
+> 
+> - handler：点击菜单回调方法  
+
+返回值： 无
+	
+示例：
+
+```javascript
+var popjson = {};
+popjson.height = 180; //自身高度
+popjson.width = 300; //自身宽度
+popjson.domobj = domobj; //设置基于某个控件位置弹出
+//菜单子项数据
+popjson.datas = [
+  {
+    text:"菜单1", 
+    icon:"res:yuanhongqian/image/ncontact-active.png",
+    handler:function(e){
+	myappjs.alert("你点击了 菜单1");
+	popmenu.hide();
+	}
+  }
+]
+popmenu.popinit(popjson);
+```
+
+**show():void**
+
+<code>显示pop弹窗 </code>
+
+参数：无
+
+返回值：无
+
+**hide():void**
+
+<code>隐藏pop窗口</code>
+
+参数：无
+
+返回值：无
+    
 
 <h2 id="cid_4">事件</h2>
 

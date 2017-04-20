@@ -64,47 +64,52 @@ popbottommenu.show();
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>Js方法</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-     <td>popinit(popjson) </td>
-	 <td>初始化pop数据，参数为json数据。<br/>
-	var popjson = {};<br/>  
-	popjson.datas; //菜单子项数据，格式数组。<br/>
-	子项数据格式为json：<br/>
-	Jsonitem.text; //菜单文字内容<br/>
-	Jsonitem.handler:function(e){};点击菜单回调方法<br/>
-	</td>
-	 <td>var popjson = {};<br/>
-//菜单子项数据<br/>
-popjson.datas = [;<br/>
-{<br/>
-text:"菜单1", <br/>
-handler:function(e){<br/>
-myappjs.alert("你点击了 菜单1");<br/>
-     &emsp;&emsp;&emsp;popbottommenu.hide();<br/>
-   &emsp; &emsp;}<br/>
- &emsp;}<br/>
-]<br/>
-popbottommenu.popinit(popjson);
-</td>
-   </tr>
-   <tr>
-      <td>show()</td>
-      <td>显示pop弹窗 </td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>hide()</td>
-      <td>隐藏pop窗口</td>
-      <td></td>
-   </tr>
- 
-</table>
+**popinit(popjson:Object):void **
+
+<code>初始化pop数据</code>
+
+参数为json数据：
+
+> datas：菜单子项数据，格式json数组。子项数据格式为json：  
+> 
+> - text：菜单文字内容  
+> 
+> - handler：点击菜单回调方法  
+
+返回值： 无
+
+示例：
+
+```javascript
+var popjson = {};
+//菜单子项数据
+popjson.datas = [;
+{
+text:"菜单1", 
+handler:function(e){
+myappjs.alert("你点击了 菜单1");
+   popbottommenu.hide();
+   }
+ }
+]
+```
+
+
+**show():void**
+
+<code>显示pop弹窗 </code>
+
+参数：无
+
+返回值：无
+
+**hide():void**
+
+<code>隐藏pop窗口</code>
+
+参数：无
+
+返回值：无
 
 
 <h2 id="cid_4">事件</h2>

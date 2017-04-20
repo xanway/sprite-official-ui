@@ -210,7 +210,8 @@ middleMain样式下，主菜单背景颜色，默认#549FF7
 
 
 
-<h2 id="cid_3">js方法</h2>
+<h2 id="cid_3">js方法</h2> 
+
 **公共方法**  
 
 [事件相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_0)，包括：

@@ -17,98 +17,161 @@ sliderbar是滑动条组件，类似控制播放的进度条，一般用于拖�
 
 <h2 id="cid_1">属性</h2>
 
-<table>
-   <tr>
-      <td>属性</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>公共属性</td>
-      <td>参见公共属性章节，包括：<br/>id<br/>style<br/>class<br/></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>x_progress</td>
-      <td>当前进度和总进度的百分比数值0-100 (可通过js动态修改)</td>
-      <td></td>
-   </tr>
-</table>
+<span id="sx_0">**公共属性**</span>  
 
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+
+**x_progress**
+
+<code>当前进度和总进度的百分比</code>
+
+数值0-100 (可通过js动态修改)
+     
 
 <h2 id="cid_2">样式</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共样式</td>
-      <td>尺寸:默认height:30;<br/>定位<br/>外边距<br/>内边距<br/>边框<br/>背景<br/>flexbox布局:align-self<br/></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>sliderbar-color</td>
-      <td>前面线条颜色;默认#549FF7</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>sliderbar-after-color</td>
-      <td>后部分线条颜色；默认#f5f5f5</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>button-background-color</td>
-      <td>触摸按钮背景颜色；默认#fcfcfc</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>button-border-color</td>
-      <td>触摸按钮边框颜色；默认#d9d9d9</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>button-height</td>
-      <td>触摸按钮高度（设置后宽度同时生效），默认30，如果同时设置height和button-height的时候，需要保证height比button-height的值大</td>
-      <td></td>
-   </tr>
-</table>
+
+
+**公共样式**	
+>尺寸:默认height:30;
+>
+> 定位
+> 
+>外边距
+>
+>内边距
+>
+>边框
+>
+>背景
+>
+>flexbox布局:align-self
+
+
+**sliderbar-color**	
+
+<code>前面线条颜色</code>
+
+默认#549FF7	
+
+**sliderbar-after-color**	
+
+<code>后部分线条颜色</code>
+
+默认#f5f5f5	
+
+**button-background-color**	
+
+<code>触摸按钮背景颜色</code>
+
+默认#fcfcfc	
+
+**button-border-color**	
+
+<code>触摸按钮边框颜色</code>
+
+默认#d9d9d9	
+
+**button-height**
+	
+<code>触摸按钮高度</code>
+
+设置后宽度同时生效，默认30，如果同时设置height和button-height的时候，需要保证height比button-height的值大
+
+
+
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>Js方法</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共方法</td>
-      <td>见设计文档box章节（不包括容器类Dom节点操作）</td>
-      <td></td>
-   </tr>
-</table>
+**公共方法**  
+
+[事件相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_0)，包括：
+
+> [on(messageName:string,callback:Function): void   组件注册事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_1)   
+> 
+> [fire(messageName:string,params:Array&lt;any&gt;): void  组件事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_2)   
+> 
+> [off(messageName:string,callback:Function): void  组件移除事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_3)  
+>  
+> [getOn(messageName:string): Array&lt;Function&gt;  获取已绑定的事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_4)   
+
+[动画相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_1)，包括： 
+ 
+> [startAnimation(jsonData:Object,callback:Function): void  启动UI组件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_1)   
+> 
+> [startAnimator(jsonData:Object,callback:Function): void  启动UI组件属性动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_2)   
+> 
+> [startKeyFrameAnimator(jsonData:Object,callback:Function): void  启动UI组件关键帧动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_3)  
+>  
+> [ releaseAnimator(): void  结束控件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_4)   
+
+[尺寸和位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_2)，包括：  
+
+> [getFrame(): Object  获取组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_1)   
+> 
+> [setFrame(frame:Object): void  设置组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_2)   
+> 
+> [getCenter(): Object  获取组件中心点在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_3)  
+>
+> [getAbsoluteFrame(): Object  获取组件在绘制窗口中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_4)   
+
+
+[普通Dom节点操作](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_3)，包括：  
+
+> [getParent(): IElement  获取父节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_1)   
+> 
+> [getNext(): IElement  获取同级下一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_2)   
+> 
+> [getPrevious(): IElement  获取同级前一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_3)  
+> 
+> [remove(): void  从父容器中移除自身](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_4)  
+> 
+> [clone(isDeep:boolean):IElement  对当前Dom节点进行克隆](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_5)  
+>
+> [setAttr(attrName:string,attrValue:string): void  设置节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_6)   
+>
+> [getAttr(attrName:string):string  获取节点属性值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_7) 
+>
+> [getAttrs(): Object  获取节点所有属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_8) 
+>
+> [removeAttr(attrName:string): void  移除节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_9) 
+>
+> [hasAttr(attrName:string): boolean  节点是否具有该属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_10) 
+> 
+> [setStyle(styleName:string,styleValue:string): void  设置节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_13)  
+>
+> [getStyle(styleName:string):string  获取节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_14)   
+>
+> [clearStyle(styleName:string): void  移除节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_15)    
+>
+> [setClassStyle(className:string,domobj:IElement): void   设置节点对应Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.htm#ptdom_16) 
+>  
+> [getClassStyle(): string  获取节点已设置Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_17)  
+>  
+> [getTag(): string  获取UI组件类型](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_18)  
+>  
+> [getId(): string  获取UI组件Id标识](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_19) 
 
 <h2 id="cid_4">事件</h2>
 
-<table>
-   <tr>
-      <td>事件</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>change</td>
-      <td>监听触摸时的实时进度值,参数(e , param1) param1返回进度值</td>
-	<td></td>
-   </tr>
-</table>  
+**change**
+
+<code>监听触摸时的实时进度值</code>
+
+event对象包括：  
+ 
+> type：事件类型，字符串类型，固定值：change； 
+>  
+>target：触发事件的目标组件，dom对象； 
+> 
+>timestamp：事件触发的时间戳,单位毫秒，数字类型；
+
+param：
+
+返回进度值：[0-100]
+      
 
 <h2 id="cid_5">示例</h2>
-
-该示例和list组件混合使用，list需要用到section。
 
 ```html
 <page>
