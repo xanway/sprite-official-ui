@@ -102,7 +102,36 @@ btn.setAttr(“value”,”按钮”);
 
 <h2 id="cid_2">样式</h2>
 
-**公共样式**  
+本节目录：
+
+
+> [公共样式](#ys_0)
+> 
+> [color  按钮文字颜色](#ys_1)
+> 
+> [color-click  按钮文字点击颜色	](#ys_2)
+> 
+> [border-color-click	边框点击颜色](#ys_3) 
+>  
+> [background-color-click	按钮背景点击色](#ys_4)  
+> 
+> [tip-color 小气泡字体颜色](#ys_5)  
+> 
+> [tip-background-color	小气泡背景颜色](#ys_6)	
+>   
+> [font-size	按钮文字字体大小](#ys_7)  
+> 
+> [licon-width  按钮左侧图片宽度 ](#ys_8)
+> 
+> [licon-height  按钮左侧图片高度](#ys_9)	
+> 
+> [ricon-width  按钮右侧图片宽度](#ys_10)
+> 
+> [ricon-height  按钮右侧图片高度](#ys_11)
+
+
+
+<span id="ys_0">**公共样式**</span>  
 
 [参见公共样式章节](https://gitdocument.exmobi.cn/sprite-begin/ggys.html)，包括：  
 
@@ -121,7 +150,7 @@ btn.setAttr(“value”,”按钮”);
 > flexbox布局：align-self，flex
 
 
-**color**	
+<span id="ys_1">**color**</span>	
 
 <code>按钮文字颜色</code>
 
@@ -132,69 +161,69 @@ var btn = document. getElement("buttonid");
 btn.setStyle("color","red");
 ```
 
-**color-click**	
+<span id="ys_2">**color-click**</span>	
 
 <code>按钮文字点击颜色</code>
 
 按钮文字点击颜色 默认#ffffff	
 
 
-**border-color-click**	
+<span id="ys_3">**border-color-click**</span>	
 
 <code>边框点击颜色</code>
 
 边框点击颜色，默认#295b9d	
 
 
-**background-color-click**	
+<span id="ys_4">**background-color-click**	</span>
 
 <code>按钮背景点击色</code>
 
 按钮背景点击色，点击按钮会渐变到该色值，默认#295b9d。
 
 	
-**tip-color**	
+<span id="ys_5">**tip-color**</span>	
 
 <code>小气泡字体颜色</code>
 
 小气泡字体颜色（可以通过js修改），默认#ffffff	同color
 
 
-**tip-background-color**	
+<span id="ys_6">**tip-background-color**</span>	
 
 <code>小气泡背景颜色</code>
 
 小气泡背景颜色（可以通过js修改），当按钮样式有outline是背景色是red，其他样式基于按钮本身背景色半透明	
 
 
-**font-size**	
+<span id="ys_7">**font-size**</span>	
 
 <code>按钮文字字体大小</code>
 
 按钮文字字体大小 （可以通过js修改），默认大小16dp
 
 
-**licon-width**
+<span id="ys_8">**licon-width**</span>
 
 <code>按钮左侧图片宽度</code>
 
 按钮左侧图片宽度（可以通过js修改），默认24	 
 
 
-**licon-height**  
+<span id="ys_9">**licon-height**</span>  
 
 <code>按钮左侧图片高度</code>
 
 按钮左侧图片高度（可以通过js修改）,默认24	
 
 
-**ricon-width**
+<span id="ys_10">**ricon-width**</span>
 
 <code>按钮右侧图片宽度</code>
 
 按钮右侧图片宽度（可以通过js修改）,默认24
 	
-**ricon-height** 
+<span id="ys_11">**ricon-height**</span> 
 
 <code>按钮右侧图片高度</code>
 
@@ -207,7 +236,6 @@ btn.setStyle("color","red");
 
 
 **公共方法**  
-
 
 [事件相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_0)，包括：
 
@@ -306,11 +334,11 @@ btn.click();
 
 event对象包括：  
  
-type：事件类型，字符串类型，固定值：change；  
-
-target：触发事件的目标组件，dom对象；  
-
-timestamp：事件触发的时间戳,单位毫秒，数字类型；
+> type：事件类型，字符串类型，固定值：change；  
+> 
+>target：触发事件的目标组件，dom对象；  
+>
+>timestamp：事件触发的时间戳,单位毫秒，数字类型；
 
 示例：
 

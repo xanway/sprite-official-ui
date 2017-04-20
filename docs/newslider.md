@@ -41,150 +41,293 @@ newslider1.loadData(json);
   
 <h2 id="cid_1">属性</h2>
 
-<table>
-   <tr>
-      <td>属性</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>公共属性</td>
-      <td>参见公共属性章节，包括：<br/>id;<br/>style;<br/>class;</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>type</td>
-      <td>normal和notext( 没有文字时标记点居中 ) 两种类型</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>index</td>
-      <td>当前显示页索引，默认为0，支持设置及获取（支持js动态修改）</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>direction</td>
-      <td>滚动方向，【horizontal，vertical】;<br/>horizontal：横向滚动；（默认）;<br/>vertical：纵向滚动； </td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>drag</td>
-      <td>是否允许手动拖动切换，【true，false】;<br/>true：允许手动拖动切换（默认）；false：不允许手动拖动切换；</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>loop</td>
-      <td>是否支持循环滑动，【true，false】;<br/>true：支持循环；false：不支持循环（默认）；注：循环滑动子容器应不少于3个</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>autoPlay</td>
-      <td>是否自动切换，【true，false】;<br/>true：自动切换；false：不自动切换（默认）；</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>interval</td>
-      <td>自动切换间隔时间，数字，单位s;默认3s</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>bounces</td>
-      <td>是否支持弹动，可选项，【true，false】;<br/>true：支持弹动（默认）;false：不支持弹动;<br/>注：仅iOS支持</td>
-      <td></td>
-   </tr>
-</table>
+本节目录：
 
+> [公共属性 ](#sx_0)
+> 
+>[type	展示类型](#sx_1)	
+>
+>[index	当前显示页索引](#sx_2)
+>
+>[direction	滚动方向](#sx_3)
+>
+>[drag	是否允许手动拖动切换](#sx_4)
+>
+>[loop	是否支持循环滑动](#sx_5)
+>
+>[autoPlay	是否自动切换](#sx_6)
+>
+>[interval	自动切换间隔时间](#sx_7)
+>
+>[bounces	是否支持弹动](#sx_8)
+
+
+<span id="sx_0">**公共属性**</span>  
+
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+
+
+<span id="sx_1">**type**</span>
+
+<code>展示类型</code>
+
+支持normal和notext( 没有文字时标记点居中 ) 两种类型
+    
+<span id="sx_2">index</span>
+
+<code>当前显示页索引</code>
+
+默认为0，支持设置及获取（支持js动态修改）
+
+
+<span id="sx_3">**direction**</span>
+
+<code>滚动方向</code>
+
+取值：[horizontal，vertical];
+
+> horizontal：横向滚动；（默认）
+> 
+> vertical：纵向滚动； 
+
+<span id="sx_4">**drag**</span>
+
+<code>是否允许手动拖动切换</code>
+
+取值[true，false]:
+
+> true：允许手动拖动切换（默认）；
+> 
+>false：不允许手动拖动切换；
+     
+
+<span id="sx_5">**loop**</span>
+
+<code>是否支持循环滑动</code>
+
+取值[true，false]:
+
+> true：支持循环；
+> 
+>false：不支持循环（默认）
+
+**注：** 循环滑动子容器应不少于3个
+
+<span id="sx_6">autoPlay</span>
+
+<code>是否自动切换</code>
+
+取值[true，false]
+
+> true：自动切换；
+> 
+>false：不自动切换（默认）
+    
+<span id="sx_7">interval</span>
+
+<code>自动切换间隔时间</code>
+
+取值数字，单位s;默认3s
+
+<span id="sx_8">bounces</span>
+
+<code>是否支持弹动</code>
+
+取值[true，false];
+
+> true：支持弹动（默认）
+> 
+>false：不支持弹动;
+
+**注：** 仅iOS支持
  
 <h2 id="cid_2">样式</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共样式</td>
-      <td>尺寸:默认height:180;<br/>定位;<br/>外边距;<br/>内边距;<br/>边框;<br/>背景:默认#ffffff;<br/>flexbox布局：align-self，flex</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>bottom-mark-height:</td>
-      <td>底部文字描述条高度;默认30dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>mark-point-width:</td>
-      <td>标记点宽度;默认6dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>mark-point-height:</td>
-      <td>标记点高度;默认6dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>mark-point-color:</td>
-      <td>标记点颜色;默认#ffffff</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>color:</td>
-      <td>底部描述文字颜色;默认#ffffff</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>font-size: </td>
-      <td>底部描述文字大小;默认15dp</td>
-      <td></td>
-   </tr>
-   
-</table>
+本节目录：
 
-注：除了box公共样式以外，其他菜单样式通过js修改后，需重新执行loadData()才生效。  
+
+**公共样式**
+
+> 尺寸:默认height:180;
+> 
+>定位;
+>
+>外边距;
+>
+>内边距;
+>
+>边框;
+>
+>背景:默认#ffffff;
+>
+>flexbox布局：align-self，flex
+
+**bottom-mark-height**
+
+<code>底部文字描述条高度</code>
+
+底部文字描述条高度;默认30dp
+
+**mark-point-width**
+
+<code>标记点宽度</code>
+
+标记点宽度;默认6dp
+
+**mark-point-height**
+
+<code>标记点高度</code>
+
+标记点高度;默认6dp
+
+    
+**mark-point-color**
+
+<code>标记点颜色</code>
+
+标记点颜色;默认#ffffff
+
+     
+**color**
+<code>底部描述文字颜色</code>
+
+底部描述文字颜色;默认#ffffff
+
+**font-size**
+
+<code>底部描述文字大小</code>
+
+底部描述文字大小;默认15dp
+
+**注：** 除了公共样式以外，其他菜单样式通过js修改后，需重新执行loadData()才生效。  
+
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>Js方法</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共方法</td>
-      <td>见设计文档box章节（不包括容器类Dom节点操作）</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>loadData(json)</td>
-      <td>格式json.datas数组，属性如下:<br/>data.text = "华中师大教授讽范冰冰 不欢迎这样戏子";<br/>data.imageurl = "http://cms-bucket.nosdn.127.net/d325d6e7b40e45598aadb2fcc67249c220161028103329.png"; //支持本地res: 和网络http: 图片;<br/>data.defaulturl = "res:spritetest/image/wangyi/default_null_big_src.png";</td>
-      <td></td>
-   </tr>
-  
-  
-</table>
 
+
+**公共方法**  
+
+[事件相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_0)，包括：
+
+> [on(messageName:string,callback:Function): void   组件注册事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_1)   
+> 
+> [fire(messageName:string,params:Array&lt;any&gt;): void  组件事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_2)   
+> 
+> [off(messageName:string,callback:Function): void  组件移除事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_3)  
+>  
+> [getOn(messageName:string): Array&lt;Function&gt;  获取已绑定的事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_4)   
+
+[动画相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_1)，包括： 
+ 
+> [startAnimation(jsonData:Object,callback:Function): void  启动UI组件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_1)   
+> 
+> [startAnimator(jsonData:Object,callback:Function): void  启动UI组件属性动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_2)   
+> 
+> [startKeyFrameAnimator(jsonData:Object,callback:Function): void  启动UI组件关键帧动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_3)  
+>  
+> [ releaseAnimator(): void  结束控件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_4)   
+
+[尺寸和位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_2)，包括：  
+
+> [getFrame(): Object  获取组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_1)   
+> 
+> [setFrame(frame:Object): void  设置组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_2)   
+> 
+> [getCenter(): Object  获取组件中心点在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_3)  
+>
+> [getAbsoluteFrame(): Object  获取组件在绘制窗口中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_4)   
+
+
+[普通Dom节点操作](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_3)，包括：  
+
+> [getParent(): IElement  获取父节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_1)   
+> 
+> [getNext(): IElement  获取同级下一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_2)   
+> 
+> [getPrevious(): IElement  获取同级前一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_3)  
+> 
+> [remove(): void  从父容器中移除自身](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_4)  
+> 
+> [clone(isDeep:boolean):IElement  对当前Dom节点进行克隆](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_5)  
+>
+> [setAttr(attrName:string,attrValue:string): void  设置节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_6)   
+>
+> [getAttr(attrName:string):string  获取节点属性值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_7) 
+>
+> [getAttrs(): Object  获取节点所有属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_8) 
+>
+> [removeAttr(attrName:string): void  移除节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_9) 
+>
+> [hasAttr(attrName:string): boolean  节点是否具有该属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_10) 
+> 
+> [setStyle(styleName:string,styleValue:string): void  设置节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_13)  
+>
+> [getStyle(styleName:string):string  获取节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_14)   
+>
+> [clearStyle(styleName:string): void  移除节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_15)    
+>
+> [setClassStyle(className:string,domobj:IElement): void   设置节点对应Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.htm#ptdom_16) 
+>  
+> [getClassStyle(): string  获取节点已设置Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_17)  
+>  
+> [getTag(): string  获取UI组件类型](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_18)  
+>  
+> [getId(): string  获取UI组件Id标识](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_19) 
+
+**loadData(jsonData:Object):void**
+
+<code>注入数据</code>
+
+参数：
+
+jsonData，json格式如下：
+
+> datas：为json数组：
+> 
+> - imageurl：网格图片，支持res:，相对路径和网络图
+> 
+> - text：新闻内容文字
+> 
+> - defaulturl：默认图片地址
+
+返回值： 无
 
 <h2 id="cid_4">事件</h2>
 
-<table>
-   <tr>
-      <td>事件</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>newsliderClick</td>
-      <td>参数(e, index):监听newslider点击事件，返回点击标识</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>pageSelected</td>
-      <td>参数(e,index) : 监听newslider切换事件，返回切换后的标识</td>
-      <td></td>
-   </tr>
-</table>
+**newsliderClick**
+
+<code>点击新闻图片触发</code>
+
+event对象包括：  
+ 
+> type：事件类型，字符串类型，固定值：newsliderClick； 
+>  
+>target：触发事件的目标组件，dom对象； 
+> 
+>timestamp：事件触发的时间戳,单位毫秒，数字类型；
+
+index：
+
+返回点击标识
+
+**pageSelected**
+
+<code>监听newslider切换触发</code>
+
+event对象包括：
+
+> type：事件类型，字符串类型，固定值：pageSelected； 
+>  
+>target：触发事件的目标组件，dom对象； 
+> 
+>timestamp：事件触发的时间戳,单位毫秒，数字类型；
+
+
+index：
+
+监听newslider切换事件，返回切换后的标识
+
 
 
 <h2 id="cid_5">示例</h2>
