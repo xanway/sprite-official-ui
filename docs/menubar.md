@@ -56,161 +56,310 @@ menubar1.loadData(json);
   
 <h2 id="cid_1">属性</h2>
 
-<table>
-   <tr>
-      <td>属性</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>公共属性</td>
-      <td>参见公共属性章节，包括：<br/>id;<br/>style;<br/>class</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>index</td>
-      <td>设置选中菜单项，值从0开始，如果不设置默认为0对应第一个菜单(通过js可以动态修改)</td>
-      <td>var menubar1 = document.getElement("menubar1");<br/>menubar1.setAttr("index","2");</td>
-   </tr>
-   <tr>
-      <td>mainicon</td>
-      <td>主菜单图片路径，支持res:</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>type</td>
-      <td>menubar样式（取值normal, middleMain）</td>
-      <td></td>
-   </tr>
-  
-</table> 
+<span id="sx_0">**公共属性**</span>  
+
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+
+
+**index**
+
+<code>设置选中菜单项</code>
+
+值从0开始，如果不设置默认为0对应第一个菜单(通过js可以动态修改)
+
+示例：
+```javascript
+document.getElement("menubar1");
+menubar1.setAttr("index","2");
+```
+
+**mainicon**
+
+<code>主菜单图片路径</code>
+
+主菜单图片路径，支持res:和相对路径
+
+**type**
+
+<code>menubar样式</code>
+
+取值[normal, middleMain]
+
+> normal：普通形式的菜单，建议最多放5个
+> 
+>middleMain：在菜单中间有个原型的突出按钮，可以旋转，建议做多放4个菜单
+
 
  
 <h2 id="cid_2">样式</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共样式</td>
-      <td>尺寸:height默认50dp;<br/>定位;<br/>外边距;<br/>边框;<br/>背景:默认#f9f9f9;<br/>flexbox布局:align-self，flex;</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>color</td>
-      <td>菜单文字颜色，默认色值#565656；</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>current-color </td>
-      <td>菜单文字选择颜色，默认色值#549FF7</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>tip-color</td>
-      <td>气泡数字颜色，默认色值#ffffff</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>tip-background-color</td>
-      <td>气泡背景颜色，默认色值red</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>icon-width</td>
-      <td>菜单图标宽度，默认25dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>icon-height</td>
-      <td>菜单图标高度，默认25dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>font-size</td>
-      <td>菜单字体大小，默认14dp</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>main-background-color</td>
-      <td>middleMain样式下，主菜单背景颜色，默认#549FF7</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>main-transfer-y</td>
-      <td>主菜单基于当前坐标y偏移距离,默认0 (赋值的时候这里不要带dp单位)</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>main-transfer-x</td>
-      <td>主菜单基于基于当前坐标x偏移距离; 默认0 (赋值的时候这里不要带dp单位)</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>text-margin</td>
-      <td>菜单文字外边距，默认margin:0 0 0 0</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>icon-margin</td>
-      <td>图片外边距,默认margin:0 25 0 25</td>
-      <td></td>
-    
-   </tr>
-   
-</table>  
+>[公共样式](#ys_0)
+>
+>[color	菜单文字颜色](#ys_1)
+>
+>[current-color	菜单文字选择颜色](#ys_2)
+>
+>[tip-color	气泡数字颜色](#ys_3)
+>
+>[tip-background-color	气泡背景颜色](#ys_4)
+>
+>[icon-width	菜单图标宽度](#ys_5)
+>
+>[icon-height	菜单图标高度](#ys_6)
+>
+>[font-size	菜单字体大小](#ys_7)
+>
+>[main-background-color	middleMain样式下主菜单背景颜色	](#ys_8)
+>
+>[main-transfer-y	主菜单基于当前坐标y偏移距离,默认0](#ys_9)
+>
+>[main-transfer-x	主菜单基于基于当前坐标x偏移距离; 默认0 ](#ys_10)	
+>
+>[text-margin	菜单文字外边距](#ys_11)
+>
+>[icon-margin	图片外边距,默认](#ys_12)
+
+<span id="ys_0">**公共样式**</span>
+
+> 尺寸:height默认50dp;
+> 
+>定位;
+>
+>外边距;
+>
+>边框;
+>
+>背景:默认#f9f9f9;
+>
+>flexbox布局:align-self，flex;
+
+<span id="ys_0">**color**</span>
+
+<code>菜单文字颜色</code>
+
+默认色值#565656；	
+
+<span id="ys_1">**current-color**</span>	
+
+<code>菜单文字选择颜色</code>
+
+默认色值#549FF7	
+
+<span id="ys_2">**tip-color**</span>
+	
+<code>气泡数字颜色</code>
+
+默认色值#ffffff	
+
+
+<span id="ys_3">**tip-background-color**</span>
+
+<code>气泡背景颜色</code>
+
+默认色值red	
+
+<span id="ys_4">**icon-width**</span>
+
+<code>菜单图标宽度</code>
+
+默认25dp	
+
+
+<span id="ys_5">**icon-height**</span>
+
+<code>菜单图标高度</code>
+
+默认25dp	
+
+<span id="ys_6">**font-size**</span>	
+
+<code>菜单字体大小</code>
+
+默认14dp	
+
+
+<span id="ys_7">**main-background-color**</span>
+
+<code>主菜单背景颜色</code>
+
+middleMain样式下，主菜单背景颜色，默认#549FF7	
+
+<span id="ys_8">**main-transfer-y**</span>
+
+<code>主菜单基于当前坐标y偏移距离</code>
+
+默认0 (赋值的时候这里不要带dp单位)	
+
+<span id="ys_9">**main-transfer-x**</span>	
+
+<code>主菜单基于基于当前坐标x偏移距离</code>
+
+ 默认0 (赋值的时候这里不要带dp单位)	
+
+<span id="ys_10">**text-margin**</span>	
+
+<code>菜单文字外边距</code>
+
+默认margin:0 0 0 0	
+
+<span id="ys_11">**icon-margin**</span>
+
+<code>图片外边距</code>
+
+默认icon-margin:0 25 0 25
+
+
 
 <h2 id="cid_3">js方法</h2>
+**公共方法**  
 
-<table>
-   <tr>
-      <td>Js方法</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共方法</td>
-      <td>见设计文档box章节（不包括容器类Dom节点操作）</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>loadData(json)</td>
-      <td>格式json.datas数组，属性如下;<br/>itemJson.icon :菜单图标;<br/>itemJson.iconCurrent:菜单选中图标;<br/>itemJson.text :菜单文字;<br/>itemJson.isSmallTip:圆点气泡，设置后tip值无效;itemJson.tip = "4":小气泡内容;</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>menubarRefresh()</td>
-      <td>修改菜单json数据属性后，执行menubarRefresh()，才可生效。</td>
-      <td></td>
-   </tr>
-   
-</table>
+[事件相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_0)，包括：
 
+> [on(messageName:string,callback:Function): void   组件注册事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_1)   
+> 
+> [fire(messageName:string,params:Array&lt;any&gt;): void  组件事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_2)   
+> 
+> [off(messageName:string,callback:Function): void  组件移除事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_3)  
+>  
+> [getOn(messageName:string): Array&lt;Function&gt;  获取已绑定的事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_4)   
+
+[动画相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_1)，包括： 
+ 
+> [startAnimation(jsonData:Object,callback:Function): void  启动UI组件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_1)   
+> 
+> [startAnimator(jsonData:Object,callback:Function): void  启动UI组件属性动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_2)   
+> 
+> [startKeyFrameAnimator(jsonData:Object,callback:Function): void  启动UI组件关键帧动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_3)  
+>  
+> [ releaseAnimator(): void  结束控件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_4)   
+
+[尺寸和位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_2)，包括：  
+
+> [getFrame(): Object  获取组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_1)   
+> 
+> [setFrame(frame:Object): void  设置组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_2)   
+> 
+> [getCenter(): Object  获取组件中心点在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_3)  
+>
+> [getAbsoluteFrame(): Object  获取组件在绘制窗口中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_4)   
+
+
+[普通Dom节点操作](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_3)，包括：  
+
+> [getParent(): IElement  获取父节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_1)   
+> 
+> [getNext(): IElement  获取同级下一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_2)   
+> 
+> [getPrevious(): IElement  获取同级前一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_3)  
+> 
+> [remove(): void  从父容器中移除自身](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_4)  
+> 
+> [clone(isDeep:boolean):IElement  对当前Dom节点进行克隆](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_5)  
+>
+> [setAttr(attrName:string,attrValue:string): void  设置节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_6)   
+>
+> [getAttr(attrName:string):string  获取节点属性值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_7) 
+>
+> [getAttrs(): Object  获取节点所有属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_8) 
+>
+> [removeAttr(attrName:string): void  移除节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_9) 
+>
+> [hasAttr(attrName:string): boolean  节点是否具有该属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_10) 
+> 
+> [setStyle(styleName:string,styleValue:string): void  设置节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_13)  
+>
+> [getStyle(styleName:string):string  获取节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_14)   
+>
+> [clearStyle(styleName:string): void  移除节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_15)    
+>
+> [setClassStyle(className:string,domobj:IElement): void   设置节点对应Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.htm#ptdom_16) 
+>  
+> [getClassStyle(): string  获取节点已设置Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_17)  
+>  
+> [getTag(): string  获取UI组件类型](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_18)  
+>  
+> [getId(): string  获取UI组件Id标识](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_19) 
+
+
+**loadData(jsonData:Object):void**
+
+<code>注入数据</code>
+
+参数：
+
+jsonData，json格式如下：
+
+> datas：为json数组：
+>
+> - text：文字
+> 
+> - icon：菜单图标
+> 
+> - isSmallTip：是否显示圆点气泡
+> 
+> - tip：气泡的值
+
+返回值：无
+
+
+**menubarRefresh():void**
+
+<code>刷新menubar数据</code>
+
+修改菜单json数据属性后，执行menubarRefresh()，才可生效。</td>
+    
+参数：无
+
+返回值：无
+ 
 
 <h2 id="cid_4">事件</h2>
 
-<table>
-   <tr>
-      <td>事件</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>selectedItem</td>
-      <td>参数(e、index) 监听选中菜单标识</td>
-      <td>menubar1.on("selectedItem",function(e,index){myappjs.alert("选择的item的坐标："+index);});</td>
-   </tr>
-   <tr>
-      <td>middleMainClick</td>
-      <td>参数(e, tag:1标示已旋转 0标示还原) 监听主菜单点击事件;</td>
-	  <td>menubar3.on("middleMainClick",function(e,tag){<br/>//1标示已旋转，0标示回归原位<br/>myappjs.alert("按钮状态:"+tag);<br/>});</td>
-   </tr>
+**selectedItem**
 
-</table>
+<code>监听选中菜单标识</code>
 
+event对象包括：  
+ 
+> type：事件类型，字符串类型，固定值：selectedItem； 
+>  
+>target：触发事件的目标组件，dom对象； 
+> 
+>timestamp：事件触发的时间戳,单位毫秒，数字类型；
+
+index：
+
+监听选中菜单标识
+
+      
+**middleMainClick**
+
+<code>监听点击中间按钮</code>
+
+event对象包括：  
+ 
+> type：事件类型，字符串类型，固定值：middleMainClick； 
+>  
+>target：触发事件的目标组件，dom对象； 
+> 
+>timestamp：事件触发的时间戳,单位毫秒，数字类型；
+
+tag：
+
+监听主菜单点击事件，取值[0,1]
+
+> 1:标示已旋转
+>
+>0:标示还原
+
+示例：
+
+```javascript
+menubar3.on("middleMainClick",function(e,tag){
+	//1标示已旋转，0标示回归原位
+	myappjs.alert("按钮状态:"+tag);
+});
+```
 
 <h2 id="cid_5">示例</h2>
 

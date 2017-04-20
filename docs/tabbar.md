@@ -198,6 +198,7 @@ jsonData，json格式如下：
 >
 > - text：文字
 
+返回值：无
 
 <h2 id="cid_4">事件</h2>
 
