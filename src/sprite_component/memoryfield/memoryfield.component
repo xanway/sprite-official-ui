@@ -101,7 +101,7 @@
 
                 this.textfieldid.on("focus", function (e) {
                     copythis.datas = copythis.datas;
-
+                    console.log("111111111" + copythis.getAbsoluteFrame().y);
 
                     //向上遍历找到scroll
                     var parentdom = copythis;
@@ -128,6 +128,14 @@
                     //这里做动画是为了保护scroll不被刷新
 
                     if (copythis.scrolldom.getTag() == "scroll") {
+
+                        if (copythis.scrolldom.getOn("scrollStart").length < 1) {
+                            copythis.scrolldom.on("scrollStart", function (e) {
+                                window.hideSip();
+                                copythis.hidepop();
+                            });
+                        }
+
 
                         var jsonData = {};
                         var aniAry = new Array();
@@ -190,6 +198,8 @@
 
                         }
                         else {
+
+
                             copythis.showpop();
                         }
 
@@ -230,7 +240,10 @@
                     if (copythis.memorypop.getStyle("display") == "block") {
                         //如果失去焦点弹出框还是显示，则重新定位位置;
                         //console.log("进入失去焦点");
+
                         copythis.showpop();
+
+
                     }
 
 
@@ -367,10 +380,14 @@
                     top = thisframe.y - height;
 
 
+
                     if (top < 20) {
                         top = 20;
                         height = thisframe.y - 20;
                     }
+                    console.log("top:" + top);
+                    console.log("thisframe.y:" + thisframe.y);
+
                 }
 
 
@@ -380,6 +397,7 @@
 
                 this.memorypop.setStyle("height", height);
                 this.memorypop.setStyle("top", top);
+
 
 
                 document.refresh();

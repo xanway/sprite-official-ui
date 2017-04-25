@@ -37,7 +37,7 @@ hide():隐藏pop
     var console = require("Console");
     var time = require("Time");
 
-   
+
     var screenWidth = window.getScreenWidth();
     var screenHeight = window.getScreenHeight();
 
@@ -150,14 +150,14 @@ hide():隐藏pop
             + '' + popContent + ''
             + '</scroll >'
             + '</box> '
-            + '<image src="' + this.arrowIcon + '" style="width:20;height:10;position:absolute;top:0;left:' + arrowLeft + '" /> '
+            + '<image src="' + this.arrowIcon + '" style="width:20;height:10;position:absolute;top:1;left:' + arrowLeft + '" /> '
             + '</box>';
 
           this.popbgid.clear();
           var popmenuobj = document.createElementByXml(popxmlstr, this);
-          this.popbgid.appendChild(popmenuobj);        
-          this.rootDom.appendChild(this); 
-                     
+          this.popbgid.appendChild(popmenuobj);
+          this.rootDom.appendChild(this);
+
           this.rootDom.refresh();
 
           this.popcontent = this.getElement("popcontent");
@@ -166,7 +166,7 @@ hide():隐藏pop
             var objid = e.target.getId();
             if (objid == "popbgid") {
               copythis.hide();
-              
+
             }
           });
 
@@ -264,7 +264,7 @@ hide():隐藏pop
             jsonData1.animators = aniAry1;
             this.popbgid.startAnimator(jsonData1, function () {
               copythis.popbgid.setStyle("visibility", "hidden");
-               copythis.popbgid.releaseAnimator();
+              copythis.popbgid.releaseAnimator();
             });
 
 

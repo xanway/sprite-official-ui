@@ -174,7 +174,6 @@ ishaschild：
 >true：有数据的情况下，可以用直接进入下级节点，不需要操作。
 
 
-
 <h2 id="cid_5">示例</h2>
 
 该示例和list组件混合使用，list需要用到section。

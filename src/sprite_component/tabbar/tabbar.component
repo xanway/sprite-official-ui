@@ -124,9 +124,9 @@
                 if (this.getAttr("bindid") != null) {
                     this.bindid = this.getAttr("bindid");
 
-                    var pd = this.getParent(); 
+                    // var pd = this.getParent();
 
-                    this.sliderdom = pd.getElement(this.bindid);
+                    this.sliderdom = document.getElement(this.bindid);
                     if (this.sliderdom.getAttr("index") == null) {
                         this.position_index = 0;
                     }
@@ -247,7 +247,7 @@
                         this.childrenObj[n].getFirstChild().setStyle("font-size", 18);
                         this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", 15);
                         this.oldposition = n;
-                        // document.refresh();
+                        //this.refresh();
                         //console.log(";position:"+position+";direction:"+direction+";offset:"+offset);
                         return;
                     }
@@ -373,9 +373,8 @@
                         this.sliderScroll.scrollToCtrl(json);
                     }
 
-
                 }
-                // document.refresh();
+                this.refresh();
             },
             //属性变更回调函数
             attrChanged: function (attrName, attrValue) {
@@ -389,8 +388,8 @@
                         this.currentColor = styleValue;
                     }
 
-                     var rgbstr = {};
-                     if (this.currentColor.indexOf("#")>-1) {
+                    var rgbstr = {};
+                    if (this.currentColor.indexOf("#") > -1) {
                         rgbstr = encryption.hexToRgb(this.currentColor);
                         if (rgbstr == null) {
                             var jsondata = { "content": "颜色只能设置#xxxxxx形式", "duration": "1" };
@@ -398,11 +397,11 @@
                             return;
                         }
                     }
-                    else if(this.currentColor.indexOf("rgb")>-1){
-                      var  colorstr =  this.currentColor.replace(/rgba?\((.*)\)/g,"$1"); 
-                      rgbstr.red =  colorstr.split(",")[0];
-                      rgbstr.green =  colorstr.split(",")[1];
-                      rgbstr.blue =  colorstr.split(",")[2];
+                    else if (this.currentColor.indexOf("rgb") > -1) {
+                        var colorstr = this.currentColor.replace(/rgba?\((.*)\)/g, "$1");
+                        rgbstr.red = colorstr.split(",")[0];
+                        rgbstr.green = colorstr.split(",")[1];
+                        rgbstr.blue = colorstr.split(",")[2];
 
                     }
                     this.currentRed = rgbstr.red;
@@ -416,7 +415,7 @@
                         this.color = styleValue;
                     }
                     var rgbstr = {};
-                    if (this.color.indexOf("#")>-1) {
+                    if (this.color.indexOf("#") > -1) {
                         rgbstr = encryption.hexToRgb(this.color);
                         if (rgbstr == null) {
                             var jsondata = { "content": "颜色只能设置#xxxxxx形式", "duration": "1" };
@@ -424,11 +423,11 @@
                             return;
                         }
                     }
-                    else if(this.color.indexOf("rgb")>-1){
-                      var  colorstr =    this.color.replace(/rgb\((.*)\)/g,"$1"); 
-                      rgbstr.red =  colorstr.split(",")[0];
-                      rgbstr.green =  colorstr.split(",")[1];
-                      rgbstr.blue =  colorstr.split(",")[2];
+                    else if (this.color.indexOf("rgb") > -1) {
+                        var colorstr = this.color.replace(/rgb\((.*)\)/g, "$1");
+                        rgbstr.red = colorstr.split(",")[0];
+                        rgbstr.green = colorstr.split(",")[1];
+                        rgbstr.blue = colorstr.split(",")[2];
 
 
                     }
@@ -449,7 +448,7 @@
         @import url("tabbar.color.css");
     </style>
     <ui>
-        <scroll id="sliderScroll" direction="horizontal" scrollbar="false" style="" class="tabbar">
+        <scroll id="sliderScroll" direction="horizontal" scrollbar="false" class="tabbar">
         </scroll>
     </ui>
 </page>

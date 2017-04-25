@@ -20,254 +20,255 @@
 <page>
     <module>
 
-    <![CDATA[
+        <![CDATA[
       require("sliderbarUI");     
     ]]>
 
     </module>
-     <script>
-    <![CDATA[
+    <script>
+        <![CDATA[
     var window = require("Window");
-    var document = require("Document");
-    var ui = require("UI");
-    var time = require("Time");
-    
-    var console = require("Console");
-   
-    var Superhandsign = function(){
-       this.back = null;
-       this.chexiao = null;
-       this.handsign = null;
-       this.qingchu = null;
-       this.daxiaoprogeress = null;
-       this.huabidaxiao = null;
-       this.colorxuanxiang = null;
-       this.huabi = null;
-       this.huabicaidan = null;
-       this.queding = null;
+        var document = require("Document");
+        var ui = require("UI");
+        var time = require("Time");
+
+        var console = require("Console");
+
+        var Superhandsign = function () {
+            this.back = null;
+            this.chexiao = null;
+            this.handsign = null;
+            this.qingchu = null;
+            this.daxiaoprogeress = null;
+            this.huabidaxiao = null;
+            this.colorxuanxiang = null;
+            this.huabi = null;
+            this.huabicaidan = null;
+            this.queding = null;
 
 
-       this.folderpah = "res:handsign";
+            this.folderpah = "res:handsign";
 
-       this.huabiMax = 20;
-
-
-
-    };
-
-     Superhandsign.prototype = {
-      created: function (){
-          var copythis = this;
-          this.back = this.getElement("back");
-          this.chexiao = this.getElement("chexiao");
-          this.handsign = this.getElement("handsign");
-          this.qingchu = this.getElement("qingchu");
-          this.daxiaoprogeress = this.getElement("daxiaoprogeress");
-          this.huabidaxiao = this.getElement("huabidaxiao");
-          this.colorxuanxiang = this.getElement("colorxuanxiang");
-          this.huabi = this.getElement("huabi");
-          this.huabicaidan = this.getElement("huabicaidan");
-          this.queding = this.getElement("queding");
-
-          this.init();
-
-         this.huabi.on("click",function(e){
-          
-            if(copythis.huabicaidan.getStyle("visibility") == "hidden"){
-
-                copythis.huabicaidan.setStyle("visibility","visible");
-            }
-            else{
-
-                  copythis.huabicaidan.setStyle("visibility","hidden");
-            }
-
-        });
+            this.huabiMax = 20;
 
 
-          this.back.on("click",function(e){
 
-                //window.close({});
-                copythis.fire("backClick");
+        };
 
-          });
+        Superhandsign.prototype = {
+            created: function () {
+                var copythis = this;
+                this.back = this.getElement("back");
+                this.chexiao = this.getElement("chexiao");
+                this.handsign = this.getElement("handsign");
+                this.qingchu = this.getElement("qingchu");
+                this.daxiaoprogeress = this.getElement("daxiaoprogeress");
+                this.huabidaxiao = this.getElement("huabidaxiao");
+                this.colorxuanxiang = this.getElement("colorxuanxiang");
+                this.huabi = this.getElement("huabi");
+                this.huabicaidan = this.getElement("huabicaidan");
+                this.queding = this.getElement("queding");
 
-          this.queding.on("click",function(e){
-              var savejson = {};
-              var datetime = new Date();
-              var randnum = Math.floor(Math.random()*1000);
-              savejson.path = copythis.folderpah+"/"+datetime.getTime()+"_"+randnum+".png";
+                this.init();
 
-              copythis.handsign.save(savejson,function(json){
+                this.huabi.on("click", function (e) {
 
-                    if(json.code == 0){
-                        var arr = new Array();
-                        arr.push(json.path);
-                        copythis.fire("okClick",arr);
+                    if (copythis.huabicaidan.getStyle("visibility") == "hidden") {
+
+                        copythis.huabicaidan.setStyle("visibility", "visible");
                     }
-                    else{
-                       var jsonData= {};
-                        jsonData.content="保存失败！";
-                        ui.toast(jsonData);
+                    else {
+
+                        copythis.huabicaidan.setStyle("visibility", "hidden");
                     }
-              });
-          });
 
-          this.chexiao.on("click",function(){
-              copythis.handsign.undo();
-
-          });
-          this.qingchu.on("click",function(){
+                });
 
 
-                var json = {};
-               json.title = "询问";
-               json.content = "是否清空？";
-               json.buttonTexts = ["是","否"];
+                this.back.on("click", function (e) {
+
+                    //window.close({});
+                    copythis.fire("backClick");
+
+                });
+
+                this.queding.on("click", function (e) {
+                    var savejson = {};
+                    var datetime = new Date();
+                    var randnum = Math.floor(Math.random() * 1000);
+                    savejson.path = copythis.folderpah + "/" + datetime.getTime() + "_" + randnum + ".png";
+
+                    copythis.handsign.save(savejson, function (json) {
+
+                        if (json.code == 0) {
+                            var arr = new Array();
+                            arr.push(json.path);
+                            copythis.fire("okClick", arr);
+                        }
+                        else {
+                            var jsonData = {};
+                            jsonData.content = "保存失败！";
+                            ui.toast(jsonData);
+                        }
+                    });
+                });
+
+                this.chexiao.on("click", function () {
+                    copythis.handsign.undo();
+
+                });
+                this.qingchu.on("click", function () {
 
 
-               ui.confirm(json,function(x){
-                //x对应buttonTexts数组索引
-                 if(x == 0){
-                      copythis.handsign.clear();
-                 }
-                 else if(x==1){
+                    var json = {};
+                    json.title = "询问";
+                    json.content = "是否清空？";
+                    json.buttonTexts = ["是", "否"];
 
 
-                 }
-               });
+                    ui.confirm(json, function (x) {
+                        //x对应buttonTexts数组索引
+                        if (x == 0) {
+                            copythis.handsign.clear();
+                        }
+                        else if (x == 1) {
+
+
+                        }
+                    });
 
 
 
-          });
+                });
 
 
-          this.daxiaoprogeress.on("change",function(e,param1){
+                this.daxiaoprogeress.on("change", function (e, param1) {
 
-                var sethuabidaxiao =2+ (copythis.huabiMax-2) * (param1/100);
-               
-
-                copythis.huabidaxiao.setStyle("height",sethuabidaxiao);
-                copythis.huabidaxiao.setStyle("width",sethuabidaxiao);
-                copythis.huabidaxiao.setStyle("border-radius",sethuabidaxiao/2);
-
-                  copythis.handsign.setStyle("line-size",sethuabidaxiao);
-                   copythis.huabicaidan.refresh();
+                    var sethuabidaxiao = 2 + (copythis.huabiMax - 2) * (param1 / 100);
 
 
-          });
+                    copythis.huabidaxiao.setStyle("height", sethuabidaxiao);
+                    copythis.huabidaxiao.setStyle("width", sethuabidaxiao);
+                    copythis.huabidaxiao.setStyle("border-radius", sethuabidaxiao / 2);
 
-          this.colorxuanxiang.on("click",function(e){
-              var dom = e.target;
-             
-            if(dom.getStyle("background-color") != null){
-                copythis.huabidaxiao.setStyle("background-color",dom.getStyle("background-color"));
+                    copythis.handsign.setStyle("line-size", sethuabidaxiao);
+                    copythis.huabicaidan.refresh();
 
-                copythis.handsign.setStyle("line-color",dom.getStyle("background-color"));
 
-             // document.refresh();
+                });
+
+                this.colorxuanxiang.on("click", function (e) {
+                    var dom = e.target;
+
+                    if (dom.getStyle("background-color") != null) {
+                        copythis.huabidaxiao.setStyle("background-color", dom.getStyle("background-color"));
+
+                        copythis.handsign.setStyle("line-color", dom.getStyle("background-color"));
+
+                        // document.refresh();
+                    }
+
+                });
+
+
+
+
+            },
+            loadData: function (json) {
+                this.handsign.load(json);
+
+            },
+            init: function () {
+
+                this.setAttr("folderpah", this.getAttr("folderpah"));
+
+            },
+            //属性变更回调函数
+            attrChanged: function (attrName, attrValue) {
+                if (attrName == "folderpah") {
+
+                    if (attrValue != null) {
+
+                        this.folderpah = attrValue;
+                    }
+                }
+
+            },
+            //样式变更回调函数
+            styleChanged: function (styleName, styleValue) {
+
             }
-             
-          });
+        }
 
+        module.exports = Superhandsign;
 
-
-
-      },
-      load:function(json){
-         this.handsign.load(json);
-
-      },
-      init:function(){
-
-            this.setAttr("folderpah",this.getAttr("folderpah"));
-
-      },
-      //属性变更回调函数
-      attrChanged: function (attrName,attrValue){
-         if(attrName == "folderpah"){
-
-             if(attrValue!=null){
-
-                this.folderpah = attrValue;
-             }
-         }
-
-      },
-      //样式变更回调函数
-      styleChanged: function (styleName, styleValue){
-
-      }
-    }
-
-    module.exports = Superhandsign;
-
-    ]]>  
+    ]]>
     </script>
     <style>
         @import url("superhandsign.color.css");
-        @import url("superhandsign.layout.css");  
+        @import url("superhandsign.layout.css");
     </style>
     <ui>
-      <box class="flex1" style="width:fill_screen">
-        <handsign id="handsign"  class="flex1" style="background-color: #ffffff" />
-        <box id="back" class="back column-flex-center">
-           <iconfont style="font-family:Material Design Icons;color:#ffffff;font-size:30;text-align:center;width:30;;margin:0">\uF5AD</iconfont>
-        </box>
-
-        <box id="queding" class="ok column-flex-center">
-           <iconfont style="font-family:Material Design Icons;color:#ffffff;font-size:30;text-align:center;width:30;;margin:0">\uF12C</iconfont>
-        </box>
-
-         <box class="caidan row-flex-center" style="justify-content:space-between;padding: 0 50 0 50">
-
-           <iconfont id="chexiao" class="text-color" style="font-family:Material Design Icons;font-size:30;text-align:center;width:30;;margin:0">\uF54C</iconfont>
-           <iconfont id="huabi" class="text-color" style="font-family:Material Design Icons;font-size:30;text-align:center;width:30;;margin:0">\uF3EB</iconfont>
-          
-           <iconfont id="qingchu"  class="text-color" style="font-family:Material Design Icons;font-size:30;text-align:center;width:30;;margin:0">\uF459</iconfont>
-          
-
-        </box>
-
-
-        <box  id="huabicaidan" class="huabicaidan row-flex-center" >
-            <box style="flex:2" class="row-flex-center">
-              <box class="huabidaxiao">
-                  <box id="huabidaxiao"  style="width: 2;height: 2;background-color: #000000;border-radius: 1"></box>
-              </box>
-
-              <sliderbar id="daxiaoprogeress"  style="height:20;button-height:20;flex:1;margin:0 10 0 4;button-background-color:#549FF7;button-border-color:#549FF7;sliderbar-after-color:#ffffff" /> 
-
-              
+        <box class="flex1" style="width:fill_screen">
+            <handsign id="handsign" class="flex1" style="background-color: #ffffff" />
+            <box id="back" class="back column-flex-center">
+                <iconfont style="font-family:Material Design Icons;color:#ffffff;font-size:30;text-align:center;width:30;;margin:0">\uF5AD</iconfont>
             </box>
-            <line direction="vertical" style="line-color:#d0d0d0;line-length:50;line-size:1dp"/>
-            <box style="flex:3" class="row-flex-center">
-               
-                <box class="flex1 row-flex-start" style="flex-wrap:wrap;" id="colorxuanxiang">
-                    <box class="xuanxiang" style="background-color: #333333"></box>
 
-                    <box class="xuanxiang" style="background-color: red"></box>
-                    <box class="xuanxiang" style="background-color: yellow"></box>
-                    <box class="xuanxiang" style="background-color: blue"></box>
-                    <box class="xuanxiang bg-turquoise"></box>
-                    <box class="xuanxiang bg-green-sea"></box>
-                    <box class="xuanxiang bg-emerland"></box>
-                    <box class="xuanxiang bg-amethyst"></box>
-                    <box class="xuanxiang bg-midnight-blue"></box>
-                    <box class="xuanxiang bg-asbestos"></box>
-                    <box class="xuanxiang bg-sliver"></box>
-                    <box class="xuanxiang bg-pomegranate"></box>
-                    <box class="xuanxiang bg-pumpkin"></box>
-                    <box class="xuanxiang bg-orange"></box>
-                    <box class="xuanxiang bg-carrot"></box> 
-                    <box class="xuanxiang " style="background-color: #549FF7">
-                      
-                    </box> 
-                </box>            
+            <box id="queding" class="ok column-flex-center">
+                <iconfont style="font-family:Material Design Icons;color:#ffffff;font-size:30;text-align:center;width:30;;margin:0">\uF12C</iconfont>
             </box>
-        </box>  
-      </box>
-        
+
+            <box class="caidan row-flex-center" style="justify-content:space-between;padding: 0 50 0 50">
+
+                <iconfont id="chexiao" class="text-color" style="font-family:Material Design Icons;font-size:30;text-align:center;width:30;;margin:0">\uF54C</iconfont>
+                <iconfont id="huabi" class="text-color" style="font-family:Material Design Icons;font-size:30;text-align:center;width:30;;margin:0">\uF3EB</iconfont>
+
+                <iconfont id="qingchu" class="text-color" style="font-family:Material Design Icons;font-size:30;text-align:center;width:30;;margin:0">\uF459</iconfont>
+
+
+            </box>
+
+
+            <box id="huabicaidan" class="huabicaidan row-flex-center">
+                <box style="flex:2" class="row-flex-center">
+                    <box class="huabidaxiao">
+                        <box id="huabidaxiao" style="width: 2;height: 2;background-color: #000000;border-radius: 1"></box>
+                    </box>
+
+                    <sliderbar id="daxiaoprogeress" style="height:20;button-height:20;flex:1;margin:0 10 0 4;button-background-color:#549FF7;button-border-color:#549FF7;sliderbar-after-color:#ffffff"
+                    />
+
+
+                </box>
+                <line direction="vertical" style="line-color:#d0d0d0;line-length:50;line-size:1dp" />
+                <box style="flex:3" class="row-flex-center">
+
+                    <box class="flex1 row-flex-start" style="flex-wrap:wrap;" id="colorxuanxiang">
+                        <box class="xuanxiang" style="background-color: #333333"></box>
+
+                        <box class="xuanxiang" style="background-color: red"></box>
+                        <box class="xuanxiang" style="background-color: yellow"></box>
+                        <box class="xuanxiang" style="background-color: blue"></box>
+                        <box class="xuanxiang bg-turquoise"></box>
+                        <box class="xuanxiang bg-green-sea"></box>
+                        <box class="xuanxiang bg-emerland"></box>
+                        <box class="xuanxiang bg-amethyst"></box>
+                        <box class="xuanxiang bg-midnight-blue"></box>
+                        <box class="xuanxiang bg-asbestos"></box>
+                        <box class="xuanxiang bg-sliver"></box>
+                        <box class="xuanxiang bg-pomegranate"></box>
+                        <box class="xuanxiang bg-pumpkin"></box>
+                        <box class="xuanxiang bg-orange"></box>
+                        <box class="xuanxiang bg-carrot"></box>
+                        <box class="xuanxiang " style="background-color: #549FF7">
+
+                        </box>
+                    </box>
+                </box>
+            </box>
+        </box>
+
     </ui>
 
 </page>
