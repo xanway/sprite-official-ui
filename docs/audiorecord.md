@@ -19,12 +19,12 @@ audiorecord组件为录音组件，该组件提供一个录音弹出窗口，类
 ```javascript
 var audiorecord1 = document.createElement("audiorecord");
 var jsondata = {};
-            jsondata.recordingtext = "手指上滑，取消发送";
-            jsondata.readyendtext = "手指松开，取消发送";
-            jsondata.folderpah = "res:recorddata/"; //录音存放的目录
-            jsondata.maxTime = "100"; //秒
-            //该方法内部有添加控件到根节点的操作，不要放在按钮里面执行，否者会终端touchup等事件
-            audiorecord1.recordinit(jsondata);
+jsondata.recordingtext = "手指上滑，取消发送";
+jsondata.readyendtext = "手指松开，取消发送";
+jsondata.folderpah = "res:recorddata/"; //录音存放的目录
+jsondata.maxTime = "100"; //秒
+//该方法内部有添加控件到根节点的操作，不要放在按钮里面执行，否者会终端touchup等事件
+audiorecord1.recordinit(jsondata);
 audiorecord1.start();
 
 ``` 
@@ -41,69 +41,111 @@ audiorecord1.start();
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>recordinit(jsondata)</td>
-      <td>录音初始化，参数json格式：<br/>
-jsondata.recordingtext:正在录音的提示文字；<br/>
-jsondata.readyendtext:准备取消录音的提示文字<br/>
-jsondata.folderpah:录音文件存放目录<br/>
-jsondata.maxTime：最大的录音时间 单位秒<br/>
-</td>
-      <td>jsondata格式：<br/>
-var jsondata = {};<br/>
-jsondata.recordingtext = "手指上滑，取消发送";<br/>
-jsondata.readyendtext = "手指松开，取消发送";<br/>
-jsondata.folderpah = "res:recorddata"; //录音存放的目录<br/>
-jsondata.maxTime = "100"; //秒<br/>
-audiorecord1.recordinit(jsondata);<br/>
-</td>
-   </tr>
-   <tr>
-      <td>start()</td>
-      <td>开始录音</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>stop()</td>
-      <td>停止录音</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>readycancel():</td>
-      <td>准备停止录音，类似微信发送语音手势上滑时候的状态，这个时候录音还在继续，如果再次执行start()会再次变成录音状态。</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>cancelrecord()</td>
-      <td>取消录音，取消录音不会生成录音文件</td>
-      <td></td>
-   </tr>
-</table>
+本节目录：
+
+> [recordinit(jsonData:Object):void  录音初始化](#ff_0)
+> 
+> [start():void  开始录音](#ff_1)
+> 
+> [stop():void  停止录音](#ff_2)
+> 
+> [readycancel():void  准备停止录音](#ff_3)
+> 
+> [cancelrecord():void  取消录音](#ff_4)
+
+
+
+<span id="ff_0">**recordinit(jsonData:Object):void**</span>
+
+<code>录音初始化</code>
+
+参数：
+
+jsonData，json格式：
+
+> recordingtext：正在录音的提示文字
+> 
+>readyendtext：准备取消录音的提示文字
+>
+>folderpah：录音文件存放目录
+>
+>maxTime：最大的录音时间 单位秒
+
+示例：
+
+```javascript
+jsondata格式：
+var jsondata = {};
+jsondata.recordingtext = "手指上滑，取消发送";
+jsondata.readyendtext = "手指松开，取消发送";
+jsondata.folderpah = "res:recorddata"; //录音存放的目录
+jsondata.maxTime = "100"; //秒
+audiorecord1.recordinit(jsondata);
+```
+
+
+<span id="ff_1">**start():void**</span>
+
+<code>开始录音</code>
+
+参数：无
+
+返回值：无
+
+<span id="ff_2">**stop():void**</span>
+
+<code>停止录音</code>
+
+参数：无
+
+返回值：无
+
+<span id="ff_3">**readycancel():void**</span>
+
+<code>准备停止录音</code>
+
+参数：无
+
+返回值：无
+
+
+<span id="ff_4">**cancelrecord():void**</span>
+
+<code>取消录音</code>
+
+参数：无
+
+返回值：无
+
+
 
 <h2 id="cid_4">事件</h2>
 
-<table>
-   <tr>
-      <td>事件</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>finish</td>
-      <td>参数(e,t,path) t标识当前录制了多少秒,path返回录音文件路径。<br/>注意：执行stop()和cancelrecord()都会被finish事件监听到，正常结束返回录音时间和录音文件地址，取消录音返回时间0，地址为null</td>
-      <td></td>
-   </tr>
+**finish**
+
+<code>监听录音结束</code>
+
+执行stop()和cancelrecord()都会被finish事件监听到
+
+event对象包括：  
  
-</table>
+> type：事件类型，字符串类型，固定值：okClick；  
+> 
+>target：触发事件的目标组件，dom对象；  
+>
+>timestamp：事件触发的时间戳,单位毫秒，数字类型；
+
+time：
+
+返回数值型，标识当前录制了多少秒,取消录音返回时间0。
+
+path：
+
+返回字符串或null，返回录音文件路径，取消录音返回地址为null
+
+
 
 <h2 id="cid_5">示例</h2>
-
 
 ```html
 <page>

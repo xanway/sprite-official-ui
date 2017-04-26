@@ -31,122 +31,245 @@ play1.start();
 
 <h2 id="cid_1">属性</h2>
 
-<table>
-   <tr>
-      <td>属性</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>公共属性</td>
-      <td>参见公共属性章节，包括：<br/>id<br/>style<br/>class<br/></td>
-      <td></td>
-   </tr>
-</table>
+<span id="sx_0">**公共属性**</span>  
+
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+
 
 <h2 id="cid_2">样式</h2>
 
-<table>
-   <tr>
-      <td>样式</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共样式</td>
-      <td>尺寸，默认height:30;<br/>
-定位<br/>
-外边距<br/>
-内边距<br/>
-边框<br/>
-背景<br/>
-flexbox布局:align-self<br/>
-</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>sliderbar-color</td>
-      <td>前面线条颜色;默认#549FF7</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>sliderbar-after-color</td>
-      <td>后部分线条颜色；默认#f5f5f5</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>button-background-color</td>
-      <td>触摸按钮背景颜色；默认#fcfcfc</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>button-border-color</td>
-      <td>触摸按钮边框颜色；默认#d9d9d9</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>button-height</td>
-      <td>触摸按钮高度（设置后宽度同时生效），默认30，如果同时设置height和button-height的时候，需要保证height比button-height的值大</td>
-      <td></td>
-   </tr>
-</table>
+本节目录：
+
+> [公共样式](#ys_0)
+> 
+> [sliderbar-color  前面线条颜色](#ys_1)
+> 
+> [sliderbar-after-color  后部分线条颜色](#ys_2)
+> 
+> [button-background-color  触摸按钮背景颜色](#ys_3)
+> 
+> [button-border-color  触摸按钮边框颜色](#ys_4)
+> 
+>[ button-height	  触摸按钮高度](#ys_5)
+
+
+
+<span id="ys_0">**公共样式**</span>
+
+[参见公共样式章节](https://gitdocument.exmobi.cn/sprite-begin/ggys.html)，包括： 
+
+> 尺寸，默认height:30;
+> 
+>定位
+>
+>外边距
+>
+>内边距
+>
+>边框
+>
+>背景
+>
+>flexbox布局:align-self
+
+<span id="ys_1">**sliderbar-color**</span>
+
+<code>前面线条颜色</code>
+
+默认#549FF7
+
+	
+<span id="ys_2"> **sliderbar-after-color**</span>
+
+<code>后部分线条颜色</code>
+
+默认#f5f5f5
+
+<span id="ys_3"> **button-background-color**</span>
+
+<code>触摸按钮背景颜色</code>
+
+默认#fcfcfc	
+
+<span id="ys_4"> **button-border-color**</span>
+
+<code>触摸按钮边框颜色</code>
+
+默认#d9d9d9	
+
+
+<span id="ys_5"> **button-height**</span>
+
+<code>触摸按钮高度</code>
+
+设置后宽度同时生效，默认30，如果同时设置height和button-height的时候，需要保证height比button-height的值大
+
 
 <h2 id="cid_3">js方法</h2>
 
-<table>
-   <tr>
-      <td>Js方法</td>
-      <td>描述说明</td>
-      <td>示例</td>
-   </tr>
-   <tr>
-      <td>box公共方法</td>
-      <td>见设计文档box章节（不包括容器类Dom节点操作）</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>playinit(jsondata)</td>
-      <td>播放音频之前初始化,<br/>
-Json数据格式<br/>
-Json.url:音频文件路径支持res:和http<br/>
-Json. mediaInfo={} 音频文件内容json格式，音频切换换掉后台播放时，可以在手机系统播放状态里面看到。<br/>
-json.mediaInfo.title：标题<br/>
-json.mediaInfo.artist：艺术家<br/>
-json.mediaInfo.albumTitle：专辑<br/>
-json.mediaInfo.cover：系统播放界面的状态图片。<br/>
-</td>
-	<td>var json = {};<br/>
-json.url = "res:yuanhongqian/mp3/mnmjd.mp3";<br/>
-json.mediaInfo = {};<br/>
-json.mediaInfo.title = "没那么简单";  <br/>          
-json.mediaInfo.artist = "王小虎"; <br/>         
- json.mediaInfo.albumTitle = "四叶草Joyce Chu";   <br/>
- json.mediaInfo.cover = "res:yuanhongqian/image/2.jpg";<br/>
+本节目录：
+
+> [公共方法](#ff_0)
+> 
+> [playinit(jsondata:Object):void  播放音频之前初始化](#ff_1)
+> 
+> [start():void   开始播放](#ff_2)
+> 
+> [pause():void  暂停播放](#ff_3)
+> 
+> [stop():void  停止播放](#ff_4)
+> 
+> [getStatus():Number  获得当前播放状态](#ff_5)
+
+<span id="ff_0">**公共方法**</span>  
+
+[事件相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_0)，包括：
+
+> [on(messageName:string,callback:Function): void   组件注册事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_1)   
+> 
+> [fire(messageName:string,params:Array&lt;any&gt;): void  组件事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_2)   
+> 
+> [off(messageName:string,callback:Function): void  组件移除事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_3)  
+>  
+> [getOn(messageName:string): Array&lt;Function&gt;  获取已绑定的事件的触发函数](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#jjxg_4)   
+
+[动画相关](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_1)，包括： 
+ 
+> [startAnimation(jsonData:Object,callback:Function): void  启动UI组件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_1)   
+> 
+> [startAnimator(jsonData:Object,callback:Function): void  启动UI组件属性动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_2)   
+> 
+> [startKeyFrameAnimator(jsonData:Object,callback:Function): void  启动UI组件关键帧动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_3)  
+>  
+> [ releaseAnimator(): void  结束控件动画](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#dhxg_4)   
+
+[尺寸和位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_2)，包括：  
+
+> [getFrame(): Object  获取组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_1)   
+> 
+> [setFrame(frame:Object): void  设置组件在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_2)   
+> 
+> [getCenter(): Object  获取组件中心点在父容器中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_3)  
+>
+> [getAbsoluteFrame(): Object  获取组件在绘制窗口中的位置](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cchwz_4)   
+
+
+[普通Dom节点操作](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#cid_3)，包括：  
+
+> [getParent(): IElement  获取父节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_1)   
+> 
+> [getNext(): IElement  获取同级下一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_2)   
+> 
+> [getPrevious(): IElement  获取同级前一个节点](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_3)  
+> 
+> [remove(): void  从父容器中移除自身](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_4)  
+> 
+> [clone(isDeep:boolean):IElement  对当前Dom节点进行克隆](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_5)  
+>
+> [setAttr(attrName:string,attrValue:string): void  设置节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_6)   
+>
+> [getAttr(attrName:string):string  获取节点属性值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_7) 
+>
+> [getAttrs(): Object  获取节点所有属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_8) 
+>
+> [removeAttr(attrName:string): void  移除节点属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_9) 
+>
+> [hasAttr(attrName:string): boolean  节点是否具有该属性](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_10) 
+> 
+> [setStyle(styleName:string,styleValue:string): void  设置节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_13)  
+>
+> [getStyle(styleName:string):string  获取节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_14)   
+>
+> [clearStyle(styleName:string): void  移除节点样式值](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_15)    
+>
+> [setClassStyle(className:string,domobj:IElement): void   设置节点对应Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.htm#ptdom_16) 
+>  
+> [getClassStyle(): string  获取节点已设置Class样式](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_17)  
+>  
+> [getTag(): string  获取UI组件类型](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_18)  
+>  
+> [getId(): string  获取UI组件Id标识](https://gitdocument.exmobi.cn/sprite-begin/ggff.html#ptdom_19) 
+
+
+<span id="ff_1">**playinit(jsondata:Object):void**</span>
+
+<code>播放音频之前初始化</code>  
+
+参数：
+
+jsondata，Json数据格式：
+
+> url：音频文件路径支持res:和http://
+> 
+>mediaInfo：音频文件内容json格式，音频切换换掉后台播放时，可以在手机系统播放状态里面看到。
+>
+> - title：标题
+> 
+> - artist：艺术家
+> 
+> - albumTitle：专辑
+> 
+> - cover：系统播放界面的状态图片
+
+返回值：无
+
+示例：
+
+```javascript
+var json = {};
+json.url = "res:yuanhongqian/mp3/mnmjd.mp3";
+json.mediaInfo = {};
+json.mediaInfo.title = "没那么简单"; 
+json.mediaInfo.artist = "王小虎"; 
+json.mediaInfo.albumTitle = "四叶草Joyce Chu"; 
+json.mediaInfo.cover = "res:yuanhongqian/image/2.jpg";
 play1.playinit(json);
-</td>
-   </tr>
-   <tr>
-      <td>start()</td>
-      <td>开始播放，播放之前需要先执行playinit(json)方法</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>pause()</td>
-      <td>暂停播放</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>stop()</td>
-      <td>停止播放</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>getStatus()</td>
-      <td>获得当前播放状态；0：未播放状态； 1：播放状态； 2：暂停状态；</td>
-      <td></td>
-   </tr>
-  
-</table>
+```
+
+
+<span id="ff_2">**start():void **</span>
+
+<code>开始播放</code>  
+
+开始播放，播放之前需要先执行playinit(json)方法
+
+参数：无
+
+返回值：无
+
+
+<span id="ff_3">**pause():void **</span>
+
+<code>暂停播放</code> 
+
+参数：无
+
+返回值：无
+
+
+<span id="ff_4">**stop():void **</span>
+
+<code>停止播放</code> 
+
+参数：无
+
+返回值：无
+
+
+<span id="ff_5">**getStatus():Number **</span>
+
+<code>获得当前播放状态</code> 
+
+参数：无
+
+返回值：数值型
+
+> 0：未播放状态；
+> 
+>1：播放状态；
+>
+>2：暂停状态；
+
 
 <h2 id="cid_4">事件</h2>
 
