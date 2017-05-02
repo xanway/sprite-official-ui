@@ -85,11 +85,14 @@
 					"subject": "superhandsign组件",
 					"mdlink": "superhandsign"
 				},
-				
 				{
 					"subject": "audiorecord组件",
 					"mdlink": "audiorecord"
-				}			
+				},
+				{
+					"subject": "pluginupdate组件",
+					"mdlink": "pluginupdate"
+				}
 			 ]
 		 }
     ]
