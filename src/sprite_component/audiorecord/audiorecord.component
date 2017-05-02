@@ -192,7 +192,7 @@ finish：参数(e,t,path) t标识当前录制了多少秒,path返回录音文件
                 this.audiorecordtime = null;
             },
             readycancel: function () {
-                //准备结束，这个时候应该还在录音，只暂时要结束之前的一个样式，比如手指松开前的准备结束状态。
+                //准备结束，这个时候应该还在录音，只展示要结束之前的一个样式，比如手指松开前的准备结束状态。
                 this.imageid.setText("\uF36D");
                 this.textsm.setStyle("background-color", "#a63e3a");
                 this.voluembox.setStyle("display", "none");

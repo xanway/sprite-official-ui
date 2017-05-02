@@ -1,0 +1,77 @@
+.flex1{
+	flex:1;
+}
+.flex2{
+	flex:2;
+}
+ 
+.bgimage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  point9area: 5 5 10 5;
+}
+
+.popbg{
+  background-color:rgba(0,0,0,0);
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:fill_screen; 
+  height:fill_screen; 
+  justify-content: center;
+  align-items: center;
+ visibility:hidden;
+}
+
+.popProgress{
+ flex-direction:column;
+	justify-content:center;
+  align-items:center;
+  align-self: center;
+  width:50; 
+	height:50;
+}
+
+
+.progressBox{
+  background-color: rgba(0, 0, 0, 0.4); 
+	flex-direction:column;
+	justify-content:center;
+
+	width:100;
+	height:100;
+  border-radius: 8;
+
+}
+
+.myProgress{
+  line-progress-size: 5;
+  line-size: 3;
+  position: absolute; 
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  solid-color:rgba(0, 0, 0, 0);  
+  line-progress-color:#669d2a;  
+ 
+} 
+
+.progressText{ 
+  color:#ffffff; 
+  font-size: 14dp;
+  text-align: center; 
+}
+.progressText2{
+  color:#ffffff; 
+  font-size: 10dp;
+  top:10;
+  text-align: center;
+}
+
+
