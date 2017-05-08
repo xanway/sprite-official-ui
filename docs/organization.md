@@ -21,7 +21,7 @@ organization组件是专门为组织架构选人场景封装的，该组件支�
 
 <span id="sx_0">**公共属性**</span>  
 
-[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-api/ggsx.html)，包括：id、style、class；
 
 **rootid**
 

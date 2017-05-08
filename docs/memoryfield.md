@@ -27,7 +27,7 @@ memoryfield组件主要用于记忆框快捷输入场景，类似百度搜索，
 
 <span id="sx_0">**公共属性**</span>  
 
-[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-begin/ggsx.html)，包括：id、style、class；
+[参见公共属性章节](https://gitdocument.exmobi.cn/sprite-api/ggsx.html)，包括：id、style、class；
 
 <span id="sx_1">**textfield组件的所有属性**</span>
 
