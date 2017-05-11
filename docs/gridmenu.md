@@ -27,12 +27,10 @@ itemJson.text = "美食";
 arr.push(itemJson);
 var itemJson = {};
 itemJson.icon = "res:yuanhongqian/image/20160126202805dianying.png";
-itemJson.iconClick = "res:yuanhongqian/image/napp-active.png";
 itemJson.text = "电影";  
 arr.push(itemJson);
 var itemJson = {};
 itemJson.icon = "res:yuanhongqian/image/20160126203337jiudian.png";
-itemJson.iconClick = "res:yuanhongqian/image/nme-active.png";
 itemJson.isSmallTip = true;
 itemJson.text = "酒店";   
 arr.push(itemJson);
@@ -328,12 +326,14 @@ gridmenu3.on("gridMenuClick ",function(e,index){});
 <page>
     <script>
         <![CDATA[
-        var index = 1;
+    var index = 1;
         var window = require("Window");
         var document = require("Document");
         var ui = require("UI");
         var console = require("Console");
         var app = require("App");
+
+
         //引用自定义UI模板库
         //require("componentUI");
         require("titlebarUI");
@@ -343,11 +343,14 @@ gridmenu3.on("gridMenuClick ",function(e,index){});
         var myappjs = require("myapp");
         var screenWidth = window.getScreenWidth();
 
-        window.on("loaded", function () {
+
+        window.on("animator", function () {
             var gridmenu1 = document.getElement("gridmenu1");
 
             var gridmenu2 = document.getElement("gridmenu2");
+
             var gridmenu3 = document.getElement("gridmenu3");
+
             //关闭页面
             var titlebarid = document.getElement("titlebarid");
             titlebarid.on("liconClick", function (e) {
@@ -359,91 +362,120 @@ gridmenu3.on("gridMenuClick ",function(e,index){});
                 var json = {};
                 window.close(json);
             });
+
+
             titlebarid.on("rtextClick", function (e) {
+
+
                 var itemJson = json.datas[4];
 
-                itemJson.icon = "res:yuanhongqian/image/20160126203251waimai.png";
+                itemJson.icon = "../image/20160126203251waimai.png";
                 itemJson.text = "外卖123";
                 itemJson.isSmallTip = true;
 
                 var itemJson = json.datas[3];
 
-                itemJson.icon = "res:yuanhongqian/image/20160126194705meishi.png";
+                itemJson.icon = "../image/20160126194705meishi.png";
                 itemJson.text = "休闲123";
                 itemJson.tip = "10";
+
+
                 var itemJson = json.datas[2];
 
-                itemJson.icon = "res:yuanhongqian/image/20160126203337jiudian.png";
-                itemJson.iconClick = "res:yuanhongqian/image/nme-active.png";
+                itemJson.icon = "../image/20160126203337jiudian.png";
+                itemJson.iconClick = "../image/nme-active.png";
                 itemJson.isSmallTip = false;
                 itemJson.text = "酒店123";
+
+
                 var itemJson = json.datas[0];
-                itemJson.icon = "res:yuanhongqian/image/20160126194705meishi.png";
+                itemJson.icon = "../image/20160126194705meishi.png";
                 itemJson.text = "美食";
                 itemJson.tip = "10";
-                gridmenu1.refresh();
+
+
+                gridmenu1.gridmenuRefresh();
+
+
             });
+
 
             var json = {};
             var arr = new Array();
+
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126194705meishi.png";
+            itemJson.icon = "../image/20160126194705meishi.png";
             itemJson.text = "美食";
             arr.push(itemJson);
+
+
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126202805dianying.png";
-            itemJson.iconClick = "res:yuanhongqian/image/napp-active.png";
+            itemJson.icon = "../image/20160126202805dianying.png";
+            itemJson.iconClick = "../image/napp-active.png";
             itemJson.text = "电影";
             arr.push(itemJson);
+
+
+
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126203337jiudian.png";
-            itemJson.iconClick = "res:yuanhongqian/image/nme-active.png";
+            itemJson.icon = "../image/20160126203337jiudian.png";
+            itemJson.iconClick = "../image/nme-active.png";
             itemJson.isSmallTip = true;
             itemJson.text = "酒店";
             arr.push(itemJson);
 
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126202841xiuxianyule.png";
+            itemJson.icon = "../image/20160126202841xiuxianyule.png";
             itemJson.text = "休闲娱乐";
-            itemJson.tip = "4";
+            itemJson.tip = "400";
             arr.push(itemJson);
+
+
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126203251waimai.png";
+            itemJson.icon = "../image/20160126203251waimai.png";
             itemJson.text = "外卖";
 
             itemJson.tip = "1";//如果是0或者空不显示
             arr.push(itemJson);
 
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/2016101111034420161011huochejipiao.png";
+            itemJson.icon = "../image/2016101111034420161011huochejipiao.png";
             itemJson.text = "机票/火车票";
             arr.push(itemJson);
 
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126202946liren.png";
+            itemJson.icon = "../image/20160126202946liren.png";
             itemJson.text = "丽人";
             arr.push(itemJson);
 
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126203440zhoubianyou.png";
+            itemJson.icon = "../image/20160126203440zhoubianyou.png";
             itemJson.text = "周边游";
             arr.push(itemJson);
 
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126205426shenghuofuwu.png";
+            itemJson.icon = "../image/20160126205426shenghuofuwu.png";
             itemJson.text = "生活服务";
             arr.push(itemJson);
 
             var itemJson = {};
-            itemJson.icon = "res:yuanhongqian/image/20160126203542ktv.png";
+            itemJson.icon = "../image/20160126203542ktv.png";
             itemJson.text = "KTV";
             arr.push(itemJson);
+
             json.datas = arr;
+
             gridmenu1.loadData(json);
+
             gridmenu2.loadData(json);
+
             gridmenu3.loadData(json);
+
+
             gridmenu1.on("gridMenuClick", function (e, tag) {
+
                 myappjs.alert(tag);
+
             });
 
         });
@@ -456,18 +488,16 @@ gridmenu3.on("gridMenuClick ",function(e,index){});
     ]]>
     </script>
     <style>
-        @import url(res:sprite_component/css/sprite.layout.css);
-        @import url(res:sprite_component/css/sprite.color.css);
+        @import url("spriteLayout");
+        @import url("spriteColor");
     </style>
     <ui>
         <box class="bg-white full" id="box">
-            <titlebar id="titlebarid" class="titlebar-hasstatus" title="gridmenu控件" licon="res:yuanhongqian/image/icon.png" style="licon-width:24;licon-height:24"
+            <titlebar id="titlebarid" class="titlebar-hasstatus" title="gridmenu控件" licon="../image/icon.png" style="licon-width:24;licon-height:24"
                 ltext="返回" rtext="刷新" />
             <line />
             <scroll class="flex1" style="background-color:#ececec">
-
-                <gridmenu id="gridmenu1" style="cell-scale:1.2" col="5" landcol="8" />
-
+                <gridmenu id="gridmenu1" style="cell-scale:1.2;" col="5" landcol="8" />
                 <box style="height:10;" />
                 <line style="line-size:0.5" />
                 <gridmenu id="gridmenu2" style="icon-width:50;icon-height:50;color:red;tip-color:#000000;cell-scale:1.2;" col="4" landcol="6"
@@ -475,7 +505,7 @@ gridmenu3.on("gridMenuClick ",function(e,index){});
                 <box style="height:10;" />
                 <line style="line-size:0.5" />
 
-                <gridmenu id="gridmenu3" style="icon-width:50;icon-height:50;color:red;tip-color:#000000;font-size: 16;col-spacing:1;row-spacing:1;;cell-scale:1;background-color: #e0e0e0"
+                <gridmenu id="gridmenu3" style="icon-width:50;icon-height:50;color:red;tip-color:#000000;font-size: 16;col-spacing:1;row-spacing:1;cell-scale:1;background-color: #e0e0e0"
                     col="3" landcol="6" />
             </scroll>
         </box>
