@@ -286,6 +286,8 @@ middleMain样式下，主菜单背景颜色，默认#549FF7
 
 <code>注入数据</code>
 
+在模板里面使用时，该方法不能放在created里面执行，因为loadData时组件内部需要布局刷新，created时候是不允许执行刷新操作的。
+
 参数：
 
 jsonData，json格式如下：

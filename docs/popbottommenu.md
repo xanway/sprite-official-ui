@@ -66,6 +66,8 @@ popbottommenu.show();
 
 **popinit(popjson:Object):void **
 
+在模板里面使用时，该方法不能放在created里面执行，因为popinit时组件内部需要布局刷新，created时候是不允许执行刷新操作的。
+
 <code>初始化pop数据</code>
 
 参数为json数据：

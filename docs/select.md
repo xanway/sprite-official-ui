@@ -194,6 +194,24 @@ select1.loadData(datas);
 返回值：无
 
 
+**loadData(jsonDatas:Array):void**
+
+在模板里面使用时，该方法不能放在created里面执行，因为loadData时组件内部需要布局刷新，created时候是不允许执行刷新操作的。
+
+<code>注入数据</code>
+
+参数：
+
+jsonDatas：json数组，json格式
+
+> text: 文字
+> 
+> selected: 是否选择，取值true，false;
+> 
+> value: 提交值;
+
+
+
 <h2 id="cid_4">事件</h2>
 
 

@@ -138,6 +138,8 @@ pop窗口背景色; 默认#549FF7
 
 ** loadData(arr:Array&lt;string&gt;):void**
 
+在模板里面使用时，该方法不能放在created里面执行，因为loadData时组件内部需要布局刷新，created时候是不允许执行刷新操作的。
+
 <code>注入数据到字母条</code>
 
 数组格式["a","b","c"];如果不传值默认[A-Z]

@@ -190,6 +190,8 @@ tabbarid1.loadData(json);
 
 <code>注入数据</code>
 
+在模板里面使用时，该方法不能放在created里面执行，因为loadData时组件内部需要布局刷新，created时候是不允许执行刷新操作的。
+
 参数：
 
 jsonData，json格式如下：
@@ -199,6 +201,16 @@ jsonData，json格式如下：
 > - text：文字
 
 返回值：无
+
+**binddom(dom:IElement):void**</td>
+
+<code>绑定slider控件对象</code>
+
+在模板里面使用tabbar组件的时候，绑定slider组件对象时，需要用该方法绑定，属性绑定无效。
+
+参数：
+
+dom: slider组件dom对象
 
 <h2 id="cid_4">事件</h2>
 
