@@ -409,7 +409,6 @@ riconsndClick:监听右侧第二张图片点击事件；
                     var title_content = this.getElement("title_content");
 
                     var domobj = document.createElementByXml(xmlstr);
-                    // console.log(domobj);
 
                     title_content.replaceChild(domobj, this.titletext);
                     title_content.refresh();
@@ -432,7 +431,7 @@ riconsndClick:监听右侧第二张图片点击事件；
     </style>
     <ui>
         <box id="titlebarbox" class="titlebar">
-            <box id="title_content"  class="flex1 row-flex-center">
+            <box id="title_content" class="flex1 row-flex-center">
                 <text id="titletext" class="titlebar-text"></text>
             </box>
             <box class="titlebar-lcaption">

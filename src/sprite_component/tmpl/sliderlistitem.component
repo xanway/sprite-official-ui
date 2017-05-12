@@ -69,7 +69,7 @@
 
 				this.itembox.on("touchDown", function (e, param) {
 					//setCaptureTouchEvent 
-
+					console.log(listarr[0]);
 					if (listarr != null) {
 						listarr[0].setCaptureTouchEvent(false);
 
@@ -109,13 +109,13 @@
 					var json = this.getFrame();
 					if (json.x < copythis.tagshuzhi) {
 						copythis.fangxiang = "left";
-						copythis.setAttr("show","true");
+						copythis.setAttr("show", "true");
 					}
 					else {
 						copythis.fangxiang = "right";
-						copythis.setAttr("show","false");
+						copythis.setAttr("show", "false");
 					}
-                    
+
 
 					var jsonData = {};
 					var aniAry = new Array();
@@ -177,7 +177,7 @@
 			},
 			hidemenu: function () {
 
-            
+
 				var jsonData = {};
 				var aniAry = new Array();
 				//第一个动画
@@ -271,6 +271,7 @@
 				<box id="del" style="width:60;height:70;background-color:red;justify-content:center">
 					<text style="text-align:center;color:#ffffff">删除</text>
 				</box>
+				
 			</box>
 
 			<box class="itembox" id="itembox">

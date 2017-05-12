@@ -6,7 +6,6 @@
     color-click:按钮文字点击颜色 默认白色；
     background-color：按钮背景颜色 （可以通过js修改）；
     background-color-click：按钮背景点击色；
-   
     border-color:边框颜色（可以通过js修改）；
     border-color-click：按钮边框点击色；
     tip-color：小气泡字体颜色 （可以通过js修改）；
@@ -19,20 +18,16 @@
 
     属性：
     builtInClass 使用内置样式
-
     value：按钮文字（可以通过js修改）；
     tip：小气泡数字（可以通过js修改）；
     licon；按钮上的图片（可以通过js修改）；
     ricon；按钮上的图片（可以通过js修改）；
-
     readonly:只读（可以通过js修改）；
     loading:加载等待，取值true和false （可以通过js修改）；
-
 
     方法：
     box公共方法；
     click(): 模拟按钮点击方法，可以js模拟点击按钮效果；
-
 
     事件：
     box公共事件；
@@ -64,7 +59,6 @@
             this.tipbox = null;
             this.btn_image = null;
             this.btn_rimage = null;
-
             this.fontText = null;
             this.loadingimage = null;
             this.btn_content = null;
@@ -90,10 +84,8 @@
             this.ricon = "";
 
             this.loading = "false";
-
             this.taginit = true;
             this.classStyle = "";
-
             this.pathLocation = "";
 
         };
@@ -103,6 +95,7 @@
         Button.prototype = {
 
             created: function () {
+                this.datatest = [];
                 //这里是得到组件所在的uixml页面的绝对路径目录
                 this.pathLocation = document.getPathLocation();
 
@@ -120,10 +113,11 @@
                 }
 
                 this.init();
-
-
                 var copythis = this;
                 this.box.on("touchDown", function (e, param) {
+
+                    copythis.datatest.push("111");
+                    console.log(copythis.datatest.length);
 
                     if (copythis.readonly == "false") {
                         var jsonData = {};
@@ -286,19 +280,14 @@
                     this.text.setStyle("flex", "1");
                 }
 
+                if (this.getParent() != null) {
+                    if (this.getParent().getStyle("flex-direction") != "row") {
 
-                if (this.getParent().getStyle("flex-direction") != "row") {
-
-                    this.btn_content.setStyle("flex", "1");
-                    this.text.setStyle("flex", "1");
+                        this.btn_content.setStyle("flex", "1");
+                        //this.text.setStyle("flex", "1");
+                    }
                 }
-
-
-
-
                 this.taginit = false;
-
-
             },
             click: function () {
                 var copythis = this;
@@ -594,22 +583,16 @@
     ]]>
     </script>
     <style>
-        /* @import url("spriteLayout");
-        @import url("spriteColor");*/
-        
         @import url("button.layout.css");
         @import url("button.color.css");
     </style>
     <ui>
         <box id="btn" class="button">
-
             <image id="btn_image" class="button-image" style="display:none" />
             <box id="btn_content" class="row-flex-center">
                 <image id="loadingimage" style="width:15;height:15;display:none" class="button-image" src="loading.gif" />
-
                 <text id="text" class="button-text"></text>
             </box>
-
             <box id="tipbox" class="tip" style="display:none">
                 <text id="tiptext" class="tip-text">9</text>
             </box>

@@ -32,6 +32,7 @@ click():模拟点击
 
         var Switch = function () {
             this.btn = null;
+
             this.roundimage = null;
             this.box = null;
             this.ontext = null;
@@ -41,12 +42,15 @@ click():模拟点击
             this.readonly = "false";
             this.checked = "false";
             this.value = "";
+            this.onText = "是";
+            this.offText = "否";
 
             this.btnSize = 0;
             this.btnMaxX = 0;
             this.space_w = 0;
             this.isOn = false;
             this.backgroundColor = "#549FF7";
+            this.height = 36;
             this.timestamp = 0;
             this.clicktag = false;
             this.movetag = false;
@@ -59,24 +63,21 @@ click():模拟点击
                 this.box = this.getElement("box");
                 this.roundimage = this.getElement("roundimage");
                 this.btn = this.getElement("roundbtn");
-                this.ontext = this.getElement("ontext");
-                this.offtext = this.getElement("offtext");
+                this.ontextdom = this.getElement("ontext");
+                this.offtextdom = this.getElement("offtext");
                 this.readonlydom = this.getElement("readonly");
                 this.init();
                 var copythis = this;
 
-                this.btn.on("touchMove", function (e, param) {
-
-
-                    
+                this.btn.on("touchMove", function (e, param) {                  
                     if(Math.abs(param.distanceX) >= 1){
+					//标记已经移动
                         copythis.movetag = true;
                     }
-
-                
+             
                     var json = this.getFrame();
                     json.x += param.distanceX;
-                    // console.log("json.x:"+json.x);
+                   // console.log("json.x:"+json.x);
 
                     if (json.x < 0) {
                         json.x = 0;
@@ -84,7 +85,7 @@ click():模拟点击
                     else if (json.x > copythis.space_w) {
                         json.x = copythis.space_w;
                     }
-                    //console.log(json.x+"copythis.space_w"+copythis.space_w);
+                  // console.log(json.x+"copythis.space_w"+copythis.space_w);
 
                     this.setFrame(json);
                     if (json.x > copythis.space_w / 2) {
@@ -98,10 +99,9 @@ click():模拟点击
                     }
 
                 });
-                this.btn.on("touchUp", function (e) {
-                    //console.log("copythis.clicktag"+copythis.clicktag+";copythis.movetag:"+copythis.movetag);
+                this.btn.on("touchUp", function (e) {                
                     if (copythis.movetag == true) {
-
+						//如果再移动的过程中抬起手指，根据移动的距离判断是true还是false
                         var json = this.getFrame();
                         if (json.x > copythis.space_w / 2) {
                             copythis.setAttr("checked", "true");
@@ -120,9 +120,7 @@ click():模拟点击
 
                 });
                 this.btn.on("touchDown", function (e) {
-                    // console.log("touchDown"+e.timestamp);
-                    //copythis.timestamp = e.timestamp;
-                    copythis.clicktag = true;
+                    //标记没有移动
                     copythis.movetag = false;
 
                 });
@@ -135,7 +133,7 @@ click():模拟点击
                 this.btn.fire("touchDown");
                 this.btn.fire("touchUp");
             },
-            //属性变更回调函数
+            //属性变更回调函数 
             attrChanged: function (attrName, attrValue) {
 
                 var changetag = false;
@@ -147,37 +145,66 @@ click():模拟点击
                     }
 
                 }
-                //console.log(attrName+"#"+attrValue);
-                if (attrName == "checked") {
-                    this.checked = attrValue;
 
-                    var jsonData = {};
-                    var aniAry = new Array();
-                    //第一个动画
-                    var jsonAni1 = {};
-                    jsonAni1.delay = 0;
-                    jsonAni1.duration = 200;
-                    jsonAni1.curve = "linear";
-                    jsonAni1.props = {};
-                    if (attrValue == "true")
-                        jsonAni1.props.x = this.btnMaxX;
-                    else
-                        jsonAni1.props.x = 0
+                if(attrName == "onText"){
+                    if (attrValue != null) {
+                        this.onText = attrValue;
+                    }
+                    this.ontextdom.setText(this.onText);
+                }
 
-                    aniAry.push(jsonAni1);
-                    jsonData.animators = aniAry;
-                    var copythis = this;
-                    this.btn.startAnimator(jsonData, function () {
-                        //console.log("copythis.isOn:"+copythis.isOn+"##attrValue:"+attrValue);
-                        if (copythis.isOn + "" != attrValue) {
+                if(attrName == "offText"){
+                    if (attrValue != null) {
+                        this.offText = attrValue;
+                    }
+                    this.offtextdom.setText(this.offText); 
+                }
+             
+				if (attrName == "checked") {
 
-                            if (attrValue == "true")
-                                copythis.setOn();
-                            else
-                                copythis.setOff();
-                            copythis.clicktag = false;
-                        }
-                    });
+                    if (attrValue != null) {
+                        this.checked = attrValue;
+                    }
+					
+					
+					if (this.taginit == true) {
+					//这里是初始化的时候进来,直接把状态修改好
+						 if (this.checked == "true")
+							this.setOn();
+						 else
+							this.setOff(); 			
+					}
+					else{
+					//通过js修改属性加上动画效果
+						var jsonData = {};
+						var aniAry = new Array();
+						//第一个动画
+						var jsonAni1 = {};
+						jsonAni1.delay = 0;
+						jsonAni1.duration = 200;
+						jsonAni1.curve = "linear";
+						jsonAni1.props = {};
+						if (this.checked == "true")
+							jsonAni1.props.x = this.btnMaxX;
+						else
+							jsonAni1.props.x = 0
+
+						aniAry.push(jsonAni1);
+						jsonData.animators = aniAry;
+						var copythis = this;
+						this.btn.startAnimator(jsonData, function () {
+						console.log("copythis.isOn:"+copythis.isOn+"##attrValue:"+copythis.checked);
+							if (copythis.isOn + "" != copythis.checked) {
+
+								if (copythis.checked == "true")
+									copythis.setOn();
+								else
+									copythis.setOff(); 
+								
+								
+							}
+						});				
+					}
                 }
 
                 if (attrName == "readonly") {
@@ -216,35 +243,20 @@ click():模拟点击
             //样式变更回调函数
             styleChanged: function (styleName, styleValue) {
 
-            },
-            init: function () {
-                this.taginit = true;
-                var value = this.getAttr("checked");
-
-                if (this.getStyle("on-background-color") != null) {
-
-                    this.backgroundColor = this.getStyle("on-background-color");
-                }
-
-                // console.log("this.backgroundColor:"+this.backgroundColor);
-                if (value == "true") {
-                    this.isOn = true;
-                    //设置背景色
-
-                    if (this.backgroundColor != null) {
-                        this.box.setStyle("background-color", this.backgroundColor);
-
-                    } else {
-                        this.backgroundColor = "#549FF7";
+                if(styleName == "on-background-color"){
+                    if(styleValue != null){
+                      this.backgroundColor = styleValue;
                     }
                     this.btn.setStyle("border-color", this.backgroundColor);
-                }
-                else {
-                    this.isOn = false;
-                    this.box.setStyle("background-color", "#e5e7ea");
+                    this.box.setStyle("background-color", this.backgroundColor);
+
                 }
 
-                var cssHeight = this.getStyle("height");
+            },
+            init: function () {
+             this.taginit = true;
+
+               var cssHeight = this.getStyle("height");
                 if (cssHeight) {
                     cssHeight = parseInt(cssHeight);
                     this.btnSize = cssHeight;
@@ -256,7 +268,7 @@ click():模拟点击
                 }
                 else {
                     cssHeight = 36;
-                    this.btnSize = cssHeight;
+                    this.btnSize = cssHeight; 
                     this.box.setStyle("border-radius", this.btnSize / 2);
                     this.btn.setStyle("border-radius", this.btnSize / 2);
                     this.readonlydom.setStyle("border-radius", this.btnSize / 2);
@@ -277,44 +289,22 @@ click():模拟点击
                     cssWidth = 72;
                     this.btnMaxX = cssWidth - this.btnSize;
                 }
-
-
-                //设置打开
-                var on = this.getAttr("onText");
-                if (on != null) {
-
-                    this.ontext.setText(on);
-                }
-                //设置关闭
-                var off = this.getAttr("offText");
-                if (off != null) {
-                    this.offtext.setText(off);
-                }
-
-                this.ontext.setStyle("font-size", this.getStyle("font-size"));
-                this.offtext.setStyle("font-size", this.getStyle("font-size"));
+				
+				this.ontextdom.setStyle("font-size", this.getStyle("font-size"));
+                this.offtextdom.setStyle("font-size", this.getStyle("font-size"));
                 this.space_w = this.box.getStyle("width") - this.btn.getStyle("width");
 
-                if (this.getAttr("readonly") == "true") {
-                    this.setAttr("readonly", "true");
-
-                }
-                else {
-                    this.setAttr("readonly", "false");
-                }
-
+                this.setAttr("readonly", this.getAttr("readonly"));          
                 this.setAttr("value", this.getAttr("value"));
 
-                var copythis = this;
-                //设置属性后有个动画，直接设置不生效，这里用了定时器			   
-                time.setTimeout(function () {
-                    if (copythis.isOn) {
-                        copythis.setAttr("checked", "true");
-                    } else {
-                        copythis.setAttr("checked", "false");
-                    }
-                    copythis.taginit = false;
-                }, 10);
+               this.setAttr("onText", this.getAttr("onText"));
+               this.setAttr("offText", this.getAttr("offText"));
+               this.setStyle("on-background-color", this.getStyle("on-background-color")); 
+               var copythis = this          
+               copythis.setAttr("checked", copythis.getAttr("checked"));
+                
+              
+               this.taginit = false;
             },
             setOn: function () {
                 this.isOn = true;
@@ -342,7 +332,7 @@ click():模拟点击
     <ui>
         <box class="ctrlbox" id="ctrlbox">
             <box id="readonly" class="readonly" />
-            <box id="box" class="box">
+            <box id="box" class="box" >
                 <text id="ontext" class="ontext"></text>
                 <text id="offtext" class="offtext"></text>
                 <box id="roundbtn" class="btn">

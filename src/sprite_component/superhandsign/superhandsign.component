@@ -41,6 +41,7 @@
             this.qingchu = null;
             this.daxiaoprogeress = null;
             this.huabidaxiao = null;
+            this.huabidaxiaobox = null;
             this.colorxuanxiang = null;
             this.huabi = null;
             this.huabicaidan = null;
@@ -64,6 +65,7 @@
                 this.qingchu = this.getElement("qingchu");
                 this.daxiaoprogeress = this.getElement("daxiaoprogeress");
                 this.huabidaxiao = this.getElement("huabidaxiao");
+                this.huabidaxiaobox = this.getElement("huabidaxiaobox");
                 this.colorxuanxiang = this.getElement("colorxuanxiang");
                 this.huabi = this.getElement("huabi");
                 this.huabicaidan = this.getElement("huabicaidan");
@@ -152,7 +154,7 @@
                     copythis.huabidaxiao.setStyle("border-radius", sethuabidaxiao / 2);
 
                     copythis.handsign.setStyle("line-size", sethuabidaxiao);
-                    copythis.huabicaidan.refresh();
+                    copythis.huabidaxiaobox.refresh();
 
 
                 });
@@ -232,7 +234,7 @@
 
             <box id="huabicaidan" class="huabicaidan row-flex-center">
                 <box style="flex:2" class="row-flex-center">
-                    <box class="huabidaxiao">
+                    <box class="huabidaxiao" id="huabidaxiaobox">
                         <box id="huabidaxiao" style="width: 2;height: 2;background-color: #000000;border-radius: 1"></box>
                     </box>
 

@@ -2,15 +2,11 @@
     样式：
     公共样式；暂无
    
-    
-
     属性：
     rootid="root" ：跟节点ID
     ischeckbox="true" ：是否有checkbox，可通过setAttr动态设置(可通过js修改)。
     rootname="南京烽火星空通信发展有限公司"  ：根节点名称
     
-   
-
     方法：
     loadData(datas); loadSearchData(datas);
       数组元素
@@ -35,7 +31,7 @@
 <page>
     <module>
         <![CDATA[
-      require("checkbox/checkbox.component");
+           require("checkbox/checkbox.component");
     ]]>
     </module>
     <script>
@@ -47,8 +43,6 @@
         var ListAdapter = require("ListAdapter");
         //var $ = require('JQLite');
         var screenWidth = window.getScreenWidth();
-
-
 
         var Organization = function () {
             this.list = null;
@@ -75,9 +69,7 @@
             this.pathLocation = "";
 
         };
-
         module.exports = Organization;
-
         Organization.prototype = {
             created: function () {
                 //这里是得到组件所在的uixml页面的绝对路径目录
@@ -100,8 +92,6 @@
                 this.list.on("scrollStart", function (e, param) {
                     //在内部处理键盘隐藏
                     window.hideSip();
-
-
                 });
 
                 this.yixuan.on("click", function (e) {
@@ -154,7 +144,7 @@
 
                                 if (copythis.searcharr[i].id == userid) {
                                     copythis.searcharr[i].selected = false;
-                                   
+
                                     //这里做删除动画
                                     // copythis.selectAnimator(copythis.scrollselect,i);
                                     break;
@@ -174,7 +164,7 @@
                                 }
                             }
                         }
- 
+
                         // copythis.adapter.refresh();
                         var adapterData = {};
                         adapterData.sectionIndex = 0;
@@ -521,7 +511,7 @@
                 this.addTabbar(this.currentid, this.currentname);
             },
             addSelected: function (userdata) {
-
+                var copythis = this;
                 if (userdata.selected == true) {
 
                     this.selectedarr.push(userdata);
@@ -544,12 +534,19 @@
 
                     var dom = document.createElementByXml(xmlstr, this);
                     this.scrollselect.appendChild(dom);
+                    this.scrollselect.refresh();
+
+                    //android上刚添加完，需要延迟才能滚动
+                    time.setTimeout(function () {
+                        var json = {};
+                        json.animated = true;
+                        json.x = dom.getFrame().width + 8;
+                        copythis.scrollselect.scrollBy(json);
+
+                    }), 10;
 
 
-                    var json = {};
-                    json.animated = true;
-                    json.x = dom.getFrame().width + 8;
-                    this.scrollselect.scrollBy(json);
+
                     this.selectindex = this.selectindex + 1;
 
 
@@ -693,13 +690,7 @@
                         this.datas[i].selected = false;
                     }
                 }
-
-
-
                 this.adapter.refresh();
-
-
-
                 // console.log(m+";this.datas:"+ JSON.stringify(this.datas));
                 var children = this.scrolltabbar.getChildren();
 
@@ -722,11 +713,15 @@
                 this.scrolltabbar.refresh();
 
                 var copythis = this;
+                //刚添加完scroll的内容，这里做延迟，android上才能滚动
+                time.setTimeout(function () {
+                    var json2 = {};
+                    json2.animated = true;
+                    json2.x = dom.getFrame().width + 8;
+                    copythis.scrolltabbar.scrollBy(json2);
 
-                var json2 = {};
-                json2.animated = true;
-                json2.x = dom.getFrame().width + 8;
-                copythis.scrolltabbar.scrollBy(json2);
+                }, 10);
+
 
 
             },

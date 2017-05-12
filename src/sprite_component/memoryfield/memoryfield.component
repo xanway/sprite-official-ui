@@ -72,7 +72,7 @@
                 this.textfieldid = this.getElement("textfieldid");
 
                 this.textfieldid.on("textChanged", function (e) {
-                    // console.log("copythis.textfieldid.get"+ copythis.textfieldid.getAttr("value"));
+                    console.log("copythis.textfieldid.get" + copythis.textfieldid.getAttr("value"));
                     copythis.value = copythis.textfieldid.getAttr("value");
                     if (copythis.value != "") {
                         copythis.value = copythis.value.replace(/ /g, "");
@@ -100,8 +100,9 @@
                 });
 
                 this.textfieldid.on("focus", function (e) {
+                    console.log("进入了内部的focus");
                     copythis.datas = copythis.datas;
-                    console.log("111111111" + copythis.getAbsoluteFrame().y);
+
 
                     //向上遍历找到scroll
                     var parentdom = copythis;
@@ -154,42 +155,7 @@
 
 
                     }
-                    /*var thisframe = copythis.getAbsoluteFrame();
-                    if( screenHeight - (thisframe.y+thisframe.height) <= copythis.jianpanheight){
-                       var parentdom = copythis.getParent();
-    
-                      copythis.topTrans = 0-( thisframe.y+thisframe.height - (screenHeight - copythis.jianpanheight) );
-    
-    
-                      if(parentdom.getTag() == "scroll"){
-                       // console.log("进来了");
-    
-                          parentdom.setStyle("height", screenHeight - copythis.jianpanheight-64);
-                          parentdom.setClassStyle(null);
-    
-                             document.refresh();
-                             var transYjson = {};
-                             transYjson.y = copythis.topTrans;
-                             transYjson.animated = false;
-                             parentdom.scrollBy(transYjson);
-                             document.refresh();
-    
-    
-    
-    
-                      }
-                      else{
-    
-                          
-                           parentdom.setStyle("top", copythis.topTrans);
-    
-                     
-                          document.refresh();
-    
-    
-                       }
-                       
-                      }*/
+
                     //做延迟，然后弹出框pop才能根据位置弹出来 
                     time.setTimeout(function () {
 
@@ -219,43 +185,13 @@
 
 
 
-
-
-                    /* var parentdom = copythis.getParent();
-                                    
-                        if(parentdom.getTag() == "scroll"){
-                           
-                            parentdom.setClassStyle("flex1");
-                            document.refresh();
-      
-      
-      
-                        }
-                        else{
-                            parentdom.setStyle("top", 0);
-                            document.refresh();
-                        }  */
-                    // console.log("进入失去焦点"+copythis.memorypop.getStyle("display"));
-
                     if (copythis.memorypop.getStyle("display") == "block") {
                         //如果失去焦点弹出框还是显示，则重新定位位置;
                         //console.log("进入失去焦点");
-
                         copythis.showpop();
-
-
                     }
-
-
-
-
                 });
-
-
-
                 this.init();
-
-
             },
             loadData: function (datas) {
                 var copythis = this;
@@ -391,22 +327,11 @@
                 }
 
 
-
-
-
-
                 this.memorypop.setStyle("height", height);
                 this.memorypop.setStyle("top", top);
 
-
-
                 document.refresh();
-
                 this.adapter.refresh();
-
-
-
-
 
             },
             hidepop: function () {
@@ -524,23 +449,20 @@
 
             },
             init: function () {
-
-                var attrs = this.getAttrs();
-
-                for (var ar in attrs) {
-                    if (ar != "style" && ar != "id" && ar != "class") {
-                        //console.log(ar+":"+attrs[ar]);
-                        this.setAttr(ar, attrs[ar]);
-                    }
-
-                }
-
-
-
+                console.log("进入了init");
+                /* var attrs = this.getAttrs();
+ 
+                 for (var ar in attrs) {
+                     if (ar != "style" && ar != "id" && ar != "class") {
+                         //console.log(ar+":"+attrs[ar]);
+                         this.setAttr(ar, attrs[ar]);
+                     }
+                 }
+ */
             },
             //属性变更回调函数
             attrChanged: function (attrName, attrValue) {
-                this.textfieldid.setAttr(attrName, attrValue);
+                // this.textfieldid.setAttr(attrName, attrValue);
 
             },
             //样式变更回调函数
