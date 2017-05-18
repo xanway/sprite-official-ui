@@ -258,7 +258,7 @@ gridmenu1.loadData(json);
 > [getId(): string  获取UI组件Id标识](https://gitdocument.exmobi.cn/sprite-api/ggff.html#ptdom_19) 
 
 
-**loadData(jsonData:Object):void**
+**loadData(jsonData:Object,isrefresh:boolean):void**
 
 <code>注入网格数据</code>
 
@@ -277,6 +277,12 @@ jsonData，json格式如下：
 > -  tip：网格气泡
 > 
 > -  isSmallTip：是否显示圆点气泡
+
+isrefresh：[true,false]
+
+默认：true
+
+是否内部刷新，如果页面上有多个gridmenu控件，可以设置false，然后在组件外部统一刷新dom。 可选
 
 返回值： 无
 
