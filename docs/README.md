@@ -1,43 +1,83 @@
 # 官方封装组件使用说明
 ----------
 
-官方组件基于sprite平台提供的基础组件进行封装，首先获取封装组件 sprite_component 把该组件目录放入自己应用某个目录下面，另外还需要在应用程序的入口home.js里面进行路径配置，配置信息如下，示例中配置是直接把sprite_component放在apps更目录下，开发者根据实际目录修改路径配置信息。
+官方组件基于sprite平台提供的基础组件进行封装，使用官方组件有两种方式：
 
-![](image/fengzhuangzhujian_1.png)
+
+<h2 id="cid_0">使用Mbuilder组件管理导入组件</h2>
+
+
+在应用工程目录的component目录上，点击右键，选择“Sprite组件管理”，如图：
+
+<img src="image/fengzhuangzhujian_35.png" />
+
+然后点击“应用”选择自己需要的组件，会自动在component目录帮你添加好组件目录。
+
+<img src="image/fengzhuangzhujian_36.png" />
+
+并且还会在入口文件的require.json帮我们配置好需要应用的组件，如图：
+
+<img src="image/fengzhuangzhujian_37.png" />
+
+注意：只有mbuilder管理的组件才能写成${component:xxxx}这种形式，代码在构建之后会自动在out目录生成实际的组件目录路径，如图：
+
+<img src="image/fengzhuangzhujian_38.png" />
+
+<img src="image/fengzhuangzhujian_39.png" />
+
+
+只有out目录下的资源，才是真正同步到手机的。
+
+如果想删除某个组件，只需要在src目录下的require.json配置中，删掉对应的组件配置代码即可，out目录也会对应删除该组件目录。
+
+如果想修改组件马上看下效果，可以直接修改out目录的代码，不过修改之后自己记得copy出来，否者会在src目录代码下次同步的时候给覆盖掉。如果想自己在官方组件基础之上加点东西，可以参考第二节的做法。
+
+注意：mbuilder对组件管理的目录是component，所以开发者不能在自己的应用中有相同的目录。如果自定义组件，可以另起名字。
+
+另外还需要注意的是，不要修改component目录下的代码，修改了也无效，mbuilder会在下次组件同步的时候给替换掉。
+
+
+
+<h2 id="cid_0">自定义目录导入组件</h2>
+
+如果开发者有自己的想法，想修改官方组件可以自己直接从[https://github.com/yuanhongqian/SpriteUI](https://github.com/yuanhongqian/SpriteUI)  下载官方组件源码，然后进行修改。具体使用如下：
+
+
+首先获取封装组件 sprite_component 把该组件目录放入自己应用某个目录下面，另外还需要在应用程序的入口配置文件require.json里面进行路径配置，配置信息如下，示例中配置是直接把sprite_component放在src更目录下，开发者根据实际目录修改路径配置信息。
+
 
 >配置信息如下：  
 
 ```javascript
-require.config({
-jsPaths:{
-},
-componentPaths:{
-//官方封装组件引用
-"componentUI":"res:sprite_component/tmpl/component.component",
-"buttonUI":"res:sprite_component/button/button.component",
-"titlebarUI":"res:sprite_component/titlebar/titlebar.component",
-"menubarUI":"res:sprite_component/menubar/menubar.component",
-"gridmenuUI":"res:sprite_component/gridmenu/gridmenu.component",
-"newsliderUI":"res:sprite_component/newslider/newslider.component",
-"checkboxUI":"res:sprite_component/checkbox/checkbox.component",
-"radioUI":"res:sprite_component/radio/radio.component",
-"switchUI":"res:sprite_component/switch/switch.component",
-"selectUI":"res:sprite_component/select/select.component",
-"tabbarUI":"res:sprite_component/tabbar/tabbar.component",
-"indexbarUI":"res:sprite_component/indexbar/indexbar.component",
-"popmenuUI":"res:sprite_component/popmenu/popmenu.component",
-"popbottommenuUI":"res:sprite_component/popbottommenu/popbottommenu.component",
-"sliderbarUI":"res:sprite_component/sliderbar/sliderbar.component",
-"audioplayUI":"res:sprite_component/audioplay/audioplay.component",
-"superhandsignUI":"res:sprite_component/superhandsign/superhandsign.component",
-"organizationUI":"res:sprite_component/organization/organization.component",
-"memoryfieldUI":"res:sprite_component/memoryfield/memoryfield.component",
-"audiorecordUI":"res:sprite_component/audiorecord/audiorecord.component"
-},
-cssPaths:{ 
-
+{
+	"jsPaths":{
+	},
+	"componentPaths":{
+	"componentUI":"res:sprite_component/tmpl/component.component",
+	"buttonUI":"res:sprite_component/button/button.component",
+	"titlebarUI":"res:sprite_component/titlebar/titlebar.component",
+	"menubarUI":"res:sprite_component/menubar/menubar.component",
+	"gridmenuUI":"res:sprite_component/gridmenu/gridmenu.component",
+	"newsliderUI":"res:sprite_component/newslider/newslider.component",
+	"checkboxUI":"res:sprite_component/checkbox/checkbox.component",
+	"radioUI":"res:sprite_component/radio/radio.component",
+	"switchUI":"res:sprite_component/switch/switch.component",
+	"selectUI":"res:sprite_component/select/select.component",
+	"tabbarUI":"res:sprite_component/tabbar/tabbar.component",
+	"indexbarUI":"res:sprite_component/indexbar/indexbar.component",
+	"popmenuUI":"res:sprite_component/popmenu/popmenu.component",
+	"popbottommenuUI":"res:sprite_component/popbottommenu/popbottommenu.component",
+	"sliderbarUI":"res:sprite_component/sliderbar/sliderbar.component",
+	"audioplayUI":"res:sprite_component/audioplay/audioplay.component",
+	"superhandsignUI":"res:sprite_component/superhandsign/superhandsign.component",
+	"organizationUI":"res:sprite_component/organization/organization.component",
+	"memoryfieldUI":"res:sprite_component/memoryfield/memoryfield.component",
+	"audiorecordUI":"res:sprite_component/audiorecord/audiorecord.component"
+	},
+	"cssPaths":{ 
+	
+	}
 }
-});
 ```
 
 需要注意的是，这个配置必须写在home.js的最开始位置，因为android客户端需要在最开始的时候初始化这些配置。  
