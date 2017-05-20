@@ -222,8 +222,7 @@ popjson.datas.push(json);
 				if (this.adapter == null) {
 					this.adapter = new ListAdapter();
 					this.adapter.on("getCellId", function (e, position) {
-						var data = datas[position];
-						return data.type;
+						return "cell";
 
 					});
 					this.adapter.on("getSectionText", function (e, sectionindex) {

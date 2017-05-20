@@ -1,0 +1,5 @@
+{
+    "require_id": "pluginupdateUI",
+    "index": "pluginupdate.component",
+    "version": "1.0.0"
+}

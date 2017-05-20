@@ -1,0 +1,5 @@
+{
+    "require_id": "audiorecordUI",
+    "index": "audiorecord.component",
+    "version": "1.0.0"
+}

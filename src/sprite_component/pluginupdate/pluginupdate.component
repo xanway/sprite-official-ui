@@ -15,236 +15,244 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
 事件：无
 -->
 <page>
-  <script>
-    <![CDATA[
+    <script>
+        <![CDATA[
 
-    var window = require("Window");
-    var document = require("Document");
-    var ListAdapter = require("ListAdapter");
-    var console = require("Console");
-    var time = require("Time");
-    var http = require("Http");
-    var file = require("File");
-
-
-    var screenWidth = window.getScreenWidth();
-    var screenHeight = window.getScreenHeight();
-
-    var PluginUpdate = function () {
-      this.popbgid = null;
-      this.popcontent = null;
-      this.myProgress = null
-      this.pathLocation = "";
-      this.rootDom = null;
-      this.progressText = null;
-      this.popshow = false;
-      this.popProgress = null;
-      this.pluginJson = null;
-      this.progressText2 = null;
-      this.progressBox = null;
-
-    };
-
-    module.exports = PluginUpdate;
-
-    PluginUpdate.prototype =
-      {
-
-        created: function () {
-          //console.log("进入了created");
-        },
-        //属性变更回调函数
-        attrChanged: function (attrName, attrValue) {
-
-        },
-        //样式变更回调函数
-        styleChanged: function (styleName, styleValue) {
-
-        },
-        pluginupdateInit: function (popjson) {
-          this.pluginJson = popjson;
-          //这里是得到组件所在的uixml页面的绝对路径目录
-          this.pathLocation = document.getPathLocation();
-          this.rootDom = document.getRootElement();
-          this.popbgid = this.getElement("popbgid");
-          this.myProgress = this.getElement("myProgress");
-          this.progressText = this.getElement("progressText");
-          this.popProgress = this.getElement("popProgress");
-          this.progressText2 = this.getElement("progressText2");
-          this.progressBox = this.getElement("progressBox");
-
-          if (this.pluginJson.lineColor != null) {
-            this.myProgress.setStyle("line-color", this.pluginJson.lineColor);
-          }
-
-          if (this.pluginJson.lineProgressColor != null) {
-            this.myProgress.setStyle("line-progress-color", this.pluginJson.lineProgressColor);
-
-          }
-
-          this.remove();
-          this.rootDom.appendChild(this);
-          this.rootDom.refresh();
-
-        },
-        getVersion: function (fun) {
-          var option = {};
-          option.url = this.pluginJson.versionUrl;
-          option.method = "GET";
-          option.data = "";
-          option.isBlock = true;
-          option.connectTimeout = 5;
-          option.reqCharset = "utf-8";
-          option.isBlock = false;
-          http.ajax(option, function (json) {
-            if (json.status == 200) {
-
-              //成功
-              fun(1, json.data);
-            }
-            else {
-              fun(-1, "网络请求失败！");
-            }
-
-          });
-
-        },
-        pluginDown: function (fun) {
-
-          var copythis = this;
-          if (this.popshow == false) {
-
-            this.popbgid.setStyle("visibility", "visible");
-            var jsonData1 = {};
-            var aniAry1 = new Array();
-
-            //第一个动画
-            var jsonAni1 = {};
-            jsonAni1.delay = 0;
-            jsonAni1.duration = 160;
-            jsonAni1.curve = "linear";
-            jsonAni1.props = {};
-            jsonAni1.props.backgroundColor = "rgba(0,0,0,0.3)";
-            aniAry1.push(jsonAni1);
-            jsonData1.animators = aniAry1;
-            this.popbgid.startAnimator(jsonData1, function () {
-              copythis.popbgid.releaseAnimator();
-              copythis.popshow = true;
-            });
+            var window = require("Window");
+            var document = require("Document");
+            var ListAdapter = require("ListAdapter");
+            var console = require("Console");
+            var ui = require("UI");
+            var time = require("Time");
+            var http = require("Http");
+            var file = require("File");
 
 
+            var screenWidth = window.getScreenWidth();
+            var screenHeight = window.getScreenHeight();
 
-            var option = {};
-            var base_https = this.pluginJson.pluginDownUrl;
-            var savePath = "res:download/"
-            var data = "";
-            option.url = base_https;
-            option.data = data;
-            option.isBlock = false;
-            option.timeout = 30;
-            option.connectTimeout = 5;
-            option.method = "GET";
-            option.path = savePath;
+            var PluginUpdate = function() {
+                this.popbgid = null;
+                this.popcontent = null;
+                this.myProgress = null
+                this.pathLocation = "";
+                this.rootDom = null;
+                this.progressText = null;
+                this.popshow = false;
+                this.popProgress = null;
+                this.pluginJson = null;
+                this.progressText2 = null;
+                this.progressBox = null;
 
-            httpId = http.download(option,
-              function (responseData) {
-                if (responseData.status >= 200 && responseData.status <= 299) {
+            };
 
-                  var zipjson = {};
-                  zipjson.srcPath = responseData.path;
-                  console.log("==========" + responseData.path);
-                  zipjson.dstPath = "file:" + file.getAbsolutePath("res:").replace(/\/apps/g, "");
-                  file.unZip(zipjson, function (zipData) {
-                    if (zipData.code == 0) {
-                      //解压成功
-                      //移除之前zip包
-                      console.log("jiea==========" + zipData.dstPath);
-                      var option = {};
-                      option.srcPath = responseData.path;
-                      file.deleteFile(option);
-                      copythis.hide();
-                      fun(1);
+            module.exports = PluginUpdate;
+
+            PluginUpdate.prototype = {
+
+                created: function() {
+                    //console.log("进入了created");
+                },
+                //属性变更回调函数
+                attrChanged: function(attrName, attrValue) {
+
+                },
+                //样式变更回调函数
+                styleChanged: function(styleName, styleValue) {
+
+                },
+                pluginupdateInit: function(popjson) {
+                    this.pluginJson = popjson;
+                    //这里是得到组件所在的uixml页面的绝对路径目录
+                    this.pathLocation = document.getPathLocation();
+                    this.rootDom = document.getRootElement();
+                    this.popbgid = this.getElement("popbgid");
+                    this.myProgress = this.getElement("myProgress");
+                    this.progressText = this.getElement("progressText");
+                    this.popProgress = this.getElement("popProgress");
+                    this.progressText2 = this.getElement("progressText2");
+                    this.progressBox = this.getElement("progressBox");
+
+                    if (this.pluginJson.lineColor != null) {
+                        this.myProgress.setStyle("line-color", this.pluginJson.lineColor);
                     }
-                    else {
-                      //解压失败 
-                      copythis.hide();
-                      fun(-2);
+
+                    if (this.pluginJson.lineProgressColor != null) {
+                        this.myProgress.setStyle("line-progress-color", this.pluginJson.lineProgressColor);
+
                     }
-                  });
+
+                    this.remove();
+                    this.rootDom.appendChild(this);
+                    this.rootDom.refresh();
+
+                },
+                getVersion: function(fun) {
+                    var option = {};
+                    option.url = this.pluginJson.versionUrl;
+                    option.method = "GET";
+                    option.data = "";
+                    option.isBlock = true;
+                    option.connectTimeout = 5;
+                    option.reqCharset = "utf-8";
+                    option.isBlock = false;
+                    http.ajax(option, function(json) {
+                        if (json.status == 200) {
+                            //成功
+                            fun(1, json.data);
+                        } else {
+                            fun(-1, "网络请求失败！");
+                        }
+
+                    });
+
+                },
+                pluginDown: function(fun, downloadUrl) {
+                    console.log("downloadUrl:" + downloadUrl);
+
+                    if (downloadUrl == null || downloadUrl == "") {
+
+                        ui.toast({
+                            "content": "下载地址不能为空"
+                        });
+                        return;
+                    }
+
+                    var copythis = this;
+                    if (this.popshow == false) {
+
+                        this.popbgid.setStyle("visibility", "visible");
+                        var jsonData1 = {};
+                        var aniAry1 = new Array();
+
+                        //第一个动画
+                        var jsonAni1 = {};
+                        jsonAni1.delay = 0;
+                        jsonAni1.duration = 160;
+                        jsonAni1.curve = "linear";
+                        jsonAni1.props = {};
+                        jsonAni1.props.backgroundColor = "rgba(0,0,0,0.3)";
+                        aniAry1.push(jsonAni1);
+                        jsonData1.animators = aniAry1;
+                        this.popbgid.startAnimator(jsonData1, function() {
+                            copythis.popbgid.releaseAnimator();
+                            copythis.popshow = true;
+                        });
+
+
+
+                        var option = {};
+                        var base_https = downloadUrl;
+                        var savePath = "res:download/"
+                        var data = "";
+                        option.url = base_https;
+                        option.data = data;
+                        option.isBlock = false;
+                        option.timeout = 30;
+                        option.connectTimeout = 5;
+                        option.method = "GET";
+                        option.path = savePath;
+
+                        httpId = http.download(option,
+                            function(responseData) {
+                                if (responseData.status >= 200 && responseData.status <= 299) {
+                                    console.log(responseData);
+
+                                    var zipjson = {};
+                                    zipjson.srcPath = responseData.path;
+
+                                    // zipjson.dstPath = "file:" + file.getAbsolutePath("res:").replace(/\/apps/g, "");
+                                    zipjson.dstPath = "file:" + file.getAbsolutePath("res:");
+                                    copythis.progressText2.setText("正在解压...");
+                                    file.unZip(zipjson, function(zipData) {
+                                        if (zipData.code == 0) {
+                                            //解压成功
+                                            //移除之前zip包
+
+                                            var option = {};
+                                            option.srcPath = responseData.path;
+                                            file.deleteFile(option);
+                                            copythis.hide();
+
+                                            fun(1);
+                                        } else {
+                                            //解压失败 
+                                            copythis.hide();
+                                            fun(-2);
+                                        }
+                                    });
+                                } else {
+                                    //网络请求失败
+                                    copythis.hide();
+                                    fun(-1);
+                                }
+                            },
+                            function(progressjson) {
+
+                                var rate = progressjson.receivedLength / progressjson.totalLength;
+                                copythis.myProgress.setAttr("progress", rate);
+                                copythis.progressText.setText(Math.floor(rate * 100) + "%");
+
+                                if (progressjson.totalLength >= 1024 * 1024) {
+                                    var a = progressjson.receivedLength / 1024 / 1024;
+                                    var b = progressjson.totalLength / 1024 / 1024;
+                                    copythis.progressText2.setText(a.toFixed(2) + "M/" + b.toFixed(2) + "M");
+                                } else if (progressjson.totalLength >= 1024) {
+                                    var a = progressjson.receivedLength / 1024;
+                                    var b = progressjson.totalLength / 1024;
+                                    copythis.progressText2.setText(a.toFixed(2) + "KB/" + b.toFixed(2) + "KB");
+                                }
+                            }
+                        );
+
+
+
+                    }
+                },
+                hide: function() {
+
+                    var copythis = this;
+                    if (this.popshow == true) {
+                        var jsonData1 = {};
+                        var aniAry1 = new Array();
+                        //第一个动画
+                        var jsonAni1 = {};
+                        jsonAni1.delay = 0;
+                        jsonAni1.duration = 140;
+                        jsonAni1.curve = "linear";
+                        jsonAni1.props = {};
+                        jsonAni1.props.backgroundColor = "rgba(0,0,0,0)";
+                        aniAry1.push(jsonAni1);
+                        jsonData1.animators = aniAry1;
+                        this.popbgid.startAnimator(jsonData1, function() {
+                            copythis.popshow = false;
+                            copythis.popbgid.setStyle("visibility", "hidden");
+                            copythis.popbgid.releaseAnimator();
+                        });
+                    }
+                },
+                loadData: function(options) {
+
+
                 }
-                else {
-                  //网络请求失败
-                  copythis.hide();
-                  fun(-1);
-                }
-              },
-              function (progressjson) {
+            }
+        ]]>
+    </script>
+    <style>
+        @import url("pluginupdate.color.css");
+        @import url("pluginupdate.layout.css");
+    </style>
+    <ui>
+        <box id="popbgid" class="popbg">
+            <box id="progressBox" class="progressBox">
+                <box id="popProgress" class="popProgress">
+                    <progress id="myProgress" type="circle" class="myProgress" progress="0" />
+                    <text id="progressText" class="progressText">0%</text>
 
-                var rate = progressjson.receivedLength / progressjson.totalLength;
-                copythis.myProgress.setAttr("progress", rate);
-                copythis.progressText.setText(Math.floor(rate * 100) + "%");
-
-                if (progressjson.totalLength >= 1024 * 1024) {
-                  var a = progressjson.receivedLength / 1024 / 1024;
-                  var b = progressjson.totalLength / 1024 / 1024;
-                  copythis.progressText2.setText(a.toFixed(2) + "M/" + b.toFixed(2) + "M");
-                }
-                else if (progressjson.totalLength >= 1024) {
-                  var a = progressjson.receivedLength / 1024;
-                  var b = progressjson.totalLength / 1024;
-                  copythis.progressText2.setText(a.toFixed(2) + "KB/" + b.toFixed(2) + "KB");
-                }
-              }
-            );
-
-
-
-          }
-        },
-        hide: function () {
-
-          var copythis = this;
-          if (this.popshow == true) {
-            var jsonData1 = {};
-            var aniAry1 = new Array();
-            //第一个动画
-            var jsonAni1 = {};
-            jsonAni1.delay = 0;
-            jsonAni1.duration = 140;
-            jsonAni1.curve = "linear";
-            jsonAni1.props = {};
-            jsonAni1.props.backgroundColor = "rgba(0,0,0,0)";
-            aniAry1.push(jsonAni1);
-            jsonData1.animators = aniAry1;
-            this.popbgid.startAnimator(jsonData1, function () {
-              copythis.popshow = false;
-              copythis.popbgid.setStyle("visibility", "hidden");
-              copythis.popbgid.releaseAnimator();
-            });
-          }
-        },
-        loadData: function (options) {
-
-
-        }
-      }
-    ]]>
-  </script>
-  <style>
-    @import url("pluginupdate.color.css");
-    @import url("pluginupdate.layout.css");
-  </style>
-  <ui>
-    <box id="popbgid" class="popbg">
-      <box id="progressBox" class="progressBox">
-        <box id="popProgress" class="popProgress">
-          <progress id="myProgress" type="circle" class="myProgress" progress="0" />
-          <text id="progressText" class="progressText">100%</text>
+                </box>
+                <text id="progressText2" class="progressText2">0/0</text>
+            </box>
 
         </box>
-        <text id="progressText2" class="progressText2">0/0</text>
-      </box>
-
-    </box>
-  </ui>
+    </ui>
 </page>

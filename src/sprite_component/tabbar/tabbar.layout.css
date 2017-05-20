@@ -13,8 +13,10 @@ line{
 
 .tabbar-text-box{
    height:44dp;
-   align-items:center;
+   
    justify-content:center;	
+   align-items: center;
+  
 }
 
 
@@ -22,7 +24,7 @@ line{
 {
 	font-size: 18;
 	text-align: center;
-	margin: 10 0 10 0;
+	margin:  0 ;
 	singleline:true;
 	line-space:0;
 }
@@ -40,7 +42,8 @@ line{
 {
 	font-size: 15;
 	text-align: center;
-	margin: 10 0 10 0;
-	singleline:true;
+	margin: 0;
+	singleline:true;   
 	line-space:0;
+	
 }

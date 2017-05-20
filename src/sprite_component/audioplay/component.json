@@ -1,0 +1,5 @@
+{
+    "require_id": "audioplayUI",
+    "index": "audioplay.component",
+    "version": "1.0.0"
+}

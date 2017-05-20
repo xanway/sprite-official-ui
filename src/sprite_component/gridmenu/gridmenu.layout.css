@@ -74,7 +74,7 @@
 .gridmenu-image{
 	width:45;
 	height:45;
-	margin: 8 24 8 24;
+	margin: 8 24 4 24;
 }
 
 
@@ -82,4 +82,5 @@
 	position:absolute;
 	top:0;
 	left:0;
+	
 }

@@ -45,39 +45,38 @@
     </module>
     <script>
         <![CDATA[
-        var document = require("Document");
-        var window = require("Window");
-        var screenWidth_s = window.getScreenWidth();
-        var screenHeight_s = window.getScreenHeight();
-        var console = require("Console");
-        var ui = require("UI");
+            var document = require("Document");
+            var window = require("Window");
+            var screenWidth_s = window.getScreenWidth();
+            var screenHeight_s = window.getScreenHeight();
+            var console = require("Console");
+            var ui = require("UI");
 
-        var Gridmenu = function () {
-            this.gridmenu = null;
-            this.jsondatas = null;
-            this.tipColor = "#ffffff";
-            this.tipbackgroundColor = "red";
-            this.color = "#000000";
-            this.colorClick = "#549FF7";
-            this.backgroundColorClick = "#F5F5F5";
+            var Gridmenu = function() {
+                this.gridmenu = null;
+                this.jsondatas = null;
+                this.tipColor = "#ffffff";
+                this.tipbackgroundColor = "red";
+                this.color = "#000000";
+                this.colorClick = "#549FF7";
+                this.backgroundColorClick = "#F5F5F5";
 
-            this.iconWidth = "45";
-            this.iconHeight = "45";
-            this.fontSize = "13";
+                this.iconWidth = "45";
+                this.iconHeight = "45";
+                this.fontSize = "13";
 
-            this.col = "4";
-            this.landcol = "8";
+                this.col = "4";
+                this.landcol = "8";
 
-            this.pathLocation = "";
+                this.pathLocation = "";
 
 
-        };
+            };
 
-        module.exports = Gridmenu;
+            module.exports = Gridmenu;
 
-        Gridmenu.prototype =
-            {
-                created: function () {
+            Gridmenu.prototype = {
+                created: function() {
                     //这里是得到组件所在的uixml页面的绝对路径目录
                     this.pathLocation = document.getPathLocation();
                     this.gridmenu = this.getElement("gridmenu");
@@ -85,7 +84,7 @@
 
                     var copythis = this;
 
-                    this.gridmenu.on("click", function (e) {
+                    this.gridmenu.on("click", function(e) {
 
                         var item = e.target;
 
@@ -99,7 +98,7 @@
                     });
 
 
-                    this.gridmenu.on("touchDown", function (e) {
+                    this.gridmenu.on("touchDown", function(e) {
 
                         var item = e.target;
 
@@ -114,7 +113,7 @@
                         }
                     });
 
-                    this.gridmenu.on("touchUp", function (e) {
+                    this.gridmenu.on("touchUp", function(e) {
 
                         var item = e.target;
 
@@ -129,7 +128,7 @@
                         }
                     });
 
-                    this.gridmenu.on("touchCancel", function (e) {
+                    this.gridmenu.on("touchCancel", function(e) {
 
                         var item = e.target;
 
@@ -148,7 +147,7 @@
 
 
                 },
-                init: function () {
+                init: function() {
 
                     this.setStyle("tip-color", this.getStyle("tip-color"));
                     this.setStyle("tip-background-color", this.getStyle("tip-background-color"));
@@ -162,12 +161,22 @@
                     if (screenWidth_s > screenHeight_s) {
                         this.setAttr("landcol", this.getAttr("landcol"));
 
-                    }
-                    else {
+                    } else {
                         this.setAttr("col", this.getAttr("col"));
                     }
                 },
-                loadData: function (jsondatas) {
+                loadData: function(jsondatas) {
+
+
+                    var isRefresh = true;
+                    if (arguments[1] == null) {
+                        isRefresh = true;
+                    } else if (arguments[1] == true) {
+                        isRefresh = true;
+                    } else if (arguments[1] == false) {
+
+                        isRefresh = false;
+                    }
                     this.jsondatas = jsondatas;
                     this.gridmenu.clear();
 
@@ -177,8 +186,7 @@
 
                         if ((jsondatas.datas[i].icon).indexOf("res:") > -1 || (jsondatas.datas[i].icon).indexOf("http://") > -1 || (jsondatas.datas[i].icon).indexOf("https://") > -1) {
 
-                        }
-                        else {
+                        } else {
 
                             jsondatas.datas[i].icon = this.pathLocation + "/" + jsondatas.datas[i].icon;
                         }
@@ -193,8 +201,7 @@
                             tipxml = '<box type="tipsmall" itemindex="' + i + '" style="background-color:' + this.tipbackgroundColor + '" class="gridmenu-item-tip-small"></box>';
 
                             tipxml = tipxml + '<box type="tip" itemindex="' + i + '" class="gridmenu-item-tip" style="background-color:' + this.tipbackgroundColor + ';display:none"><text class="gridmenu-item-tip-text" style="color:' + this.tipColor + '"></text></box>';
-                        }
-                        else if (jsondatas.datas[i].tip != null && jsondatas.datas[i].tip != "" && jsondatas.datas[i].tip != "0") {
+                        } else if (jsondatas.datas[i].tip != null && jsondatas.datas[i].tip != "" && jsondatas.datas[i].tip != "0") {
 
                             tipxml = '<box type="tipsmall" itemindex="' + i + '" style="background-color:' + this.tipbackgroundColor + ';display:none" class="gridmenu-item-tip-small"></box>';
 
@@ -202,28 +209,32 @@
                         }
 
 
-                        var xmlstr = '<box id="id_' + i + '" itemindex="' + i + '" class="row-flex-center" style="background-color:#ffffff"> '
-                            + '<box itemindex="' + i + '" class="column-flex-center" > '
-                            + ' <image itemindex="' + i + '" style="width:' + this.iconWidth + ';height:' + this.iconHeight + ';" class="gridmenu-image" src="' + jsondatas.datas[i].icon + '"/>'
-                            + '<text id="itemtext_' + i + '" itemindex="' + i + '" style="margin:8 0 4 0;color:' + this.color + ';font-size:' + this.fontSize + ';">' + jsondatas.datas[i].text + '</text>'
-                            + '' + tipxml + ''
-                            + '</box>'
-                            + '</box>';
+                        var xmlstr = '<box id="id_' + i + '" itemindex="' + i + '" class="row-flex-center" style="background-color:#ffffff"> ' +
+                            '<box itemindex="' + i + '" class="column-flex-center" > ' +
+                            ' <image itemindex="' + i + '" style="width:' + this.iconWidth + ';height:' + this.iconHeight + ';" class="gridmenu-image" src="' + jsondatas.datas[i].icon + '"/>' +
+                            '<text id="itemtext_' + i + '" itemindex="' + i + '" style="margin:8 0 4 0;color:' + this.color + ';font-size:' + this.fontSize + ';">' + jsondatas.datas[i].text + '</text>' +
+                            '' + tipxml + '' +
+                            '</box>' +
+                            '</box>';
 
                         var dom = document.createElementByXml(xmlstr, this);
                         this.gridmenu.appendChild(dom);
 
                     }
-                    this.gridmenu.refresh();
+                    // this.gridmenu.refresh();
+
+                    if (isRefresh == true) {
+                        document.refresh();
+                    }
+
 
                 },
-                gridmenuRefresh: function () {
+                gridmenuRefresh: function() {
                     var childarr = this.gridmenu.getChildren();
                     for (var i = 0; i < childarr.length; i++) {
                         if ((this.jsondatas.datas[i].icon).indexOf("res:") > -1 || (this.jsondatas.datas[i].icon).indexOf("http:") > -1 || (this.jsondatas.datas[i].icon).indexOf("https://") > -1) {
 
-                        }
-                        else {
+                        } else {
                             this.jsondatas.datas[i].icon = this.pathLocation + "/" + this.jsondatas.datas[i].icon;
                         }
 
@@ -249,9 +260,8 @@
                             tipsmalldom.setStyle("display", "block");
                             tipdom.setStyle("display", "none");
 
-                           // console.log(tipsmalldom);
-                        }
-                        else {
+                            // console.log(tipsmalldom);
+                        } else {
                             tipsmalldom.setStyle("display", "none");
                         }
 
@@ -271,12 +281,12 @@
 
 
                 },
-                orientationChanged: function (orientation, screenWidth, screenHeight) {
+                orientationChanged: function(orientation, screenWidth, screenHeight) {
                     screenWidth_s = screenWidth;
                     screenHeight_s = screenHeight;
                     //console.log("screenWidth_s:"+screenWidth_s);
                     if (orientation == "landscape") {
-                      
+
                         this.setAttr("landcol", this.getAttr("landcol"));
                     }
 
@@ -289,7 +299,7 @@
                 },
 
                 //属性变更回调函数
-                attrChanged: function (attrName, attrValue) {
+                attrChanged: function(attrName, attrValue) {
                     if (attrName == "col") {
                         if (attrValue != null) {
                             this.col = attrValue;
@@ -301,13 +311,12 @@
                     if (attrName == "landcol") {
                         if (attrValue != null) {
                             this.landcol = attrValue;
-                        }
-                        else {
+                        } else {
                             this.landcol = this.col;
                         }
                         // console.log("this.col:"+this.col);
                         if (screenWidth_s > screenHeight_s) {
-                             console.log("this.col:"+this.col);
+                            //   console.log("this.col:" + this.col);
                             this.gridmenu.setAttr("col", this.landcol);
                         }
                     }
@@ -315,7 +324,7 @@
 
                 },
                 //样式变更回调函数
-                styleChanged: function (styleName, styleValue) {
+                styleChanged: function(styleName, styleValue) {
                     if (styleName == "color") {
                         if (styleValue != null) {
                             this.color = styleValue;
@@ -369,7 +378,7 @@
                     }
                 }
             }
-    ]]>
+        ]]>
     </script>
     <style>
         @import url("gridmenu.layout.css");

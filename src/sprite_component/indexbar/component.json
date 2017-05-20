@@ -1,0 +1,5 @@
+{
+    "require_id": "indexbarUI",
+    "index": "indexbar.component",
+    "version": "1.0.0"
+}

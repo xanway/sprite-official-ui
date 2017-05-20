@@ -1,0 +1,5 @@
+{
+    "require_id": "organizationUI",
+    "index": "organization.component",
+    "version": "1.0.0"
+}
