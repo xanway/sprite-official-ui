@@ -24,8 +24,10 @@
     loadData(json): 格式jsons.datas数组，属性如下
         itemJson.icon = "res:yuanhongqian/image/nxinxi.png";
         itemJson.text = "消息";
-        itemJson.isSmallTip = true; 设置后tip值无效
-        itemJson.tip = "4"; 
+        itemJson.isSmallTip = true;
+        设置后tip值无效
+        itemJson.tip = "4";
+        
 
      gridmenuRefresh():  如果动态修改tip等值，需要执行gridmenuRefresh()
 
@@ -180,11 +182,16 @@
                     this.jsondatas = jsondatas;
                     this.gridmenu.clear();
 
-                    for (var i = 0; i < jsondatas.datas.length; i++) {
+                    for (var i = 0;
+                    i < jsondatas.datas.length;
+                    i++) {
 
                         var tipxml = '';
 
-                        if ((jsondatas.datas[i].icon).indexOf("res:") > -1 || (jsondatas.datas[i].icon).indexOf("http://") > -1 || (jsondatas.datas[i].icon).indexOf("https://") > -1) {
+                        if ((jsondatas.datas[i].icon)
+                            .indexOf("res:") > -1 || (jsondatas.datas[i].icon)
+                            .indexOf("http://") > -1 || (jsondatas.datas[i].icon)
+                            .indexOf("https://") > -1) {
 
                         } else {
 
@@ -221,18 +228,25 @@
                         this.gridmenu.appendChild(dom);
 
                     }
-                    // this.gridmenu.refresh();
+
 
                     if (isRefresh == true) {
-                        document.refresh();
+
+                        this.gridmenu.refresh();
                     }
+
 
 
                 },
                 gridmenuRefresh: function() {
                     var childarr = this.gridmenu.getChildren();
-                    for (var i = 0; i < childarr.length; i++) {
-                        if ((this.jsondatas.datas[i].icon).indexOf("res:") > -1 || (this.jsondatas.datas[i].icon).indexOf("http:") > -1 || (this.jsondatas.datas[i].icon).indexOf("https://") > -1) {
+                    for (var i = 0;
+                    i < childarr.length;
+                    i++) {
+                        if ((this.jsondatas.datas[i].icon)
+                            .indexOf("res:") > -1 || (this.jsondatas.datas[i].icon)
+                            .indexOf("http:") > -1 || (this.jsondatas.datas[i].icon)
+                            .indexOf("https://") > -1) {
 
                         } else {
                             this.jsondatas.datas[i].icon = this.pathLocation + "/" + this.jsondatas.datas[i].icon;
