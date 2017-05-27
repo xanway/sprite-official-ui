@@ -1,10 +1,19 @@
 <!--
 样式：公共样式;
 selected-color：selected时候文字颜色，
+text-align: select内部文字布局位置
+color：select内部文字颜色
+font-size:内部字体大小
+title-background-color: pop弹出框的title背景颜色
+title-color:title文字颜色;
+prompt-color:提示文字颜色
+
+
 属性：
 value: 设置value可以直接选择该值对应的选项（可以js修改）
 title: 设置弹出框的title文字内容
 readonly: 设置只读true,false（可以js修改）
+prompt:设置提示文字
 
 方法：
 公共方法
@@ -15,255 +24,337 @@ click(): 模拟点击select
 change：监听select属性改变 
 -->
 <page>
-	<module>
-		<![CDATA[
+    <module>
+        <![CDATA[
        require("selectpop.component");
     ]]>
 
-	</module>
-	<script>
-		<![CDATA[
-    	var document = require("Document");
-		var window = require("Window");
-		var time = require("Time");
-		var console = require("Console");
+    </module>
+    <script>
+        <![CDATA[
+            var document = require("Document");
+            var window = require("Window");
+            var time = require("Time");
+            var console = require("Console");
 
-		var getRootElement = null;
-		var Select = function () {
+            var getRootElement = null;
+            var Select = function() {
 
-			this.box = null;
-			this.boxcheck = null;
-			this.imageid = null;
-			this.selectpop = null;
-			this.readonlydom = null;
+                this.box = null;
+                this.boxcheck = null;
+                this.imageid = null;
+                this.selectpop = null;
+                this.readonlydom = null;
 
-			this.options = [];
+                this.options = [];
 
-			this.text = null;
-			this.title = "选择";
-			this.readonly = "false";
-			this.value = '';
+                this.text = null;
+                this.title = "选择";
+                this.readonly = "false";
+                this.value = '';
+                this.prompt = "";
 
-			this.selectColor = "#549FF7";
+                this.selectColor = "#549FF7";
+                this.color = "#000000";
+                this.promptColor = "#D2D3D7";
+                this.textalign = "left";
+                this.titleBackgroundColor = "#ffffff";
+                this.titleColor = "#000000";
+                this.fontSize = 16;
 
-			this.taginit = true;
-
-		};
-
-		module.exports = Select;
-
-		Select.prototype =
-			{
-
-				created: function () {
-					getRootElement = document.getRootElement();
-					var copythis = this;
-					this.box = this.getElement("box");
-					this.text = this.getElement("text");
-					this.boxcheck = this.getElement("boxcheck");
-					this.imageid = this.getElement("imageid");
-					this.readonlydom = this.getElement("readonly");
-
-					if (this.getAttr("title")) {
-						this.title = this.getAttr("title");
-
-					}
-
-					if (this.getStyle("select-color")) {
-						this.selectColor = this.getStyle("select-color");
-
-					}
-
-					if (this.getAttr("value")) {
-						this.value = this.getAttr("value");
-					}
+                this.taginit = true;
 
 
-					this.setAttr("readonly", this.getAttr("readonly"));
+            };
+
+            module.exports = Select;
+
+            Select.prototype = {
+
+                created: function() {
+                    getRootElement = document.getRootElement();
+                    var copythis = this;
+                    this.box = this.getElement("box");
+                    this.text = this.getElement("text");
+                    this.boxcheck = this.getElement("boxcheck");
+                    this.imageid = this.getElement("imageid");
+                    this.readonlydom = this.getElement("readonly");
 
 
-					this.box.on("touchUp", function (e) {
-						if (copythis.readonly == "false") {
+                    this.setAttr("title", this.getAttr("title"));
+                    this.setAttr("prompt", this.getAttr("prompt"));
 
-							copythis.click();
-						}
+                    if (this.getStyle("select-color")) {
+                        this.selectColor = this.getStyle("select-color");
+                    }
 
+                    if (this.getStyle("title-background-color")) {
+                        this.titleBackgroundColor = this.getStyle("title-background-color");
+                    }
 
-					});
+                    if (this.getStyle("title-color")) {
+                        this.titleColor = this.getStyle("title-color");
 
-
-				},
-
-				click: function () {
-					var copythis = this;
-					copythis.selectpop = document.createElement("selectpop");
-
-					if (copythis.options.length == 0) {
-						//什么都不做
-					}
-					else {
-						copythis.selectpop.pop(copythis.options);
-						copythis.selectpop.setAttr("title", copythis.title);
-						copythis.selectpop.setStyle("select-color", copythis.selectColor);
-					}
-
-					// console.log(copythis.selectpop);
-					var funs = copythis.selectpop.getOn("select");
-					// console.log("funs:"+funs.length);
-					if (funs.length <= 0) {
-						copythis.selectpop.on("select", function (e, text, value) {
-
-							copythis.text.setText(text);
-							copythis.setAttr("value", value);
-
-						});
-					}
+                    }
 
 
-				},
-				//属性变更回调函数
-				attrChanged: function (attrName, attrValue) {
-					var changetag = false;
-					if (this.taginit == false) {
-
-						if (this.getAttr(attrName) != this[attrName] && this[attrName] != null) {
-							//this.fire("change");
-							changetag = true;
-						}
-
-					}
-
-					var m = 0;//用来判断数组里面元素的value是否和组件的value有相同的元素
-
-					if (attrName == "value") {
-						this.value = attrValue;
-						for (i = 0; i < this.options.length; i++) {
-							if (this.options[i].value == attrValue) {
-								this.text.setText(this.options[i].text);
-								this.options[i].selected = "true";
-								m = m + 1;
-							}
-							else {
-								this.options[i].selected = "false";
-							}
-						}
-
-						if (m != 1) {
-
-							this.text.setText("");
-						}
-					}
+                    this.setStyle("text-align", this.getStyle("text-align"));
+                    this.setStyle("color", this.getStyle("color"));
+                    this.setStyle("prompt-color", this.getStyle("prompt-color"))
+                    this.setStyle("font-size", this.getStyle("font-size"));
 
 
-					if (attrName == "readonly") {
-						if (attrValue == "true") {
-
-							this.readonly = attrValue;
-							this.box.appendChild(this.readonlydom);
-
-						}
-						else {
-							this.readonly = "false";
-							this.box.insertBefore(this.readonlydom, this.boxcheck);
-						}
-
-						if (this.taginit == false) {
-							this.box.refresh();
-						}
-					}
+                    if (this.getAttr("value")) {
+                        this.value = this.getAttr("value");
+                    }
 
 
-
-					if (changetag == true) {
-						this.fire("change");
-					}
+                    this.setAttr("readonly", this.getAttr("readonly"));
 
 
+                    this.box.on("touchUp", function(e) {
+                        if (copythis.readonly == "false") {
+
+                            copythis.click();
+                        }
 
 
-				},
-				//样式变更回调函数
-				styleChanged: function (styleName, styleValue) {
-
-				},
-				//外部调用js方法
-				loadData: function (arr) {
-					this.taginit = true;
-					var n = 0;//用来判断有没有selected属性为true的元素
-					var m = 0;//用来判断数组里面元素的value是否和组件的value有相同的元素
-
-					var valuestr = "";
-					for (i = 0; i < arr.length; i++) {
-						if (arr[i].selected == "true") {
-							n = n + 1;
-							valuestr = arr[i].value;
-							break;
-						}
-					}
-
-					for (i = 0; i < arr.length; i++) {
-						if (arr[i].value == this.value) {
-							//用来判断value值是否在数组里面存在
-							m = m + 1;
-						}
-					}
+                    });
 
 
+                },
 
-					if (n == 0 && arr[0] != null) {
-						valuestr = arr[0].value;
-					}
+                click: function() {
+                    var copythis = this;
+                    copythis.selectpop = document.createElement("selectpop");
 
-					// console.log("m:"+m);	   
-					this.options = arr;
-					if (this.value != '') {
-						if (m == 1) {
-							// console.log("m:"+m);
-							this.setAttr("value", this.value);
-						}
-						else {
-							this.setAttr("value", valuestr);
-						}
-					}
-					else {
-						this.setAttr("value", valuestr);
-					}
+                    if (copythis.options.length == 0) {
+                        //什么都不做
+                    } else {
+                        copythis.selectpop.pop(copythis.options);
+                        copythis.selectpop.setAttr("title", copythis.title);
+                        copythis.selectpop.setStyle("select-color", copythis.selectColor);
+                        copythis.selectpop.setStyle("title-background-color", copythis.titleBackgroundColor);
+                        copythis.selectpop.setStyle("title-color", copythis.titleColor);
 
-					this.taginit = false;
+                    }
 
-				},
-				getSelectedIndex: function () {
-					var t = 0;
-					for (i = 0; i < this.options.length; i++) {
-						if (this.options[i].selected == "true") {
-							t = i;
-							break;
-						}
-						//console.log(this.options[i].selected+";"+this.options[i].text);
-					}
-					return t;
-				}
-			}
-    ]]>
-	</script>
-	<style>
-		@import url("select.layout.css");
-		@import url("select.color.css");
-	</style>
-	<ui>
-		<box id="box" class="box" style="flex-direction:row;">
-			<box id="readonly" class="readonly" />
-			<box class="boxselect" id="boxcheck" style="">
-				<text id="text" style="singleline:true;text-overflow:ellipsis;margin: 0 0 0 6"></text>
-			</box>
-			<!--  <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAARVBMVEUAAAC7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7swE7V+AAAAFnRSTlMACHwO/MS3o4+IA/fOmE/s6a1waGBaRYI0iAAAAHBJREFUKM/NzUkShCAUBNHPoIIoznn/ozZhEIQNvW9z+WpR8tf86lt0q5YAc8XjAEFmYBhrx0mzqO32lAM2VbwHfP4HevVwLTldFtMVL0tnsu/yaL8XMwGHfHUAU3J7StVpIfklTZeFEOVHcVmivLwPKBQHXHBrpN4AAAAASUVORK5CYII="/> -->
+                    // console.log(copythis.selectpop);
+                    var funs = copythis.selectpop.getOn("select");
+                    // console.log("funs:"+funs.length);
+                    if (funs.length <= 0) {
+                        copythis.selectpop.on("select", function(e, text, value) {
 
-			<iconfont id="imageid" style="font-family:Material Design Icons;font-size:25;color:#9d9d9d;width: 30;;text-align: center;">\uF140</iconfont>
+
+                            copythis.text.setText(text);
+                            copythis.setAttr("value", value);
+
+                        });
+                    }
+
+
+                },
+                //属性变更回调函数
+                attrChanged: function(attrName, attrValue) {
+                    var changetag = false;
+                    if (this.taginit == false) {
+
+                        if (this.getAttr(attrName) != this[attrName] && this[attrName] != null) {
+                            //this.fire("change");
+                            changetag = true;
+                        }
+
+                    }
+
+                    var m = 0;
+                    //用来判断数组里面元素的value是否和组件的value有相同的元素
+
+                    if (attrName == "value") {
+                        this.value = attrValue;
+
+                        for (i = 0; i < this.options.length; i++) {
+                            if (this.options[i].value == attrValue) {
+                                this.text.setText(this.options[i].text);
+                                this.text.setStyle("color", this.color);
+                                this.options[i].selected = true;
+                                m = m + 1;
+                            } else {
+                                this.options[i].selected = false;
+                            }
+                        }
+
+                        if (m != 1) {
+
+                            this.text.setText(this.prompt);
+                            this.text.setStyle("color", this.promptColor);
+                        }
+
+                    }
+
+
+                    if (attrName == "readonly") {
+                        if (attrValue == "true") {
+
+                            this.readonly = attrValue;
+                            this.box.appendChild(this.readonlydom);
+
+                        } else {
+                            this.readonly = "false";
+                            this.box.insertBefore(this.readonlydom, this.boxcheck);
+                        }
+
+                        if (this.taginit == false) {
+                            this.box.refresh();
+                        }
+                    }
+
+                    if (attrName == "prompt") {
+                        if (attrValue != null) {
+                            this.prompt = attrValue;
+                        }
+
+                        // console.log("this.prompt:" + this.prompt);
+                        // this.text.setText(this.prompt);
+                    }
+
+                    if (attrName == "title") {
+                        if (attrValue != null) {
+                            this.title = attrValue;
+                        }
+                    }
 
 
 
-		</box>
+                    if (changetag == true) {
+                        this.fire("change");
+                        // console.log("触发了change事件");
+                    }
 
-	</ui>
+
+                },
+                //样式变更回调函数
+                styleChanged: function(styleName, styleValue) {
+                    if (styleName == "text-align") {
+                        if (styleValue != null) {
+                            this.textalign = styleValue;
+
+                        }
+                        this.text.setStyle("text-align", this.textalign);
+                        // console.log(styleName + "颜色1:" + styleValue);
+                    }
+
+                    if (styleName == "color") {
+                        if (styleValue != null) {
+                            this.color = styleValue;
+
+                        }
+                        this.text.setStyle("color", this.color);
+                        // console.log(styleName + "颜色:" + styleValue);
+
+                    }
+
+                    if (styleName == "prompt-color") {
+                        if (styleValue != null) {
+                            this.promptColor = styleValue;
+
+                        }
+
+                        // console.log(styleName + "颜色:" + styleValue);
+
+                    }
+
+                    if (styleName == "font-size") {
+                        if (styleValue != null) {
+                            this.fontSize = styleValue;
+
+                        }
+                        this.text.setStyle("font-size", this.fontSize);
+
+
+                    }
+
+
+
+                },
+                //外部调用js方法
+                loadData: function(arr) {
+                    this.taginit = true;
+                    var n = 0;
+                    //用来判断有没有selected属性为true的元素
+                    var m = 0;
+                    //用来判断数组里面元素的value是否和组件的value有相同的元素
+
+                    var valuestr = "";
+                    for (i = 0; i < arr.length; i++) {
+                        if (arr[i].selected == true) {
+                            n = n + 1;
+                            valuestr = arr[i].value;
+                            break;
+                        }
+                    }
+
+                    for (i = 0; i < arr.length; i++) {
+                        if (arr[i].value == this.value) {
+                            //用来判断value值是否在数组里面存在
+                            m = m + 1;
+                        }
+                    }
+
+
+
+                    if (n == 0 && arr[0] != null) {
+                        valuestr = arr[0].value;
+                    }
+
+                    // console.log("m:"+m);	   
+                    this.options = arr;
+                    if (this.value != '') {
+                        if (m == 1) {
+                            // console.log("m:"+m);
+                            this.setAttr("value", this.value);
+                        } else {
+                            this.setAttr("value", valuestr);
+                        }
+                    } else {
+                        //this.setAttr("value", valuestr);
+                        this.setAttr("value", this.value);
+                    }
+
+                    this.taginit = false;
+
+                },
+                getSelectedIndex: function() {
+                    var t = 0;
+                    for (i = 0; i < this.options.length; i++) {
+                        if (this.options[i].selected == true) {
+                            t = i;
+                            break;
+                        }
+                        //console.log(this.options[i].selected+";"+this.options[i].text);
+                    }
+                    return t;
+                }
+            }
+        ]]>
+    </script>
+    <style>
+        @import url("select.layout.css");
+        @import url("select.color.css");
+    </style>
+    <ui>
+        <box id="box" class="box" style="flex-direction:row;">
+            <box id="readonly" class="readonly" />
+            <box class="boxselect" id="boxcheck" style="">
+                <text id="text" style="singleline:true;text-overflow:ellipsis;margin: 0 0 0 6;padding: 4"></text>
+            </box>
+            <!--  <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAARVBMVEUAAAC7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7swE7V+AAAAFnRSTlMACHwO/MS3o4+IA/fOmE/s6a1waGBaRYI0iAAAAHBJREFUKM/NzUkShCAUBNHPoIIoznn/ozZhEIQNvW9z+WpR8tf86lt0q5YAc8XjAEFmYBhrx0mzqO32lAM2VbwHfP4HevVwLTldFtMVL0tnsu/yaL8XMwGHfHUAU3J7StVpIfklTZeFEOVHcVmivLwPKBQHXHBrpN4AAAAASUVORK5CYII="/> -->
+
+            <iconfont id="imageid" style="font-family:Material Design Icons;font-size:25;color:#9d9d9d;width: 30;;text-align: center;">\uF140</iconfont>
+
+
+
+        </box>
+
+    </ui>
 
 </page>

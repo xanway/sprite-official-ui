@@ -2,6 +2,8 @@
 样式：
 box公共样式;
 select-color：select时候的文字色;
+title-background-color: pop弹出框的title背景颜色
+title-color:title文字颜色;
 
 
 属性：无
@@ -26,340 +28,421 @@ popjson.datas.push(json);
 事件：select：监听select选中，
 -->
 <page>
-	<script>
-		<![CDATA[
+    <script>
+        <![CDATA[
 
-    	var window = require("Window");
-		var document = require("Document");
-		var ListAdapter = require("ListAdapter");
-		var console = require("Console");
+            var window = require("Window");
+            var document = require("Document");
+            var ListAdapter = require("ListAdapter");
+            var console = require("Console");
+            var time = require("Time");
+            var ui = require("UI");
 
 
 
-		var screenWidth_s = window.getScreenWidth();
-		var screenHeight_s = window.getScreenHeight();
-		var popMenuSize = screenWidth_s * 0.8;
-		if (screenWidth_s > screenHeight_s) {
-			popMenuSize = screenHeight_s * 0.8;
-		}
+            var screenWidth_s = window.getScreenWidth();
+            var screenHeight_s = window.getScreenHeight();
+            var popMenuSize = screenWidth_s * 0.8;
+            if (screenWidth_s > screenHeight_s) {
+                popMenuSize = screenHeight_s * 0.8;
+            }
 
-		var x = (screenWidth_s - popMenuSize) / 2;
-		var y = (screenHeight_s - popMenuSize) / 2;
-		var thisDom = null;
-		var rootDom = null;
-		var datas;
+            var x = (screenWidth_s - popMenuSize) / 2;
+            var y = (screenHeight_s - popMenuSize) / 2;
+            var thisDom = null;
+            var rootDom = null;
+            var datas;
 
 
 
 
-		var Selectpop = function () {
-			//初始化函数，用于处理组件属性及样式，入参为Json，包含两个参数：attributes（属性集，json格式），styles（样式集，json格式）
-			this.list = null;
-			this.adapter = null;
-			this.line = null;
-			this.title = "";
-			this.selectColor = "#549FF7";
+            var Selectpop = function() {
+                //初始化函数，用于处理组件属性及样式，入参为Json，包含两个参数：attributes（属性集，json格式），styles（样式集，json格式）
+                this.list = null;
+                this.adapter = null;
+                this.line = null;
+                this.poptitle = null;
+                this.title = "";
+                this.selectColor = "#549FF7";
+                this.titleBackgroundColor = "#ffffff";
+                this.titleColor = "#404040";
 
-			this.backGroundDom = null;
-			this.popDom = null;
+                this.backGroundDom = null;
+                this.popDom = null;
+                this.footerbox = null;
 
 
-		};
+            };
 
-		module.exports = Selectpop;
+            module.exports = Selectpop;
 
-		Selectpop.prototype = {
+            Selectpop.prototype = {
 
-			created: function () {
-				//console.log("进入了created");
-			},
-			//属性变更回调函数
-			attrChanged: function (attrName, attrValue) {
-				if (attrName == "title") {
-					this.title.setText(attrValue);
-				}
-			},
-			//样式变更回调函数
-			styleChanged: function (styleName, styleValue) {
+                created: function() {
+                    //console.log("进入了created");
+                },
+                //属性变更回调函数
+                attrChanged: function(attrName, attrValue) {
+                    if (attrName == "title") {
+                        this.title.setText(attrValue);
+                    }
+                },
+                //样式变更回调函数
+                styleChanged: function(styleName, styleValue) {
 
-				if (styleName == "select-color") {
-					this.selectColor = styleValue;
-				}
+                    if (styleName == "select-color") {
+                        this.selectColor = styleValue;
+                    }
 
-			},
-			pop: function (options) {
-				var copythis = this;
-			
+                    if (styleName == "title-background-color") {
+                        if (styleValue != null) {
+                            this.titleBackgroundColor = styleValue;
 
-				screenWidth_s = window.getScreenWidth();
-				screenHeight_s = window.getScreenHeight();
-				popMenuSize = screenWidth_s * 0.8;
-				if (screenWidth_s > screenHeight_s) {
-					popMenuSize = screenHeight_s * 0.8;
-				}
+                        }
+                        this.poptitle.setStyle("background-color", this.titleBackgroundColor);
 
-				x = (screenWidth_s - popMenuSize) / 2;
-				y = (screenHeight_s - popMenuSize) / 2;
 
+                    }
 
+                    if (styleName == "title-color") {
+                        if (styleValue != null) {
+                            this.titleColor = styleValue;
 
+                        }
+                        this.title.setStyle("color", this.titleColor);
 
-				rootDom = document.getRootElement();
-				datas = new Array();
-				thisDom = this;
-				this.list = this.getElement("list");
-				this.line = this.getElement("line");
-				this.title = this.getElement("title");
 
+                    }
 
-				var json = {};
-				json.style = "background-color:black;width:fill_screen;height:fill_screen;position:absolute;top:0;left:0;opacity:0.5";
-				this.backGroundDom = document.createElement("box", json);
+                },
+                pop: function(options) {
+                    var copythis = this;
 
 
-				this.backGroundDom.on("click", function (e) {
+                    screenWidth_s = window.getScreenWidth();
+                    screenHeight_s = window.getScreenHeight();
+                    popMenuSize = screenWidth_s * 0.8;
+                    if (screenWidth_s > screenHeight_s) {
+                        popMenuSize = screenHeight_s * 0.8;
+                    }
 
-					/* var jsonData = {};
-					 jsonData.type = "fade";
-					 thisDom.hide(jsonData);
-					 backGroundDom.hide(jsonData);*/
-					// backGroundDom.remove();
-					thisDom.remove();
+                    x = (screenWidth_s - popMenuSize) / 2;
+                    y = (screenHeight_s - popMenuSize * 1.5) / 2;
 
-					copythis.backGroundDom.setStyle("visibility", "hidden");
-					copythis.backGroundDom.refresh();
 
 
-				});
 
-				this.popDom = this.getElement("box");
-				this.popDom.setStyle("width", popMenuSize);
-				this.list.setStyle("width", popMenuSize);
-				this.line.setStyle("line-length", popMenuSize);
-				this.getElement("line0").setStyle("line-length", popMenuSize);
-				this.popDom.setStyle("height", popMenuSize);
-				this.popDom.setStyle("top", y);
-				this.popDom.setStyle("left", x);
+                    rootDom = document.getRootElement();
+                    datas = new Array();
+                    thisDom = this;
+                    this.list = this.getElement("list");
+                    this.line = this.getElement("line");
+                    this.title = this.getElement("title");
+                    this.poptitle = this.getElement("poptitle");
+                    this.footerbox = this.getElement("footerbox");
 
-				rootDom.appendChild(this.backGroundDom);
-				rootDom.appendChild(this);
-
-				this.backGroundDom.setStyle("visibility", "visible");
-
-				document.refresh();
-
-				this.initAdapter();
-				this.loadData(options);
-				this.adapter.refresh();
-
-				var jsonData = {};
-				jsonData.type = "scale";
-				jsonData.duration = 300;
-
-				var settings = new Array();
-
-				var json = {};
-				json.value = 0.01;
-				json.keyTimes = 0;
-				json.curve = "linear";
-				settings.push(json);
-
-				json = {};
-				json.value = 1.1;
-				json.keyTimes = 0.5;
-				json.curve = "linear";
-				settings.push(json);
-
-				json = {};
-				json.value = 1.0;
-				json.keyTimes = 1.0;
-				json.curve = "ease_out";
-				settings.push(json);
-
-				jsonData.settings = settings;
-				thisDom.startKeyFrameAnimator(jsonData, function () {
-
-					thisDom.releaseAnimator();
-				});
-
-
-				this.list.on("itemClick", function (e, position) {
-					var data = datas[position];
-
-					for (i = 0; i < datas.length; i++) {
-						if (i == position) {
-							datas[position].selected = "true";
-						}
-						else {
-							datas[i].selected = "false";
-						}
-
-					}
-
-					/* var jsonData = {};
-					 jsonData.type = "fade";
-					 thisDom.hide(jsonData);
-					 backGroundDom.hide(jsonData);*/
-
-
-
-					copythis.backGroundDom.setStyle("visibility", "hidden");
-
-					thisDom.remove();
-					document.refresh();
-
-					var params = new Array();
-					params.push(data.text);
-					params.push(data.value);
-					thisDom.fire("select", params);
-
-				});
-
-
-			},
-			initAdapter: function () {
-
-				if (this.adapter == null) {
-					this.adapter = new ListAdapter();
-					this.adapter.on("getCellId", function (e, position) {
-						return "cell";
-
-					});
-					this.adapter.on("getSectionText", function (e, sectionindex) {
-						return null;
-					});
-					this.adapter.on("getSectionCount", function (e) {
-						return 1;
-					});
-					this.adapter.on("getView", function (e, position) {
-						var data = datas[position];
-						var text = e.target.getElement("text");
-						var selectedbox = e.target.getElement("selectedbox");
-						var cellbox = e.target.getElement("cellbox");
-						text.setText(data.text);
-						if (data.selected == "true") {
-							text.setStyle("color", thisDom.selectColor);
-							selectedbox.setStyle("background-color", thisDom.selectColor);
-						}
-						else {
-							selectedbox.setStyle("background-color", "transparent");
-							text.setStyle("color", "#000000");
-						}
-
-						//console.log(data.text);
-						//设置列表点击背景色
-						var boxObj = e.target;
-						var event = cellbox.getOn("touchUp");
-						if (event.length == 0) {
-							boxObj.on("touchDown", function (e) {
-								this.setStyle("background-color", "#F6F6F6");
-							});
-							boxObj.on("touchUp", function (e) {
-								this.setStyle("background-color", "transparent");
-							});
-
-							boxObj.on("touchCancel", function (e) {
-								this.setStyle("background-color", "transparent");
-							});
-						}
-					});
-					this.adapter.on("getCount", function (e) {
-						return datas.length;
-					});
-					this.adapter.on("getItem", function (e, position) {
-						return datas[position];
-					});
-
-					this.list.setAdapter(this.adapter);
-				}
-			},
-			loadData: function (options) {
-				datas = options;
-			},
-			orientationChanged: function (orientation, screenWidth, screenHeight) {
-				screenWidth_s = screenWidth;
-				screenHeight_s = screenHeight;
-				if (screenWidth_s > screenHeight_s) {
-					popMenuSize = screenHeight_s * 0.8;
-				}
-
-				x = (screenWidth_s - popMenuSize) / 2;
-				y = (screenHeight_s - popMenuSize) / 2;
-
-				console.log("x:" + x + "y:" + y);
-
-
-				this.popDom.setStyle("top", y);
-				this.popDom.setStyle("left", x);
-				document.refresh();
-			
-			}
-		}
-    ]]>
-	</script>
-	<style>
-		line {
-			line-color: #9c9c9c;
-			line-size: 0.5;
-			/*line-length:fill_screen;*/
-		}
-		
-		.box1 {
-			flex-direction: column;
-			background-color: #ffffff;
-			justify-content: flex-start;
-			flex-wrap: nowrap;
-			align-items: center;
-			border-radius: 4dp;
-			width: 0;
-			height: 0;
-			justify-content: flex-start;
-			position: absolute;
-			top: 20;
-			left: 20;
-		}
-		
-		.box2 {
-			height: 36;
-			margin: 8;
-			justify-content: center;
-			align-items: center;
-		}
-		
-		.listcell {
-			flex-direction: row;
-			justify-content: flex-start;
-			flex-wrap: nowrap;
-			height: 45;
-			align-items: center;
-			padding: 10 4 10 4;
-		}
-		
-		text {
-			margin: 0 0 0 4;
-		}
-	</style>
-	<ui>
-		<box class="box1" id="box">
-			<box class="box2">
-				<text id="title" style="flex:1;text-align:center;font-weight:bold">选择</text>
-
-			</box>
-
-			<line id="line0" style="line-size:0.5;" />
-			<list id="list" style="flex:1;">
-				<cell id="cell">
-					<box id="cellbox" class="listcell">
-						<box id="selectedbox" style="height:10;width:10;border-radius:5dp;background-color:#549FF7;" />
-						<text id="text" style="flex:1;color:#333333;"></text>
-
-					</box>
-					<line id="line" style="line-size:0.5;" />
-				</cell>
-			</list>
-
-
-		</box>
-	</ui>
+
+                    var json = {};
+                    json.style = "background-color:black;width:fill_screen;height:fill_screen;position:absolute;top:0;left:0;opacity:0.5";
+                    this.backGroundDom = document.createElement("box", json);
+
+
+                    this.backGroundDom.on("click", function(e) {
+
+
+                        thisDom.remove();
+
+                        copythis.backGroundDom.setStyle("visibility", "hidden");
+                        copythis.backGroundDom.refresh();
+
+
+                    });
+
+                    this.footerbox.on("click", function(e) {
+                        thisDom.remove();
+
+                        copythis.backGroundDom.setStyle("visibility", "hidden");
+                        copythis.backGroundDom.refresh();
+
+                    });
+
+                    this.popDom = this.getElement("box");
+                    this.popDom.setStyle("width", popMenuSize);
+                    this.list.setStyle("width", popMenuSize);
+                    // this.line.setStyle("line-length", popMenuSize);
+                    this.getElement("line0")
+                        .setStyle("line-length", popMenuSize);
+
+                    if (screenWidth_s > screenHeight_s) {
+                        this.popDom.setStyle("height", popMenuSize);
+                    } else {
+                        this.popDom.setStyle("height", popMenuSize * 1.5);
+                    }
+                    this.popDom.setStyle("top", y);
+                    this.popDom.setStyle("left", x);
+
+                    rootDom.appendChild(this.backGroundDom);
+                    rootDom.appendChild(this);
+
+                    this.backGroundDom.setStyle("visibility", "visible");
+
+                    document.refresh();
+
+                    this.initAdapter();
+                    this.loadData(options);
+                    this.adapter.refresh();
+
+
+                    //把内容滚动到选择位置
+                    time.setTimeout(function() {
+                        var m = 0;
+                        for (var i = 0; i < options.length; i++) {
+                            if (options[i].selected == true) {
+
+                                break;
+                            }
+
+                            m++;
+                        }
+
+                        if (m == options.length) {
+                            m = 0;
+                        }
+
+
+                        var listscrolljson = {};
+
+                        listscrolljson.sectionIndex = 0;
+                        listscrolljson.index = m;
+                        listscrolljson.animated = true;
+
+
+                        copythis.list.scrollToPosition(listscrolljson);
+
+                    }, 100);
+
+
+                    var jsonData = {};
+                    jsonData.type = "scale";
+                    jsonData.duration = 300;
+
+                    var settings = new Array();
+
+                    var json = {};
+                    json.value = 0.01;
+                    json.keyTimes = 0;
+                    json.curve = "linear";
+                    settings.push(json);
+
+                    json = {};
+                    json.value = 1.1;
+                    json.keyTimes = 0.5;
+                    json.curve = "linear";
+                    settings.push(json);
+
+                    json = {};
+                    json.value = 1.0;
+                    json.keyTimes = 1.0;
+                    json.curve = "ease_out";
+                    settings.push(json);
+
+                    jsonData.settings = settings;
+                    thisDom.startKeyFrameAnimator(jsonData, function() {
+
+                        thisDom.releaseAnimator();
+                    });
+
+
+                    this.list.on("itemClick", function(e, position) {
+                        var data = datas[position];
+
+                        for (i = 0; i < datas.length; i++) {
+                            if (i == position) {
+                                datas[position].selected = true;
+                            } else {
+                                datas[i].selected = false;
+                            }
+
+                        }
+
+                        /* var jsonData = {};
+                         jsonData.type = "fade";
+                         thisDom.hide(jsonData);
+                         backGroundDom.hide(jsonData);*/
+
+
+                        copythis.backGroundDom.setStyle("visibility", "hidden");
+                        thisDom.remove();
+                        document.refresh();
+
+                        var params = new Array();
+                        params.push(data.text);
+                        params.push(data.value);
+                        thisDom.fire("select", params);
+
+                    });
+
+
+                },
+                initAdapter: function() {
+
+                    if (this.adapter == null) {
+                        this.adapter = new ListAdapter();
+                        this.adapter.on("getCellId", function(e, position) {
+                            return "cell";
+
+                        });
+                        this.adapter.on("getSectionText", function(e, sectionindex) {
+                            return null;
+                        });
+                        this.adapter.on("getSectionCount", function(e) {
+                            return 1;
+                        });
+                        this.adapter.on("getView", function(e, position) {
+                            var data = datas[position];
+                            var text = e.target.getElement("text");
+                            var selectedbox = e.target.getElement("selectedbox");
+                            var cellbox = e.target.getElement("cellbox");
+                            text.setText(data.text);
+                            if (data.selected == true) {
+                                text.setStyle("color", thisDom.selectColor);
+                                selectedbox.setStyle("color", thisDom.selectColor);
+                            } else {
+                                selectedbox.setStyle("color", "transparent");
+                                text.setStyle("color", "#000000");
+                            }
+
+                            //console.log(data.text);
+                            //设置列表点击背景色
+                            var boxObj = e.target;
+                            var event = cellbox.getOn("touchUp");
+                            if (event.length == 0) {
+                                boxObj.on("touchDown", function(e) {
+                                    this.setStyle("background-color", "#F6F6F6");
+                                });
+                                boxObj.on("touchUp", function(e) {
+                                    this.setStyle("background-color", "transparent");
+                                });
+
+                                boxObj.on("touchCancel", function(e) {
+                                    this.setStyle("background-color", "transparent");
+                                });
+                            }
+                        });
+                        this.adapter.on("getCount", function(e) {
+                            return datas.length;
+                        });
+                        this.adapter.on("getItem", function(e, position) {
+                            return datas[position];
+                        });
+
+                        this.list.setAdapter(this.adapter);
+                    }
+                },
+                loadData: function(options) {
+                    datas = options;
+                },
+                orientationChanged: function(orientation, screenWidth, screenHeight) {
+                    screenWidth_s = screenWidth;
+                    screenHeight_s = screenHeight;
+                    if (screenWidth_s > screenHeight_s) {
+                        popMenuSize = screenHeight_s * 0.8;
+                    }
+
+                    x = (screenWidth_s - popMenuSize) / 2;
+                    y = (screenHeight_s - popMenuSize) / 2;
+
+                    // console.log("x:" + x + "y:" + y);
+
+
+                    this.popDom.setStyle("top", y);
+                    this.popDom.setStyle("left", x);
+                    document.refresh();
+
+                }
+            }
+        ]]>
+    </script>
+    <style>
+        line {
+            line-color: #D2D3D7;
+            line-size: 0.5;
+            margin: 0 10 0 10;
+            /*line-length:fill_screen;*/
+        }
+
+        .box1 {
+            flex-direction: column;
+            background-color: #ffffff;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+
+            border-radius: 4dp;
+            width: 0;
+            height: 0;
+            justify-content: flex-start;
+            position: absolute;
+            top: 20;
+            left: 20;
+            padding: 0;
+        }
+
+        .box2 {
+            height: 44;
+
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .listcell {
+            flex-direction: row;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            height: 45;
+            align-items: center;
+            padding: 10 4 10 4;
+        }
+
+        text {
+            margin: 0 0 0 4;
+        }
+
+        iconfont {
+            font-family: Material Design Icons;
+            color: #549FF7;
+            font-size: 20;
+            text-align: center;
+            width: 20;
+            height: 20;
+            margin: 10;
+        }
+    </style>
+    <ui>
+        <box class="box1" id="box">
+            <box class="box2" id="poptitle">
+                <text id="title" style="flex:1;text-align:center;font-weight:bold;">选择</text>
+
+            </box>
+
+            <line id="line0" style="line-size:0.5;" />
+            <list id="list" style="flex:1;">
+                <cell id="cell">
+                    <box id="cellbox" class="listcell">
+
+                        <text id="text" style="flex:1;color:#404040;margin: 10;"></text>
+                        <iconfont id="selectedbox">\uF12C</iconfont>
+
+                    </box>
+                    <line id="line" style="line-size:0.5;" />
+                </cell>
+            </list>
+            <box style="justify-content: center;height: 40;align-items: center;" id="footerbox">
+                <iconfont id="selectedbox" style="width: 25;height: 25;font-size: 25">\uF156</iconfont>
+            </box>
+
+
+        </box>
+    </ui>
 
 </page>
