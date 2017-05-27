@@ -70,6 +70,11 @@ select1.loadData(datas);
 设置弹出框的title文字内容。
 
 
+<span id="sx_4">**prompt**</span>
+
+<code>设置提示文字</code>
+
+在没有value的选中的情况下，给出的提示文字。
 
 
 
@@ -97,6 +102,47 @@ select1.loadData(datas);
 <code>选中状态下文字颜色</code>
 
 选中状态下文字颜色; 默认#549FF7；
+
+
+**text-align**	
+
+<code>select内部文字布局位置</code>
+
+默认left;
+
+
+**color**	
+
+<code>select内部文字颜色</code>
+
+默认#000000;
+
+**font-size**	
+
+<code>select内部字体大小</code>
+
+默认16dp;
+
+**title-background-color**	
+
+<code>pop弹出框的title背景颜色</code>
+
+默认#ffffff;
+
+
+**title-color**	
+
+<code>pop弹出框的title文字颜色</code>
+
+默认#000000;
+
+
+**prompt-color**	
+
+<code>提示文字颜色</code>
+
+默认#D2D3D7;
+
 
 
 
@@ -244,7 +290,7 @@ timestamp：事件触发的时间戳,单位毫秒，数字类型；
         require("titlebarUI");
         require("buttonUI");
         require("selectUI");
-        require("selectpopUI");
+
 
         var myappjs = require("myapp");
         var screenWidth = window.getScreenWidth();
@@ -292,21 +338,18 @@ timestamp：事件触发的时间戳,单位毫秒，数字类型；
 
             for (i = 0; i < 5; i++) {
                 json = {};
-                json.type = "cell";
                 json.text = "flexbox测试";
                 json.selected = "false";
                 json.value = "100" + i;
                 datas.push(json);
 
                 json = {};
-                json.type = "cell";
                 json.text = "移动按钮";
                 json.selected = "false";
                 json.value = "101" + i;
                 datas.push(json);
 
                 json = {};
-                json.type = "cell";
                 json.text = "switch控件";
                 json.selected = "false";
                 json.value = "102" + i;
@@ -324,14 +367,12 @@ timestamp：事件触发的时间戳,单位毫秒，数字类型；
                 myappjs.alert("监听change事件");
             })
             json = {};
-            json.type = "cell";
             json.text = "flexbox测试";
             json.selected = "false";
             json.value = "100";
             datas2.push(json);
 
             json = {};
-            json.type = "cell";
             json.text = "switch控件";
             json.selected = "true";
             json.value = "102";
