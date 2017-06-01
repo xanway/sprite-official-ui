@@ -4,7 +4,7 @@
 官方组件基于sprite平台提供的基础组件进行封装，使用官方组件有两种方式：
 
 
-<h2 id="cid_0">使用Mbuilder组件管理导入组件</h2>
+<h2 id="cid_0">可视化方式导入组件</h2>
 
 
 在应用工程目录的component目录上，点击右键，选择“Sprite组件管理”，如图：
@@ -38,7 +38,7 @@
 
 
 
-<h2 id="cid_0">自定义目录导入组件</h2>
+<h2 id="cid_0">手动方式导入组件</h2>
 
 如果开发者有自己的想法，想修改官方组件可以自己直接从[https://github.com/yuanhongqian/SpriteUI](https://github.com/yuanhongqian/SpriteUI)  下载官方组件源码，然后进行修改。具体使用如下：
 
