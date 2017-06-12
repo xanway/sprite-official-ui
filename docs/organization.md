@@ -27,7 +27,7 @@ organization组件是专门为组织架构选人场景封装的，该组件支�
 
 <code>根节点ID</code>
 
-必须设置，否者后续的组织架构无法加载其上。rootid = "root"
+必须设置，否则后续的组织架构无法加载其上。rootid = "root"
     
 **ischeckbox**
 
@@ -250,7 +250,7 @@ ishaschild：
                     titleid.setAttr("rtext", "编辑");
                     //这里为了演示每次都清空一下当前数组
                     selecteddatas.splice(0, selecteddatas.length);
-                    //为了演示，这里做数据深度拷贝，否者可以直接selecteddatas=organization.getSelectDatas()
+                    //为了演示，这里做数据深度拷贝，否则可以直接selecteddatas=organization.getSelectDatas()
                     for (var i = 0; i < organization.getSelectDatas().length; i++) {
 
                         selecteddatas.push(organization.getSelectDatas()[i]);

@@ -23,7 +23,7 @@ jsondata.recordingtext = "手指上滑，取消发送";
 jsondata.readyendtext = "手指松开，取消发送";
 jsondata.folderpah = "res:recorddata/"; //录音存放的目录
 jsondata.maxTime = "100"; //秒
-//该方法内部有添加控件到根节点的操作，不要放在按钮里面执行，否者会终端touchup等事件
+//该方法内部有添加控件到根节点的操作，不要放在按钮里面执行，否则会终端touchup等事件
 audiorecord1.recordinit(jsondata);
 audiorecord1.start();
 
@@ -180,7 +180,7 @@ path：
             jsondata.readyendtext = "手指松开，取消发送";
             jsondata.folderpah = "res:recorddata"; //录音存放的目录
             jsondata.maxTime = "100"; //秒
-            //该方法内部有添加控件到根节点的操作，不要放在按钮里面执行，否者会终端touchup等事件
+            //该方法内部有添加控件到根节点的操作，不要放在按钮里面执行，否则会终端touchup等事件
             audiorecord1.recordinit(jsondata);
             titlebarid.on("liconClick", function (e) {  
                 var json = {};
