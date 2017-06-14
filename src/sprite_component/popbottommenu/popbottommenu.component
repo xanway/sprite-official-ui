@@ -60,9 +60,7 @@ var popjson = {};
 
 
                     var popContent = '';
-                    for (var i = 0;
-                    i < popjson.datas.length;
-                    i++) {
+                    for (var i = 0; i < popjson.datas.length; i++) {
                         var linestr = '';
                         if (i < popjson.datas.length - 1) {
                             linestr = '<line style="line-size:0.5"/>';

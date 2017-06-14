@@ -10,7 +10,8 @@
     font-size：菜单字体大小
     main-background-color：middleMain样式下，主菜单背景颜色
     main-transfer-y：主菜单基于当前坐标y偏移距离,
-    main-transfer-x：主菜单基于基于当前坐标x偏移距离; 
+    main-transfer-x：主菜单基于基于当前坐标x偏移距离;
+    
     text-margin: 菜单文字外边距
     icon-margin: 图片外边距
     注：自定义菜单样式通过js修改后，需重新loadData才生效
@@ -29,7 +30,8 @@
         itemJson.icon = "res:yuanhongqian/image/nxinxi.png";
         itemJson.iconCurrent = "res:yuanhongqian/image/nxinxi-active.png";
         itemJson.text = "消息";
-        itemJson.isSmallTip = true; 设置后tip值无效
+        itemJson.isSmallTip = true;
+        设置后tip值无效
         itemJson.tip = "4";
 
     menubarRefresh(): 如需通过js动态修改某个菜单的json属性值，可执行menubarRefresh()属性数据    
@@ -104,8 +106,11 @@
                         if (item.hasAttr("itemindex")) {
                             var id = item.getAttr("itemindex");
                             var num = parseInt(id);
-                            copythis.index = num;
-                            copythis.changeIndex(num);
+                            if (copythis.index != num) {
+                                copythis.index = num;
+                                copythis.changeIndex(num);
+                            }
+
                         }
                     });
                 },
@@ -134,16 +139,16 @@
                 //属性变更回调函数
                 attrChanged: function(attrName, attrValue) {
                     if (attrName == "index") {
+
                         // console.log("第一次进来");
                         if (attrValue != null) {
                             this.index = attrValue;
                         }
                         if (this.jsondatas != null) {
                             // console.log("第二次进来");
+
                             this.changeIndex(this.index);
                         }
-
-
                     }
                     if (attrName == "mainicon") {
                         if (attrValue != null) {
