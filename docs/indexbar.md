@@ -64,7 +64,7 @@ pop窗口背景色; 默认#549FF7
 默认#549FF7
 
 
-**indexbar-font-size*
+**indexbar-font-size**
 
 <code>字母条的文字大小</code>
 
