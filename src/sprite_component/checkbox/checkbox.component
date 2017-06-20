@@ -331,6 +331,7 @@ click()：模拟点击；
                 click: function () {
 
                     this.box.fire("touchUp");
+					this.fire("click");
                     //document.refresh();
                 }
             }

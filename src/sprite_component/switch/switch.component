@@ -132,6 +132,7 @@ click():模拟点击
             click: function () {
                 this.btn.fire("touchDown");
                 this.btn.fire("touchUp");
+				this.fire("click");
             },
             //属性变更回调函数 
             attrChanged: function (attrName, attrValue) {

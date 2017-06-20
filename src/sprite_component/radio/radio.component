@@ -146,6 +146,7 @@ click(): 模拟radio点击方法；
 			},
 			click: function () {
 				this.box.fire("touchUp");
+				this.fire("click");
 			},
 			init: function () {
 
