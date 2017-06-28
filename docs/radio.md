@@ -237,6 +237,22 @@ checked时候的背景色; 默认#549FF7；
 返回值：无
 
 
+**bindDom(domobj:IElement):void**
+
+<code>绑定一组radio所在的容器的dom</code>
+
+如果不执行此方法，组件内部默认从uixml的根节点开始寻找同组的radio
+
+**注：** 在模板里面使用radio，必须执行该方法，传入radio组所在的容器dom.
+
+参数：
+
+domobj: 容器的dom对象
+
+返回值：无
+
+
+
 <h2 id="cid_4">事件</h2>
 
 
