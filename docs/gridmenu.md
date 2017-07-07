@@ -105,6 +105,8 @@ gridmenu1.loadData(json);
 >[ tip-color  气泡字体颜色](#ys_8)
 > 
 >[ tip-background-color	 气泡背景色](#ys_9)
+>
+>[ item-background-color  网格背景色](#ys_10)
 
 
 <span id="ys_0">**公共样式**</td>
@@ -181,6 +183,14 @@ gridmenu1.loadData(json);
 <code>气泡背景色</code>
 
 气泡背景色，默认red
+
+
+
+<span  id="ys_10">item-background-color</span>
+
+<code> 网格背景色</code>
+
+网格背景色，默认：#ffffff;
 
 
 **注：**除了公共样式以外，其他菜单样式通过js修改后，需重新执行loadData()才生效。  
