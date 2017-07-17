@@ -157,18 +157,19 @@
                 },
                 init: function() {
 
-                    this.setStyle("pop-background-color", this.getStyle("pop-background-color"));
+                    /*this.setStyle("pop-background-color", this.getStyle("pop-background-color"));
                     this.setStyle("pop-text-color", this.getStyle("pop-text-color"));
                     this.setStyle("indexbar-text-color", this.getStyle("indexbar-text-color"));
                     this.setStyle("indexbar-font-size", this.getStyle("indexbar-font-size"));
 
-                    this.setAttr("ispop", this.getAttr("ispop"));
+                    this.setAttr("ispop", this.getAttr("ispop"));*/
+
 
                 },
                 getZM: function(n) {
-                    console.log(n);
+                    //  console.log(n);
                     var zm = this.childrenObj[n].getFirstChild().getText();
-                    console.log(zm);
+                    // console.log(zm);
                     var zm_textdom = document.getElement("zm_text");
                     zm_textdom.setText(zm);
 

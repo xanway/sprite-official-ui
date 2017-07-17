@@ -1,10 +1,10 @@
-.button{
+.ctrlbox{
 	background-color:#549FF7;
 	border-color:#549FF7;	
 }
 
 .tip{
-	background-color:rgba(0, 0, 0, 0.15);
+	background-color:rgba(0, 0, 0, 0.15); 
 }
 
 .tip-text{	

@@ -70,11 +70,6 @@
                 this.iconHeight = "45";
                 this.fontSize = "13";
 
-
-                this.colSpacing = 0;
-                this.rowSpacing = 0;
-                this.cellScale = 1;
-
                 this.col = "4";
                 this.landcol = "8";
 
@@ -89,95 +84,96 @@
                 created: function() {
                     //这里是得到组件所在的uixml页面的绝对路径目录
                     this.pathLocation = document.getPathLocation();
-
+                    this.gridmenu = this.getElement("gridmenu");
                     this.gridmenubox = this.getElement("gridmenubox");
-
-
                     this.init();
+
+                    var copythis = this;
+
+                    this.gridmenu.on("click", function(e) {
+
+                        var item = e.target;
+
+                        if (item.hasAttr("itemindex")) {
+                            var id = item.getAttr("itemindex");
+                            var num = parseInt(id);
+                            var ary = new Array();
+                            ary.push(num);
+                            copythis.fire("gridMenuClick", ary);
+                        }
+                    });
+
+
+                    this.gridmenu.on("touchDown", function(e) {
+
+                        var item = e.target;
+
+                        if (item.hasAttr("itemindex")) {
+                            var id = item.getAttr("itemindex");
+                            var num = parseInt(id);
+                            var celldom = copythis.getElement("id_" + num);
+                            var itemtext = copythis.getElement("itemtext_" + num);
+                            celldom.setStyle("background-color", copythis.backgroundColorClick);
+                            itemtext.setStyle("color", copythis.colorClick);
+
+                        }
+                    });
+
+                    this.gridmenu.on("touchUp", function(e) {
+
+                        var item = e.target;
+
+                        if (item.hasAttr("itemindex")) {
+                            var id = item.getAttr("itemindex");
+                            var num = parseInt(id);
+                            var celldom = copythis.getElement("id_" + num);
+                            var itemtext = copythis.getElement("itemtext_" + num);
+                            celldom.setStyle("background-color", "#ffffff");
+                            itemtext.setStyle("color", copythis.color);
+
+                        }
+                    });
+
+                    this.gridmenu.on("touchCancel", function(e) {
+
+                        var item = e.target;
+
+                        if (item.hasAttr("itemindex")) {
+                            var id = item.getAttr("itemindex");
+                            var num = parseInt(id);
+                            var celldom = copythis.getElement("id_" + num);
+                            var itemtext = copythis.getElement("itemtext_" + num);
+                            celldom.setStyle("background-color", "#ffffff");
+                            itemtext.setStyle("color", copythis.color);
+
+                        }
+                    });
+
+
+
 
                 },
                 init: function() {
 
-                    /*if (this.getStyle("tip-color") != null) {
+                    this.setStyle("tip-color", this.getStyle("tip-color"));
+                    this.setStyle("tip-background-color", this.getStyle("tip-background-color"));
+                    this.setStyle("color", this.getStyle("color"));
+                    this.setStyle("color-click", this.getStyle("color-click"));
+                    this.setStyle("background-color-click", this.getStyle("background-color-click"));
+                    this.setStyle("icon-width", this.getStyle("icon-width"));
+                    this.setStyle("icon-height", this.getStyle("icon-height"));
+                    this.setStyle("font-size", this.getStyle("font-size"));
 
-                        this.setStyle("tip-color", this.getStyle("tip-color"));
-                    }
+                    this.setStyle("item-background-color", this.getStyle("item-background-color"));
 
-                    if (this.getStyle("tip-background-color") != null) {
-                        this.setStyle("tip-background-color", this.getStyle("tip-background-color"));
-                    }
-
-                    if (this.getStyle("tip-background-color") != null) {
-                        this.setStyle("tip-background-color", this.getStyle("tip-background-color"));
-                    }
-
-                    if (this.getStyle("color") != null) {
-                        this.setStyle("color", this.getStyle("color"));
-
-                    }
-                    if (this.getStyle("color-click") != null) {
-
-                        this.setStyle("color-click", this.getStyle("color-click"));
-                    }
-
-                    if (this.getStyle("background-color-click") != null) {
-                        this.setStyle("background-color-click", this.getStyle("background-color-click"));
-
-                    }
-
-                    if (this.getStyle("icon-width") != null) {
-                        this.setStyle("icon-width", this.getStyle("icon-width"));
-                    }
-
-                    if (this.getStyle("icon-height") != null) {
-                        this.setStyle("icon-height", this.getStyle("icon-height"));
-                    }
-
-
-
-
-                    if (this.getStyle("font-size") != null) {
-
-                        this.setStyle("font-size", this.getStyle("font-size"));
-                    }
-
-                    if (this.getStyle("item-background-color") != null) {
-
-                        this.setStyle("item-background-color", this.getStyle("item-background-color"));
-                    }*/
-
-
-
-
-
-
-                    /*if (screenWidth_s > screenHeight_s) {
+                    if (screenWidth_s > screenHeight_s) {
                         this.setAttr("landcol", this.getAttr("landcol"));
 
                     } else {
                         this.setAttr("col", this.getAttr("col"));
-                    }*/
-
-
-                    /*if (this.getStyle("col-spacing") != null) {
-                        //console.log("col-spacingcol-spacingcol-spacing");
-                        this.setStyle("col-spacing", this.getStyle("col-spacing"));
                     }
-
-                    if (this.getStyle("row-spacing") != null) {
-                        this.setStyle("row-spacing", this.getStyle("row-spacing"));
-                    }
-
-                    if (this.getStyle("cell-scale") != null) {
-                        this.setStyle("cell-scale", this.getStyle("cell-scale"));
-                    }*/
-
-
-
                 },
                 loadData: function(jsondatas) {
-
-
                     var isRefresh = true;
                     if (arguments[1] == null) {
                         isRefresh = true;
@@ -188,11 +184,7 @@
                         isRefresh = false;
                     }
                     this.jsondatas = jsondatas;
-                    this.gridmenubox.clear();
-
-                    // console.log("11111111111111111111col:" + this.col);
-
-                    var gridmenuxml = '<grid id="gridmenu" style="col-spacing:' + this.colSpacing + ';row-spacing:' + this.rowSpacing + ';cell-scale:' + this.cellScale + '" col="' + this.col + '"  class="gridmenu">';
+                    this.gridmenu.clear();
 
                     for (var i = 0; i < jsondatas.datas.length; i++) {
 
@@ -231,90 +223,16 @@
                             '</box>' +
                             '</box>';
 
-                        gridmenuxml = gridmenuxml + xmlstr;
-                        //  var dom = document.createElementByXml(xmlstr, this);
-                        // this.gridmenu.appendChild(dom);
+                        var dom = document.createElementByXml(xmlstr, this);
+                        this.gridmenu.appendChild(dom);
 
                     }
 
-                    gridmenuxml = gridmenuxml + '</grid>';
-                    var dom = document.createElementByXml(gridmenuxml, this);
-                    this.gridmenubox.appendChild(dom);
-                    this.gridmenubox.refresh();
 
                     if (isRefresh == true) {
-                        document.refresh();
+
+                        this.gridmenu.refresh();
                     }
-
-                    var copythis = this;
-                    this.gridmenu = this.getElement("gridmenu");
-                    //   this.gridmenu.refresh();
-
-                    // console.log(this.gridmenu);
-
-                    this.gridmenu.on("click", function(e) {
-
-                        var item = e.target;
-
-                        if (item.hasAttr("itemindex")) {
-                            var id = item.getAttr("itemindex");
-                            var num = parseInt(id);
-                            var ary = new Array();
-                            ary.push(num);
-                            copythis.fire("gridMenuClick", ary);
-                        }
-                    });
-
-
-                    this.gridmenu.on("touchDown", function(e) {
-
-                        var item = e.target;
-
-                        if (item.hasAttr("itemindex")) {
-                            var id = item.getAttr("itemindex");
-                            var num = parseInt(id);
-                            var celldom = copythis.getElement("id_" + num);
-                            var itemtext = copythis.getElement("itemtext_" + num);
-                            celldom.setStyle("background-color", copythis.backgroundColorClick);
-                            itemtext.setStyle("color", copythis.colorClick);
-
-                        }
-
-                        copythis.fire("touchDown");
-                    });
-
-                    this.gridmenu.on("touchUp", function(e) {
-
-                        var item = e.target;
-
-                        if (item.hasAttr("itemindex")) {
-                            var id = item.getAttr("itemindex");
-                            var num = parseInt(id);
-                            var celldom = copythis.getElement("id_" + num);
-                            var itemtext = copythis.getElement("itemtext_" + num);
-                            celldom.setStyle("background-color", "#ffffff");
-                            itemtext.setStyle("color", copythis.color);
-
-                        }
-                        copythis.fire("touchUp");
-                    });
-
-                    this.gridmenu.on("touchCancel", function(e) {
-
-                        var item = e.target;
-
-                        if (item.hasAttr("itemindex")) {
-                            var id = item.getAttr("itemindex");
-                            var num = parseInt(id);
-                            var celldom = copythis.getElement("id_" + num);
-                            var itemtext = copythis.getElement("itemtext_" + num);
-                            celldom.setStyle("background-color", "#ffffff");
-                            itemtext.setStyle("color", copythis.color);
-
-                        }
-                        copythis.fire("touchCancel");
-                    });
-
 
 
 
@@ -327,6 +245,7 @@
                         } else {
                             this.jsondatas.datas[i].icon = this.pathLocation + "/" + this.jsondatas.datas[i].icon;
                         }
+
                         var itemJson = this.jsondatas.datas[i];
                         var imagedom = childarr[i].getElements("image")[0];
                         var textdom = childarr[i].getElements("text")[0];
@@ -344,6 +263,8 @@
 
                         var tipsmalldom = childarr[i].getElements('[type="tipsmall"]')[0];
                         if (itemJson.isSmallTip != null && itemJson.isSmallTip == true) {
+
+
                             tipsmalldom.setStyle("display", "block");
                             tipdom.setStyle("display", "none");
 
@@ -386,15 +307,13 @@
                 },
 
                 //属性变更回调函数
-                attrChanged: function(attrName, attrValue, taginit) {
+                attrChanged: function(attrName, attrValue) {
                     if (attrName == "col") {
                         if (attrValue != null) {
                             this.col = attrValue;
                         }
-                        //  console.log("this.col11111:" + this.col);
-                        //  this.gridmenu.setAttr("col", this.col);
-                        // this.gridmenu.refresh();
-
+                        // console.log("this.col:"+this.col);
+                        this.gridmenu.setAttr("col", this.col);
                     }
 
                     if (attrName == "landcol") {
@@ -406,17 +325,14 @@
                         // console.log("this.col:"+this.col);
                         if (screenWidth_s > screenHeight_s) {
                             //   console.log("this.col:" + this.col);
-
-                            // this.gridmenu.setAttr("col", this.landcol);
-                            this.col = this.landcol
+                            this.gridmenu.setAttr("col", this.landcol);
                         }
-                        // this.gridmenu.refresh();
                     }
 
 
                 },
                 //样式变更回调函数
-                styleChanged: function(styleName, styleValue, taginit) {
+                styleChanged: function(styleName, styleValue) {
                     if (styleName == "color") {
                         if (styleValue != null) {
                             this.color = styleValue;
@@ -476,35 +392,6 @@
                             this.fontSize = styleValue;
                         }
                     }
-
-                    if (styleName == "col-spacing") {
-                        if (styleValue != null) {
-                            this.colSpacing = styleValue;
-                        }
-                        //  console.log("col-spacingcol-spacingcol-spacing" + this.colSpacing);
-                        // this.gridmenu.setStyle("col-spacing", this.colSpacing);
-
-                        // this.gridmenu.refresh();
-                    }
-
-                    if (styleName == "row-spacing") {
-                        if (styleValue != null) {
-                            this.rowSpacing = styleValue;
-                        }
-                        // this.gridmenu.setStyle("row-spacing", this.rowSpacing);
-
-                        // this.gridmenu.refresh();
-                    }
-
-                    if (styleName == "cell-scale") {
-                        if (styleValue != null) {
-                            this.cellScale = styleValue;
-                        }
-                        // this.gridmenu.setStyle("cell-scale", this.cellScale);
-
-                        // this.gridmenu.refresh();
-
-                    }
                 }
             }
         ]]>
@@ -514,6 +401,9 @@
         @import url("gridmenu.color.css");
     </style>
     <ui>
-        <box id="gridmenubox" />
+
+        <grid id="gridmenu" class="gridmenu">
+
+        </grid>
     </ui>
 </page>

@@ -2,8 +2,10 @@
 样式：
 box公共样式;
 checked-color：checked时候的背景色;
-nochecked-color; 为未选中状态下背景色
-color:文字颜色(通过js可以修改); 
+nochecked-color;
+为未选中状态下背景色
+color:文字颜色(通过js可以修改);
+
 height:radio高度(通过js可以修改);
 font-size:字体大小(通过js可以修改)；
 readonly-radius:只读状态遮罩区域的弧度，一般用于有图片的时候设置
@@ -25,156 +27,164 @@ click(): 模拟radio点击方法；
  change：监听radio属性改变
 -->
 <page>
-	<module>
+    <module>
 
-		<![CDATA[
+        <![CDATA[
     
     ]]>
 
-	</module>
-	<script>
-		<![CDATA[
-    	var document = require("Document");
-		var window = require("Window");
-		var time = require("Time");
-		var console = require("Console");
+    </module>
+    <script>
+        <![CDATA[
+            var document = require("Document");
+            var window = require("Window");
+            var time = require("Time");
+            var console = require("Console");
 
-		var getRootElement = null;
+            var getRootElement = null;
 
-		var Radio = function () {
-			this.btn = null;
-			this.box = null;
-			this.boxradio = null;
-			this.checkimage = null;
-			this.captiondom = null;
-			this.readonlydom = null;
+            var Radio = function() {
+                this.btn = null;
+                this.box = null;
+                this.boxradio = null;
+                this.checkimage = null;
+                this.captiondom = null;
+                this.readonlydom = null;
 
-			this.checked = "false";
-			this.group = null;
-			this.caption = "";
-			this.checkedimage = null;
-			this.nocheckedimage = null;
-			this.readonly = "false";
-			this.value = "";
-
-
-			this.checkedColor = "#549FF7";
-			this.nocheckedColor = "#9B9C9C";
-			this.height = "30";
-			this.fontSize = "16";
-			this.color = "#000000",
-				this.readonlyRadius = "0";
-			this.clicktag = false;
-
-			this.index = 0;
-			this.taginit = true;
-
-			this.pathLocation = "";
-		}
-
-		module.exports = Radio;
-
-		Radio.prototype = {
-			created: function () {
-				//这里是得到组件所在的uixml页面的绝对路径目录
-				this.pathLocation = document.getPathLocation();
-				getRootElement = document.getRootElement();
-				this.box = this.getElement("box");
-				this.btn = this.getElement("checkedbtn");
-				this.boxradio = this.getElement("boxradio");
-				this.captiondom = this.getElement("caption");
-				this.checkimage = this.getElement("checkimage");
-				this.readonlydom = this.getElement("readonly");
-
-				this.init();
-
-				var copythis = this;
-
-				this.box.on("touchUp", function (e) {
-					if (copythis.readonly == "false") {
-
-						var rule = '[group="' + copythis.group + '"]';
-						var radioarr = getRootElement.getElements(rule);
+                this.checked = "false";
+                this.group = null;
+                this.caption = "";
+                this.checkedimage = null;
+                this.nocheckedimage = null;
+                this.readonly = "false";
+                this.value = "";
 
 
-						//当有group的radion个数大于2执行 排斥方法
-						if (radioarr.length >= 2) {
-							if (copythis.checked == "true") {
-								return;
-							}
+                this.checkedColor = "#549FF7";
+                this.nocheckedColor = "#9B9C9C";
+                this.height = "30";
+                this.fontSize = "16";
+                this.color = "#000000",
+                    this.readonlyRadius = "0";
+                this.clicktag = false;
+
+                this.index = 0;
+                this.taginit = true;
+
+                this.pathLocation = "";
+            }
+
+            module.exports = Radio;
+
+            Radio.prototype = {
+                created: function() {
+                    //这里是得到组件所在的uixml页面的绝对路径目录
+                    this.pathLocation = document.getPathLocation();
+                    getRootElement = document.getRootElement();
+                    this.box = this.getElement("box");
+                    this.btn = this.getElement("checkedbtn");
+                    this.boxradio = this.getElement("boxradio");
+                    this.captiondom = this.getElement("caption");
+                    this.checkimage = this.getElement("checkimage");
+                    this.readonlydom = this.getElement("readonly");
+
+                    this.init();
+
+                    var copythis = this;
+
+                    this.box.on("touchUp", function(e) {
+                        if (copythis.readonly == "false") {
+
+                            var rule = '[group="' + copythis.group + '"]';
+                            var radioarr = getRootElement.getElements(rule);
 
 
-							var id = copythis.getAttr("id");
-							//console.log("id："+copythis.getAttr("id"));
-							for (i = 0; i < radioarr.length; i++) {
-								if (copythis == radioarr[i]) {
-									radioarr[i].setAttr("checked", "true");
-									//console.log("id相等");
-								}
-								else {
-									radioarr[i].setAttr("checked", "false");
-								}
-
-								//radioarr[i].setAttr("checked","false");			 
-
-							}
-							/* copythis.setAttr("checked","true");*/
-						}
-						else {
-
-							if (copythis.checked == "true") {
-								return;
-
-							}
-							else {
-								copythis.setAttr("checked", "true");
-							}
-						}
-					}
-
-				});
-
-				/*		  	if(this.getAttr("checked") == "true"){
-									
-							 //如果同一group的radio有多个true,这里模拟执行一次点击，最后一个被选中
-							  time.setTimeout(function(){
-									copythis.boxradio.fire("touchUp");
-							  },10);
-							  
-								}*/
-
-			},
-			click: function () {
-				this.box.fire("touchUp");
-				this.fire("click");
-			},
-			init: function () {
+                            //当有group的radion个数大于2执行 排斥方法
+                            if (radioarr.length >= 2) {
+                                if (copythis.checked == "true") {
+                                    return;
+                                }
 
 
+                                var id = copythis.getAttr("id");
+                                //console.log("id："+copythis.getAttr("id"));
+                                for (i = 0; i < radioarr.length; i++) {
+                                    if (copythis == radioarr[i]) {
+                                        radioarr[i].setAttr("checked", "true");
+                                        //console.log("id相等");
+                                    } else {
+                                        radioarr[i].setAttr("checked", "false");
+                                    }
 
-				this.taginit = true;
+                                    //radioarr[i].setAttr("checked","false");			 
 
-				this.setStyle("readonly-radius", this.getStyle("readonly-radius"));
-				this.setStyle("checked-color", this.getStyle("checked-color"));
-				this.setStyle("nochecked-color", this.getStyle("nochecked-color"));
-				this.setStyle("height", this.getStyle("height"));
-				this.setStyle("font-size", this.getStyle("font-size"));
-				this.setStyle("color", this.getStyle("color"));
+                                }
+                                /* copythis.setAttr("checked","true");*/
+                            } else {
+
+                                if (copythis.checked == "true") {
+                                    return;
+
+                                } else {
+                                    copythis.setAttr("checked", "true");
+                                }
+                            }
+                        }
+
+                    });
+
+                    /*		  	if(this.getAttr("checked") == "true"){
+                    					
+                    			 //如果同一group的radio有多个true,这里模拟执行一次点击，最后一个被选中
+                    			  time.setTimeout(function(){
+                    					copythis.boxradio.fire("touchUp");
+                    			  },10);
+                    			  
+                    				}*/
+
+                },
+                click: function() {
+                    this.box.fire("touchUp");
+                },
+                bindDom: function(dom) {
+
+
+                    getRootElement = dom;
+
+                },
+                init: function() {
 
 
 
-				this.setAttr("checked", this.getAttr("checked"));
-				this.setAttr("checkedimage", this.getAttr("checkedimage"));
-				this.setAttr("nocheckedimage", this.getAttr("nocheckedimage"));
-				this.setAttr("readonlyimage", this.getAttr("readonlyimage"));
-				this.setAttr("caption", this.getAttr("caption"));
-				this.setAttr("group", this.getAttr("group"));
-				this.setAttr("readonly", this.getAttr("readonly"));
-				this.setAttr("value", this.getAttr("value"));
+                    this.taginit = true;
+
+                    this.setAttr("checked", this.getAttr("checked"));
+                    this.setStyle("height", this.getStyle("height"));
+
+
+                    /*this.setStyle("readonly-radius", this.getStyle("readonly-radius"));
+                    this.setStyle("checked-color", this.getStyle("checked-color"));
+                    this.setStyle("nochecked-color", this.getStyle("nochecked-color"));
+                    this.setStyle("height", this.getStyle("height"));
+                    this.setStyle("font-size", this.getStyle("font-size"));
+                    this.setStyle("color", this.getStyle("color"));
 
 
 
-				/*var attrs = this.getAttrs();
+                    this.setAttr("checked", this.getAttr("checked"));
+
+                    this.setAttr("checkedimage", this.getAttr("checkedimage"));
+                    this.setAttr("nocheckedimage", this.getAttr("nocheckedimage"));
+                    this.setAttr("readonlyimage", this.getAttr("readonlyimage"));
+                    this.setAttr("caption", this.getAttr("caption"));
+                    this.setAttr("group", this.getAttr("group"));
+                    this.setAttr("readonly", this.getAttr("readonly"));
+                    this.setAttr("value", this.getAttr("value"));*/
+
+
+
+
+                    /*var attrs = this.getAttrs();
 		   
 				for(var ar in attrs){
 				   if(ar != "style"){ 
@@ -185,275 +195,280 @@ click(): 模拟radio点击方法；
 				}*/
 
 
-				this.taginit = false;
-
-
-			},
-			//属性变更回调函数
-			attrChanged: function (attrName, attrValue) {
-				var changetag = false;
-				if (this.taginit == false) {
-
-					if (this.getAttr(attrName) != this[attrName] && this[attrName] != null) {
-						//this.fire("change"); 
-						changetag = true;
-					}
-
-				}
-
-
-				if (attrName == "readonly") {
-
-					if (attrValue != null) {
+                    this.taginit = false;
 
-						this.readonly = attrValue;
-						if (attrValue == "true") {
-							// console.log("进入了readonly");
-							this.box.appendChild(this.readonlydom);
-							if (this.checked == "false") {
-								// this.boxradio.setStyle("background-color","#d9d9d9");
-								// this.btn.setStyle("background-color","#d9d9d9");
-							}
-						}
-						else {
 
-							this.box.insertBefore(this.readonlydom, this.boxradio);
-							if (this.checked == "false") {
-								// this.boxradio.setStyle("background-color","#ffffff");
-								// this.btn.setStyle("background-color","transparent");
-							}
-						}
+                },
+                //属性变更回调函数
+                attrChanged: function(attrName, attrValue, taginit) {
+                    var changetag = false;
+                    if (this.taginit == false) {
+                        if (taginit != true) {
+                            //   console.log("能进来吗:" + attrName + ";" + attrValue + ";taginit:" + taginit);
+                            if (this.getAttr(attrName) != this[attrName] && this[attrName] != null && attrValue != null) {
+                                // console.log("123能进来吗:" + attrName + ";" + attrValue);
+                                // this[attrName] = attrValue;
 
-					}
+                                changetag = true;
+                            }
+                        }
+                    }
 
-					if (this.taginit == false) {
-						this.box.refresh();
-					}
 
-				}
+                    if (attrName == "readonly") {
 
+                        if (attrValue != null) {
 
+                            this.readonly = attrValue;
 
-				if (attrName == "checkedimage") {
-					if (attrValue != null) {
+                            if (attrValue == "true") {
 
-						if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
-							this.checkedimage = attrValue;
-						}
-						else {
-							this.checkedimage= this.pathLocation + "/" + attrValue;
-						}
+                                this.readonlydom.setStyle("visibility", "visible");
 
-					
-						this.checkedColor = "transparent";
-						this.checkimage.setStyle("display", "block");
-						this.btn.setStyle("display", "none");
-						if (this.checked == "true") {
+                            } else {
 
-							this.checkimage.setAttr("src", this.checkedimage);
+                                this.readonlydom.setStyle("visibility", "hidden");
 
-							this.boxradio.setStyle("border-color", this.checkedColor);
-						}
-					}
-					else {
+                            }
 
-						this.checkimage.setStyle("display", "none");
-						this.btn.setStyle("display", "block");
-					}
-					if (this.taginit == false) {
-						this.box.refresh();
-					}
-				}
+                        }
 
-				if (attrName == "nocheckedimage") {
-					if (attrValue != null) {
+                    }
 
-						if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
-							this.nocheckedimage = attrValue;
-						}
-						else {
-							this.nocheckedimage= this.pathLocation + "/" + attrValue;
-						}
 
-						this.checkimage.setStyle("display", "block");
-						this.nocheckedColor = "transparent";
-						if (this.checked == "false") {
 
-							this.checkimage.setAttr("src", this.nocheckedimage);
-							this.boxradio.setStyle("border-color", "this.nocheckedColor");
-						}
-					}
-					else {
-						this.checkimage.setStyle("display", "none");
+                    if (attrName == "checkedimage") {
+                        if (attrValue != null) {
 
-					}
-					if (this.taginit == false) {
-						this.box.refresh();
-					}
-				}
+                            if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
+                                this.checkedimage = attrValue;
+                            } else {
+                                this.checkedimage = this.pathLocation + "/" + attrValue;
+                            }
 
-				// console.log(attrName+"#"+attrValue);
-				if (attrName == "checked") {
-					//console.log("222222222;"+attrValue);			
-					if (attrValue == "true") {
 
+                            this.checkedColor = "transparent";
+                            this.checkimage.setStyle("display", "block");
+                            this.btn.setStyle("display", "none");
+                            if (this.checked == "true") {
 
-						
-						if (this.checkedimage != null) {
-							this.checkimage.setAttr("src", this.checkedimage);
-						}
+                                this.checkimage.setAttr("src", this.checkedimage);
 
+                                this.boxradio.setStyle("border-color", this.checkedColor);
+                            }
+                        } else {
 
-						this.btn.setStyle("background-color", this.checkedColor);
-						this.boxradio.setStyle("border-color", this.checkedColor);
-						this.checked = "true";
-					}
-					else {
+                            this.checkimage.setStyle("display", "none");
+                            this.btn.setStyle("display", "block");
+                        }
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
+                    }
 
-						if (this.nocheckedimage != null) {
-							this.checkimage.setAttr("src", this.nocheckedimage);
-						}
+                    if (attrName == "nocheckedimage") {
+                        if (attrValue != null) {
 
+                            if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
+                                this.nocheckedimage = attrValue;
+                            } else {
+                                this.nocheckedimage = this.pathLocation + "/" + attrValue;
+                            }
 
-						this.btn.setStyle("background-color", "#ffffff");
-						this.boxradio.setStyle("border-color", this.nocheckedColor);
-						this.checked = "false";
-					}
+                            this.checkimage.setStyle("display", "block");
+                            this.nocheckedColor = "transparent";
+                            if (this.checked == "false") {
 
+                                this.checkimage.setAttr("src", this.nocheckedimage);
+                                this.boxradio.setStyle("border-color", "this.nocheckedColor");
+                            }
+                        } else {
+                            this.checkimage.setStyle("display", "none");
 
+                        }
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
+                    }
 
-				}
+                    // console.log(attrName+"#"+attrValue);
+                    if (attrName == "checked") {
+                        //console.log("222222222;"+attrValue);			
+                        if (attrValue == "true") {
 
-				if (attrName == "caption") {
-					if (attrValue != null) {
-						this.caption = attrValue;
-					}
-					this.captiondom.setText(this.caption);
 
-					if (this.taginit == false) {
-						this.box.refresh();
-					}
 
-				}
+                            if (this.checkedimage != null) {
+                                this.checkimage.setAttr("src", this.checkedimage);
+                            }
 
-				if (attrName == "group") {
-					if (attrValue != null) {
-						this.group = attrValue;
-					}
-				}
 
-				if (attrName == "value") {
-					if (attrValue != null) {
-						this.value = attrValue;
-					}
-				}				
+                            if (this.getAttr("checkedimage") == null) {
 
-				if (changetag == true) {
-					this.fire("change");
-				}
+                                if (this.getStyle("checked-color") != null) {
+                                    this.checkedColor = this.getStyle("checked-color");
+                                }
 
 
+                                this.btn.setStyle("background-color", this.checkedColor);
+                                this.boxradio.setStyle("border-color", this.checkedColor);
+                            }
 
-			},
-			//样式变更回调函数
-			styleChanged: function (styleName, styleValue) {
-				if (styleName == "checked-color") {
-					if (styleValue != null) {
-						this.checkedColor = styleValue;
-					}
+                            /*this.btn.setStyle("background-color", this.checkedColor);
+                            this.boxradio.setStyle("border-color", this.checkedColor);*/
 
-				}
+                            this.checked = "true";
+                        } else {
 
-				if (styleName == "nochecked-color") {
-					if (styleValue != null) {
-						this.nocheckedColor = styleValue;
-					}
+                            if (this.nocheckedimage != null) {
+                                this.checkimage.setAttr("src", this.nocheckedimage);
+                            }
 
-				}
+                            if (this.getAttr("checkedimage") == null) {
+                                this.btn.setStyle("background-color", "#ffffff");
+                                this.boxradio.setStyle("border-color", this.nocheckedColor);
+                            }
 
-				if (styleName == "font-size") {
-					if (styleValue != null) {
-						this.fontSize = styleValue;
-					}
 
-					this.captiondom.setStyle("font-size", this.fontSize);
 
-					if (this.taginit == false) {
-						this.box.refresh();
-					}
-				}
+                            this.checked = "false";
+                        }
 
 
-				if (styleName == "color") {
-					if (styleValue != null) {
-						this.color = styleValue;
-					}
-					this.captiondom.setStyle("color", this.color);
 
+                    }
 
-				}
-				if (styleName == "readonly-radius") {
-					if (styleValue != null) {
-						this.readonlyRadius = styleValue;
-					}
-					this.readonlydom.setStyle("border-radius", this.readonlyRadius);
-					if (this.taginit == false) {
-						this.box.refresh();
-					}
+                    if (attrName == "caption") {
+                        if (attrValue != null) {
+                            this.caption = attrValue;
+                        }
+                        this.captiondom.setText(this.caption);
 
-				}
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
 
+                    }
 
+                    if (attrName == "group") {
+                        if (attrValue != null) {
+                            this.group = attrValue;
+                        }
+                    }
 
-				if (styleName == "height") {
-					if (styleValue != null) {
-						this.height = styleValue;
-					}
+                    if (attrName == "value") {
+                        if (attrValue != null) {
+                            this.value = attrValue;
+                        }
+                    }
 
-					this.boxradio.setStyle("height", this.height);
-					this.boxradio.setStyle("width", this.height);
-					this.readonlydom.setStyle("height", this.height);
-					this.readonlydom.setStyle("width", this.height);
+                    if (changetag == true) {
+                        this.fire("change");
+                    }
 
-					if (this.getAttr("checkedimage") == null) {
-						this.boxradio.setStyle("border-radius", this.height / 2);
-						this.readonlydom.setStyle("border-radius", this.height / 2);
 
-						this.btn.setStyle("height", this.height / 2);
-						this.btn.setStyle("width", this.height / 2);
 
-						this.btn.setStyle("border-radius", this.height / 4);
+                },
+                //样式变更回调函数
+                styleChanged: function(styleName, styleValue, taginit) {
+                    if (styleName == "checked-color") {
+                        if (styleValue != null) {
+                            this.checkedColor = styleValue;
+                        }
 
-					}
-					else {
+                    }
 
-						this.checkimage.setStyle("height", this.height-1);
-						this.checkimage.setStyle("width", this.height-1);
-					}
+                    if (styleName == "nochecked-color") {
+                        if (styleValue != null) {
+                            this.nocheckedColor = styleValue;
+                        }
 
-					if (this.taginit == false) {
-						this.box.refresh();
-					}
+                    }
 
-				}
-				
+                    if (styleName == "font-size") {
+                        if (styleValue != null) {
+                            this.fontSize = styleValue;
+                        }
 
-			}
-		}
-    ]]>
-	</script>
-	<style>
-		@import url("radio.layout.css");
-		@import url("radio.color.css");
-	</style>
-	<ui>
-		<box id="box" class="radio">
-			<box id="readonly" class="readonly" />
-			<box class="boxradio" id="boxradio">
-				<box id="checkedbtn" class="btn" />
-				<image id="checkimage" style="display:none" />
-			</box>
-			<text id="caption"></text>
-		</box>
-	</ui>
+                        this.captiondom.setStyle("font-size", this.fontSize);
+
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
+                    }
+
+
+                    if (styleName == "color") {
+                        if (styleValue != null) {
+                            this.color = styleValue;
+                        }
+                        this.captiondom.setStyle("color", this.color);
+
+
+                    }
+                    if (styleName == "readonly-radius") {
+                        if (styleValue != null) {
+                            this.readonlyRadius = styleValue;
+                        }
+                        this.readonlydom.setStyle("border-radius", this.readonlyRadius);
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
+
+                    }
+
+
+                    if (taginit == false) {
+                        if (styleName == "height") {
+                            if (styleValue != null) {
+                                this.height = styleValue;
+                            }
+
+                            this.boxradio.setStyle("height", this.height);
+                            this.boxradio.setStyle("width", this.height);
+                            this.readonlydom.setStyle("height", this.height);
+                            this.readonlydom.setStyle("width", this.height);
+
+                            if (this.getAttr("checkedimage") == null) {
+                                this.boxradio.setStyle("border-radius", this.height / 2);
+                                this.readonlydom.setStyle("border-radius", this.height / 2);
+
+                                this.btn.setStyle("height", this.height / 2);
+                                this.btn.setStyle("width", this.height / 2);
+
+                                this.btn.setStyle("border-radius", this.height / 4);
+
+                            } else {
+
+                                this.checkimage.setStyle("height", this.height - 1);
+                                this.checkimage.setStyle("width", this.height - 1);
+                            }
+
+                            if (taginit == false && this.taginit == false) {
+                                this.box.refresh();
+                            }
+
+                        }
+                    }
+
+
+                }
+            }
+        ]]>
+    </script>
+    <style>
+        @import url("radio.layout.css");
+        @import url("radio.color.css");
+    </style>
+    <ui>
+        <box id="box" class="radio">
+
+            <box class="boxradio" id="boxradio">
+                <box id="checkedbtn" class="btn" />
+                <image id="checkimage" style="display:none" />
+            </box>
+            <text id="caption"></text>
+            <box id="readonly" style="visibility:hidden" class="readonly" />
+        </box>
+    </ui>
 </page>

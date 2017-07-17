@@ -43,61 +43,59 @@ riconsndClick:监听右侧第二张图片点击事件；
     </module>
     <script>
         <![CDATA[
-        var document = require("Document");
-        var window = require("Window");
-        var time = require("Time");
-        var console = require("Console");
+            var document = require("Document");
+            var window = require("Window");
+            var time = require("Time");
+            var console = require("Console");
 
-        //定义一个Titebar类
-        var Titlebar = function () {
-            this.titlebarbox = null;
-            this.titletext = null;
-            this.ltextObj = null;
-            this.ltextboxObj = null;
-            this.rtextObj = null;
-            this.rtextboxObj = null;
-            this.liconObj = null;
-            this.liconboxObj = null;
-            this.riconObj = null;
-            this.riconboxObj = null;
-            this.riconsndObj = null;
-            this.riconsndboxObj = null;
+            //定义一个Titebar类
+            var Titlebar = function() {
+                this.titlebarbox = null;
+                this.titletext = null;
+                this.ltextObj = null;
+                this.ltextboxObj = null;
+                this.rtextObj = null;
+                this.rtextboxObj = null;
+                this.liconObj = null;
+                this.liconboxObj = null;
+                this.riconObj = null;
+                this.riconboxObj = null;
+                this.riconsndObj = null;
+                this.riconsndboxObj = null;
 
-            this.titleColor = "#000000";
-            this.leftColor = "#549FF7";
-            this.rightColor = "#549FF7";
-            this.titleFontSize = "18";
-            this.liconWidth = "30";
-            this.liconHeight = "30";
-            this.riconWidth = "30",
+                this.titleColor = "#000000";
+                this.leftColor = "#549FF7";
+                this.rightColor = "#549FF7";
+                this.titleFontSize = "18";
+                this.liconWidth = "30";
+                this.liconHeight = "30";
+                this.riconWidth = "30";
                 this.riconHeight = "30";
-            this.riconsndWidth = "30";
-            this.riconsndHeight = "30";
+                this.riconsndWidth = "30";
+                this.riconsndHeight = "30";
 
-            this.title = "";
-            this.ltext = "";
-            this.rtext = "";
-            this.licon = "";
-            this.ricon = "";
-            this.riconsnd = "";
+                this.title = "";
+                this.ltext = "";
+                this.rtext = "";
+                this.licon = "";
+                this.ricon = "";
+                this.riconsnd = "";
 
-            this.taginit = true;
+                //  taginit = true;
 
-            this.pathLocation = "";
+                this.pathLocation = "";
 
-        }
+            }
 
-        Titlebar.prototype =
-            {
+            Titlebar.prototype = {
 
-                created: function () {
+                created: function() {
                     //这里是得到组件所在的uixml页面的绝对路径目录
                     this.pathLocation = document.getPathLocation();
                     this.titlebarbox = this.getElement("titlebarbox");
                     this.titletext = this.getElement("titletext");
                     this.ltextObj = this.getElement("ltextObj");
                     this.ltextboxObj = this.getElement("ltextboxObj");
-
                     this.rtextObj = this.getElement("rtextObj");
                     this.rtextboxObj = this.getElement("rtextboxObj");
 
@@ -110,26 +108,24 @@ riconsndClick:监听右侧第二张图片点击事件；
                     this.riconsndObj = this.getElement("riconsndObj");
                     this.riconsndboxObj = this.getElement("riconsndboxObj");
 
-
-
                     var copythis = this;
-                    this.ltextboxObj.on("click", function (e) {
+                    this.ltextboxObj.on("click", function(e) {
                         copythis.fire("ltextClick");
 
                     });
-                    this.rtextboxObj.on("click", function (e) {
+                    this.rtextboxObj.on("click", function(e) {
                         copythis.fire("rtextClick");
 
                     });
-                    this.liconboxObj.on("click", function (e) {
+                    this.liconboxObj.on("click", function(e) {
                         copythis.fire("liconClick");
 
                     });
-                    this.riconboxObj.on("click", function (e) {
+                    this.riconboxObj.on("click", function(e) {
                         copythis.fire("riconClick");
 
                     });
-                    this.riconsndboxObj.on("click", function (e) {
+                    this.riconsndboxObj.on("click", function(e) {
                         copythis.fire("riconsndClick");
 
                     });
@@ -140,7 +136,7 @@ riconsndClick:监听右侧第二张图片点击事件；
 
                 },
                 //属性变更回调函数
-                attrChanged: function (attrName, attrValue) {
+                attrChanged: function(attrName, attrValue, taginit) {
                     if (attrName == "title") {
                         if (attrValue != null) {
                             this.title = attrValue;
@@ -154,13 +150,16 @@ riconsndClick:监听右侧第二张图片点击事件；
                             this.ltextObj.setStyle("display", "block");
                             this.ltext = attrValue;
                             this.ltextObj.setText(this.ltext);
-                        }
-                        else {
+
+                            if (this.getAttr("licon") == null) {
+                                this.ltextObj.setStyle("margin", "0 0 0 10");
+                            }
+                        } else {
 
                             this.ltextObj.setStyle("display", "none");
                         }
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -172,13 +171,12 @@ riconsndClick:监听右侧第二张图片点击事件；
                             this.rtextObj.setStyle("display", "block");
                             this.rtext = attrValue;
                             this.rtextObj.setText(this.rtext);
-                        }
-                        else {
+                        } else {
 
                             this.rtextObj.setStyle("display", "none");
                         }
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -191,21 +189,20 @@ riconsndClick:监听右侧第二张图片点击事件；
 
                             if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
                                 this.licon = attrValue;
-                            }
-                            else {
+                            } else {
                                 this.licon = this.pathLocation + "/" + attrValue;
                             }
 
                             this.liconObj.setStyle("display", "block");
 
                             this.liconObj.setAttr("src", this.licon);
-                        }
-                        else {
+                        } else {
 
                             this.liconObj.setStyle("display", "none");
+
                         }
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -217,18 +214,16 @@ riconsndClick:监听右侧第二张图片点击事件；
                             //通过js进来的图片地址，都认为是基于uixml页面的相对路径，符合开发者思维
                             if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
                                 this.ricon = attrValue;
-                            }
-                            else {
+                            } else {
                                 this.ricon = this.pathLocation + "/" + attrValue;
                             }
                             this.riconObj.setStyle("display", "block");
                             this.riconObj.setAttr("src", this.ricon);
-                        }
-                        else {
+                        } else {
                             this.riconObj.setStyle("display", "none");
                         }
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -240,18 +235,16 @@ riconsndClick:监听右侧第二张图片点击事件；
                             //通过js进来的图片地址，都认为是基于uixml页面的相对路径，符合开发者思维
                             if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
                                 this.riconsnd = attrValue;
-                            }
-                            else {
+                            } else {
                                 this.riconsnd = this.pathLocation + "/" + attrValue;
                             }
                             this.riconsndObj.setStyle("display", "block");
                             this.riconsndObj.setAttr("src", this.riconsnd);
-                        }
-                        else {
+                        } else {
                             this.riconsndObj.setStyle("display", "none");
                         }
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -261,7 +254,7 @@ riconsndClick:监听右侧第二张图片点击事件；
 
                 },
                 //样式变更回调函数
-                styleChanged: function (styleName, styleValue) {
+                styleChanged: function(styleName, styleValue, taginit) {
                     if (styleName == "title-color") {
                         if (styleValue != null) {
                             this.titleColor = styleValue;
@@ -275,7 +268,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.titletext.setStyle("font-size", this.titleFontSize);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -305,7 +298,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.liconObj.setStyle("width", this.liconWidth);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -317,7 +310,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.liconObj.setStyle("height", this.liconHeight);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -331,7 +324,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.riconObj.setStyle("width", this.riconWidth);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -343,7 +336,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.riconObj.setStyle("height", this.riconHeight);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -357,7 +350,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.riconsndObj.setStyle("width", this.riconsndWidth);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
 
                             this.titlebarbox.refresh();
                         }
@@ -369,7 +362,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                         }
                         this.riconsndObj.setStyle("height", this.riconsndHeight);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
                             this.titlebarbox.refresh();
                         }
                     }
@@ -377,35 +370,10 @@ riconsndClick:监听右侧第二张图片点击事件；
 
                 },
                 //外部调用js方法
-                init: function () {
-                    this.taginit = true;
-                    this.setStyle("title-color", this.getStyle("title-color"));
-                    this.setStyle("title-font-size", this.getStyle("title-font-size"));
-
-                    this.setStyle("left-color", this.getStyle("left-color"));
-                    this.setStyle("right-color", this.getStyle("right-color"));
-
-                    this.setStyle("licon-width", this.getStyle("licon-width"));
-                    this.setStyle("licon-height", this.getStyle("licon-height"));
-                    this.setStyle("ricon-width", this.getStyle("ricon-width"));
-                    this.setStyle("ricon-height", this.getStyle("ricon-height"));
-                    this.setStyle("riconsnd-width", this.getStyle("riconsnd-width"));
-                    this.setStyle("riconsnd-height", this.getStyle("riconsnd-height"));
-                    this.setAttr("title", this.getAttr("title"));
-                    this.setAttr("ltext", this.getAttr("ltext"));
-                    this.setAttr("rtext", this.getAttr("rtext"));
-                    this.setAttr("licon", this.getAttr("licon"));
-                    this.setAttr("ricon", this.getAttr("ricon"));
-                    this.setAttr("riconsnd", this.getAttr("riconsnd"));
-
-                    if (this.getAttr("licon") == null) {
-                        this.ltextObj.setStyle("margin", "0 0 0 10");
-                    }
-
-                    this.taginit = false;
+                init: function() {
 
                 },
-                setTitleContent: function (xmlstr) {
+                setTitleContent: function(xmlstr) {
                     var title_content = this.getElement("title_content");
 
                     var domobj = document.createElementByXml(xmlstr);
@@ -414,16 +382,16 @@ riconsndClick:监听右侧第二张图片点击事件；
                     title_content.refresh();
 
                 },
-                getDomById: function (id) {
+                getDomById: function(id) {
 
                     return this.getElement(id);
                 }
             }
 
 
-        module.exports = Titlebar;
+            module.exports = Titlebar;
 
-    ]]>
+        ]]>
     </script>
     <style>
         @import url("titlebar.layout.css");
@@ -440,7 +408,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                 </box>
 
                 <box id="ltextboxObj" style="" class="column-flex-center">
-                    <text style="display:none;height:30;margin:0 0 0 0" id="ltextObj" class="text-center"></text>
+                    <text style="display:none;height:30;margin:0 0 0 0;color:#549FF7" id="ltextObj" class="text-center"></text>
                 </box>
 
             </box>
@@ -452,7 +420,7 @@ riconsndClick:监听右侧第二张图片点击事件；
                     <image style="display:none;margin:0 10 0 0" id="riconObj" class=" titlebar-image" />
                 </box>
                 <box id="rtextboxObj" style="" class="column-flex-center">
-                    <text id="rtextObj" style="display:none;height:30;margin:0 10 0 0" class="text-center peter-river"></text>
+                    <text id="rtextObj" style="display:none;height:30;margin:0 10 0 0;color:#549FF7" class="text-center peter-river"></text>
                 </box>
             </box>
         </box>

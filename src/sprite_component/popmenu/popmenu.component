@@ -117,14 +117,9 @@ hide()():隐藏pop
 
                     arrowLeft = (framejson.x + framejson.width / 2) - left - 11;
                     var popContent = '';
-                    for (var i = 0;
-                    i < this.popjson.datas.length;
-                    i++) {
+                    for (var i = 0; i < this.popjson.datas.length; i++) {
 
-                        if ((this.popjson.datas[i].icon)
-                            .indexOf("res:") > -1 || (this.popjson.datas[i].icon)
-                            .indexOf("http://") > -1 || (this.popjson.datas[i].icon)
-                            .indexOf("https://") > -1) {
+                        if ((this.popjson.datas[i].icon).indexOf("res:") > -1 || (this.popjson.datas[i].icon).indexOf("http://") > -1 || (this.popjson.datas[i].icon).indexOf("https://") > -1) {
 
                         } else {
                             this.popjson.datas[i].icon = this.pathLocation + "/" + this.popjson.datas[i].icon;
@@ -222,7 +217,7 @@ hide()():隐藏pop
                         //第一个动画
                         var jsonAni1 = {};
                         jsonAni1.delay = 0;
-                        jsonAni1.duration = 40;
+                        jsonAni1.duration = 150;
                         jsonAni1.curve = "linear";
                         jsonAni1.props = {};
                         jsonAni1.props.backgroundColor = "rgba(0,0,0,0.3)";
@@ -230,22 +225,25 @@ hide()():隐藏pop
                         jsonData1.animators = aniAry1;
                         this.popbgid.startAnimator(jsonData1, function() {
                             // copythis.popbgid.releaseAnimator();
-                            var jsonData2 = {};
-                            var aniAry2 = new Array();
 
-                            //第二个动画
-                            var jsonAni2 = {};
-                            jsonAni2.delay = 0;
-                            jsonAni2.duration = 150;
-                            jsonAni2.curve = "linear";
-                            jsonAni2.props = {};
-                            jsonAni2.props.translationY = framejson.height;
-                            aniAry2.push(jsonAni2);
-                            jsonData2.animators = aniAry2;
-                            copythis.popcontent.startAnimator(jsonData2, function() {
-                                copythis.popshow = true;
-                                // copythis.popcontent.releaseAnimator();
-                            });
+                        });
+
+
+                        var jsonData2 = {};
+                        var aniAry2 = new Array();
+
+                        //第二个动画
+                        var jsonAni2 = {};
+                        jsonAni2.delay = 0;
+                        jsonAni2.duration = 150;
+                        jsonAni2.curve = "linear";
+                        jsonAni2.props = {};
+                        jsonAni2.props.translationY = framejson.height;
+                        aniAry2.push(jsonAni2);
+                        jsonData2.animators = aniAry2;
+                        copythis.popcontent.startAnimator(jsonData2, function() {
+                            copythis.popshow = true;
+                            // copythis.popcontent.releaseAnimator();
                         });
 
                     }
@@ -255,10 +253,25 @@ hide()():隐藏pop
                     var copythis = this;
                     if (this.popshow == true) {
 
+                        var jsonData1 = {};
+                        var aniAry1 = new Array();
+                        //第一个动画
+                        var jsonAni1 = {};
+                        jsonAni1.delay = 0;
+                        jsonAni1.duration = 140;
+                        jsonAni1.curve = "linear";
+                        jsonAni1.props = {};
+                        jsonAni1.props.backgroundColor = "rgba(0,0,0,0)";
+                        aniAry1.push(jsonAni1);
+                        jsonData1.animators = aniAry1;
+                        copythis.popbgid.startAnimator(jsonData1, function() {
+
+                        });
+
 
 
                         //这里得到的值，还没有发生变化，
-                        var framejson = this.popcontent.getFrame();
+                        //  var framejson = this.popcontent.getFrame();
                         var jsonData2 = {};
                         var aniAry2 = new Array();
                         //第二个动画
@@ -271,22 +284,13 @@ hide()():隐藏pop
                         aniAry2.push(jsonAni2);
                         jsonData2.animators = aniAry2;
                         this.popcontent.startAnimator(jsonData2, function() {
-                            var jsonData1 = {};
-                            var aniAry1 = new Array();
-                            //第一个动画
-                            var jsonAni1 = {};
-                            jsonAni1.delay = 0;
-                            jsonAni1.duration = 40;
-                            jsonAni1.curve = "linear";
-                            jsonAni1.props = {};
-                            jsonAni1.props.backgroundColor = "rgba(0,0,0,0)";
-                            aniAry1.push(jsonAni1);
-                            jsonData1.animators = aniAry1;
-                            copythis.popbgid.startAnimator(jsonData1, function() {
-                                copythis.popbgid.setStyle("visibility", "hidden");
-                                copythis.popshow = false;
-                            });
+                            copythis.popbgid.setStyle("visibility", "hidden");
+                            copythis.popshow = false;
+
                         });
+
+
+
 
 
 

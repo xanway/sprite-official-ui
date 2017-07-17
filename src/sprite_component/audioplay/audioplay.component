@@ -11,7 +11,8 @@ button-height: 触摸按钮高度（设置后宽度同时生效）
 x_progress:当前进度和总进度的百分比数值0-100（不再对外）
 
 方法:
-playinit(jsondata); 播放之前初始化 
+playinit(jsondata);
+播放之前初始化 
 start()
 pause()
 stop()
@@ -28,423 +29,100 @@ getStatus():得到播放状态 /*0：未播放状态；
     </module>
     <script>
         <![CDATA[
-    var document = require("Document");
-        var window = require("Window");
-        var console = require("Console");
-        var app = require("App");
-        var ui = require("UI");
-        var time = require("Time");
-        var audioplay = require("AudioPlay");
-
-
-        var screenWidth = window.getScreenWidth();
-
-        var Sliderbar = function () {
-            this.sliderbarColor = "#549FF7";
-            this.sliderbarAfterColor = "#f5f5f5";
-            this.buttonBackgroundColor = "#fcfcfc";
-            this.buttonBorderColor = "#d9d9d9";
-
-            this.buttonHeight = 30;
-            this.width = 0;
-
-
-            this.x_max = 0;
-            this.slider_box_w = 0;
-            this.slider_box = null;
-            this.before_x = null;
-            this.after_x = null;
-            this.sliderbox_btn = null;
-            this.sliderbox_image = null;
-            this.playBtn = null;
-            this.x_progress = 0;
-            this.tag = false;//用于表示是内部调用setAttr
-
-            this.dur = 0;//音频总长度秒
-            this.cur = 0; //当前进度秒
-
-            this.playjson = null; //播放需要的json数据
-
-            this.time1 = null;
-            this.time2 = null;
-            this.loadingimage = null;
-
-            this.timemp3 = null; //定时器id
-            this.btnMovetag = false; //移动进度条的时候标识，让进度条不再随着定时器移动
-        };
-
-        module.exports = Sliderbar;
-
-        Sliderbar.prototype = {
-
-            created: function () {
-                this.slider_box = this.getElement("slider_box");
-                this.before_x = this.getElement("before_x");
-                this.after_x = this.getElement("after_x");
-               
-                this.sliderbox_btn = this.getElement("sliderbox_btn");
-                this.playBtn = this.getElement("playBtn");
-                this.time1 = this.getElement("time1");
-                this.time2 = this.getElement("time2");
-                this.loadingimage = this.getElement("loadingimage");
-
-
-
-
-                var copythis = this;
-                this.sliderbox_btn.on("touchMove", function (e, param) {
-
-                    if (copythis.dur > 0) {
-                        //console.log(copythis.x_max);
-                        var json = this.getFrame();
-                        json.x += param.distanceX;
-                        if (json.x < 0) {
-                            json.x = 0;
-                        }
-                        else if (json.x > copythis.x_max) {
-                            json.x = copythis.x_max;
-                        }
-
-                        this.setFrame(json);
-
-                        var p = ((json.x / copythis.x_max) * 100).toFixed(2);
-
-                        //copythis.setProgress(p);
-
-                        copythis.setAttr("x_progress", p);
-
-
-                        copythis.cur = Number(copythis.x_progress) / (100 / copythis.dur);
-                        var t = Math.floor(copythis.cur);
-
-                        var m;
-                        var s = Number(t % 60) >= 10 ? Number(t % 60) : "0" + Number(t % 60);
-
-
-                        if (Math.floor(t / 60) < 10) {
-                            m = "0" + Math.floor(t / 60);
-
-                        }
-                        else {
-                            m = Math.floor(t / 60);
-                        }
-                        var time1str = m + ":" + s;
-
-                        copythis.time1.setText(time1str);
-
-
-
-                    }
-
-
-
-                });
-
-                this.sliderbox_btn.on("touchDown", function () {
-
-                    copythis.btnMovetag = true;
-
-                });
-
-
-                this.sliderbox_btn.on("touchUp", function () {
-
-                    copythis.btnMovetag = false;
-
-
-
-
-                    copythis.cur = Number(copythis.x_progress) / (100 / copythis.dur);
-
-                    copythis.cur = Math.floor(copythis.cur);
-                    //console.log("copythis.cur"+copythis.cur);
-                    time.clearInterval(copythis.timemp3);
-                    copythis.timemp3 = null;
-
-
-                    if (audioplay.getStatus() == 2) {
-                        copythis.playBtn.setText("\\uF3E6");
-                        audioplay.start();
-                        audioplay.seekTo(copythis.cur * 1000);
-                        copythis.playStart();
-                    }
-                    else if (audioplay.getStatus() == 1) {
-
-                        audioplay.seekTo(copythis.cur * 1000);
-                        copythis.playStart();
-                    }
-                    else if (audioplay.getStatus() == 0) {
-
-                        copythis.playBtn.setText("\\uF3E6");
-
-                        audioplay.start();
-                        //不知道为什么如果结束以后再开始不能马上定位到播放位置，需要延迟下
-                        time.setTimeout(function () {
-                            audioplay.seekTo(copythis.cur * 1000 + 300);
-
-                            copythis.playStart();
-
-                        }, 300);
-
-
-                    }
-
-
-
-
-                    if (copythis.cur >= copythis.dur) {
-
-                        copythis.stop();
-                    }
-
-
-                });
-
-                this.playBtn.on("touchUp", function (e) {
-                    /*0：未播放状态；
-                    1：播放状态；
-                    2：暂停状态；*/
-
-
-                    if (audioplay.getStatus() == 0) {
-
-                        //console.log("进来了吗");
-                        copythis.play();
-
-                    }
-                    else if (audioplay.getStatus() == 2) {
-                        copythis.play();
-
-
-                    }
-                    else if (audioplay.getStatus() == 1) {
-
-                        copythis.pause();
-
-                    }
-
-
-
-                });
-
-                //由于页面没有加载完，在横屏切换的时候得不到frame，这里用定时器
-                time.setTimeout(function () {
-
-                    copythis.slider_box_w = copythis.slider_box.getFrame().width;
-                    copythis.init();
-
-
-                }, 100);
-
-
-                audioplay.on("finish", function (e) {
-                    copythis.stop();
-                });
-
-                audioplay.on("interrupt", function (e) {
-                    //这里监听系统有没有其他音乐播放，如果有回进入这里，在这里做暂停处理。
-                    // console.log("进入了interrupt当前状态:"+audioplay.getStatus());
-                    //  console.log("进入了interrupt当前进度:"+audioplay.getCurrentPosition());
-                    // copythis.pause();
-                    time.clearInterval(copythis.timemp3);
-                    copythis.cur = audioplay.getCurrentPosition() / 1000;
-                    copythis.playBtn.setText("\\uF40D");
-                    copythis.timemp3 = null;
-                    //audioplay.pause();
-                });
-
-                audioplay.on("restore",function(e){
-                        copythis.playBtn.setText("\\uF3E6");
-                        audioplay.start();
-                        audioplay.seekTo(copythis.cur * 1000);
-                        copythis.playStart();
-                });
-
-
-
-                audioplay.on("error", function (e) {
-                    // console.log("播放错误");
-                    var jsonData = {};
-                    jsonData.content = "播放错误！";
-                    ui.toast(jsonData);
-
-
-
-                });
-
-
-                app.on("activate", function (e) {
-
-                    // console.log("当前状态："+audioplay.getStatus());
-                    //  console.log("当前进度："+audioplay.getCurrentPosition());
-
-
-
-
-                });
-
-
-            },
-            playinit: function (playjson) {
-
-
-                var copythis = this;
-                this.playjson = playjson;
-
-                //console.log(this.playjson);
-
-                audioplay.init(this.playjson);
-
-
-
-
-            },
-            //给外部调用
-            start: function () {
-
-
-                if (audioplay.getStatus() == 0) {
-                    this.play();
-                }
-                else if (audioplay.getStatus() == 2) {
-                    this.play();
-
-
-                }
-
-            },
-            //给外部调用,内部也能用
-            stop: function () {
-                time.clearInterval(this.timemp3);
-                audioplay.stop();
-                this.playBtn.setText("\\uF40D");
+            var document = require("Document");
+            var window = require("Window");
+            var console = require("Console");
+            var app = require("App");
+            var ui = require("UI");
+            var time = require("Time");
+            var audioplay = require("AudioPlay");
+
+
+            var screenWidth = window.getScreenWidth();
+
+            var Sliderbar = function() {
+                this.sliderbarColor = "#549FF7";
+                this.sliderbarAfterColor = "#f5f5f5";
+                this.buttonBackgroundColor = "#fcfcfc";
+                this.buttonBorderColor = "#d9d9d9";
+
+                this.buttonHeight = 30;
+                this.width = 0;
+
+
+                this.x_max = 0;
+                this.slider_box_w = 0;
+                this.slider_box = null;
+                this.before_x = null;
+                this.after_x = null;
+                this.sliderbox_btn = null;
+                this.sliderbox_image = null;
+                this.playBtn = null;
+                this.x_progress = 0;
+                this.tag = false;
+                //用于表示是内部调用setAttr
+
+                this.dur = 0;
+                //音频总长度秒
                 this.cur = 0;
-                // this.webcur = 0;
-                // this.oldcur = -1;
-                this.setAttr("x_progress", 0);
-                this.time1.setText("00:00");
+                //当前进度秒
+
+                this.playjson = null;
+                //播放需要的json数据
+
+                this.time1 = null;
+                this.time2 = null;
+                this.loadingimage = null;
+
                 this.timemp3 = null;
-                return;
+                //定时器id
+                this.btnMovetag = false;
+                //移动进度条的时候标识，让进度条不再随着定时器移动
+            };
 
+            module.exports = Sliderbar;
 
+            Sliderbar.prototype = {
 
-            },
-            //给外部调用，内部也能用
-            pause: function () {
+                created: function() {
+                    this.slider_box = this.getElement("slider_box");
+                    this.before_x = this.getElement("before_x");
+                    this.after_x = this.getElement("after_x");
 
-                //暂停播放
-
-                this.cur = audioplay.getCurrentPosition() / 1000;
-
-
-                // console.log("进入了暂停："+this.cur);
-
-                audioplay.pause();
-                this.playBtn.setText("\\uF40D");
-                time.clearInterval(this.timemp3);
-                this.timemp3 = null;
-
-
-
-
-            },
-            getStatus: function () {
-                return audioplay.getStatus();
-            },
-            play: function () {
-
-                if (this.playjson == null) {
-
-                    var jsonData = {};
-                    jsonData.content = "播放错误，当前没有音乐！";
-                    ui.toast(jsonData);
-                    return;
-                }
-
-                var copythis = this;
-
-                copythis.loadingimage.setStyle("display", "block");
-                copythis.playBtn.setText("\\uF3E6");
-                document.refresh();
-
-                audioplay.start();
-
-
-
-                if (audioplay.getDuration() > 0) {
-                    copythis.getMp3Length();
-                    copythis.playStart();
-
-                }
-                else {
-
-                    //这里用定时轮询，看是否得到音频长度
-                    var ttt = time.setInterval(function () {
-
-                        if (audioplay.getDuration() > 0) {
-
-                            copythis.getMp3Length();
-                            copythis.playStart();
-
-                            time.clearInterval(ttt);
-
-                        }
-
-
-                    }, 10);
-
-                }
+                    this.sliderbox_btn = this.getElement("sliderbox_btn");
+                    this.playBtn = this.getElement("playBtn");
+                    this.time1 = this.getElement("time1");
+                    this.time2 = this.getElement("time2");
+                    this.loadingimage = this.getElement("loadingimage");
 
 
 
 
-            },
-            playStart: function () {
-                var copythis = this;
-                //console.log("1234playStart当前进度:"+this.cur);
+                    var copythis = this;
+                    this.sliderbox_btn.on("touchMove", function(e, param) {
 
-                this.cur = Math.floor(audioplay.getCurrentPosition() / 1000);
-
-                // console.log("playStart当前进度:"+audioplay.getCurrentPosition());
-
-                var t = this.cur;
-                var x = (100 / copythis.dur) * t;
-
-
-                if (this.btnMovetag == false) {
-                    this.setAttr("x_progress", x);
-                    var m;
-                    var s = Number(t % 60) >= 10 ? Number(t % 60) : "0" + Number(t % 60);
-
-
-                    if (Math.floor(t / 60) < 10) {
-                        m = "0" + Math.floor(t / 60);
-
-                    }
-                    else {
-                        m = Math.floor(t / 60);
-                    }
-                    var time1str = m + ":" + s;
-                    this.time1.setText(time1str);
-                }
-
-                if (this.timemp3 == null) {
-                    this.timemp3 = time.setInterval(function () {
-
-                        if (copythis.btnMovetag == false) {
-
-                            this.cur = Math.floor(audioplay.getCurrentPosition() / 1000);
-                            // console.log("11playStart当前状态:"+audioplay.getStatus());  
-                            if (audioplay.getStatus() == 2) {
-                                time.clearInterval(copythis.timemp3);
-                                copythis.cur = audioplay.getCurrentPosition() / 1000;
-                                copythis.playBtn.setText("\\uF40D");
-                                copythis.timemp3 = null;
+                        if (copythis.dur > 0) {
+                            //console.log(copythis.x_max);
+                            var json = this.getFrame();
+                            json.x += param.distanceX;
+                            if (json.x < 0) {
+                                json.x = 0;
+                            } else if (json.x > copythis.x_max) {
+                                json.x = copythis.x_max;
                             }
-                            t = this.cur;
-                            var x = (100 / copythis.dur) * t;
 
-                            copythis.setAttr("x_progress", x);
+                            this.setFrame(json);
+
+                            var p = ((json.x / copythis.x_max) * 100).toFixed(2);
+
+                            //copythis.setProgress(p);
+
+                            copythis.setAttr("x_progress", p);
+
+
+                            copythis.cur = Number(copythis.x_progress) / (100 / copythis.dur);
+                            var t = Math.floor(copythis.cur);
+
                             var m;
                             var s = Number(t % 60) >= 10 ? Number(t % 60) : "0" + Number(t % 60);
 
@@ -452,219 +130,535 @@ getStatus():得到播放状态 /*0：未播放状态；
                             if (Math.floor(t / 60) < 10) {
                                 m = "0" + Math.floor(t / 60);
 
-                            }
-                            else {
+                            } else {
                                 m = Math.floor(t / 60);
                             }
-
                             var time1str = m + ":" + s;
 
                             copythis.time1.setText(time1str);
 
-                            if (t >= copythis.dur) {
 
-                                copythis.stop();
-
-                            }
 
                         }
 
 
-                    }, 200);//由于定时器和音乐播放进度有误差，这里设置小于1000毫秒
+
+                    });
+
+                    this.sliderbox_btn.on("touchDown", function() {
+
+                        copythis.btnMovetag = true;
+
+                    });
 
 
-                }
+                    this.sliderbox_btn.on("touchUp", function() {
+
+                        copythis.btnMovetag = false;
+
+
+                        if (copythis.dur > 0) {
+
+
+                            copythis.cur = Number(copythis.x_progress) / (100 / copythis.dur);
+
+                            copythis.cur = Math.floor(copythis.cur);
+                            //console.log("copythis.cur"+copythis.cur);
+                            time.clearInterval(copythis.timemp3);
+                            copythis.timemp3 = null;
+
+
+                            if (audioplay.getStatus() == 2) {
+                                copythis.playBtn.setText("\\uF3E6");
+                                audioplay.start();
+                                audioplay.seekTo(copythis.cur * 1000);
+                                copythis.playStart();
+                            } else if (audioplay.getStatus() == 1) {
+
+                                audioplay.seekTo(copythis.cur * 1000);
+                                copythis.playStart();
+                            } else if (audioplay.getStatus() == 0) {
+
+                                copythis.playBtn.setText("\\uF3E6");
+
+                                audioplay.start();
+                                //不知道为什么如果结束以后再开始不能马上定位到播放位置，需要延迟下
+                                time.setTimeout(function() {
+                                    audioplay.seekTo(copythis.cur * 1000 + 300);
+
+                                    copythis.playStart();
+
+                                }, 300);
+
+                            }
+
+                            if (copythis.cur >= copythis.dur) {
+                                copythis.stop();
+                            }
+                        }
+
+                    });
+
+                    this.playBtn.on("touchUp", function(e) {
+                        /*0：未播放状态；
+                        1：播放状态；
+                        2：暂停状态；*/
+
+
+                        if (audioplay.getStatus() == 0) {
+
+                            //console.log("进来了吗");
+                            copythis.play();
+
+                        } else if (audioplay.getStatus() == 2) {
+                            copythis.play();
+
+
+                        } else if (audioplay.getStatus() == 1) {
+
+                            copythis.pause();
+
+                        }
+
+
+
+                    });
+
+                    //由于页面没有加载完，在横屏切换的时候得不到frame，这里用定时器
+                    time.setTimeout(function() {
+
+                        copythis.slider_box_w = copythis.slider_box.getFrame().width;
+                        copythis.init();
+
+
+                    }, 10);
+
+
+                    audioplay.on("finish", function(e) {
+                        copythis.stop();
+                    });
+
+                    audioplay.on("interrupt", function(e) {
+                        //这里监听系统有没有其他音乐播放，如果有回进入这里，在这里做暂停处理。
+                        // console.log("进入了interrupt当前状态:"+audioplay.getStatus());
+                        //  console.log("进入了interrupt当前进度:"+audioplay.getCurrentPosition());
+                        // copythis.pause();
+                        time.clearInterval(copythis.timemp3);
+                        copythis.cur = audioplay.getCurrentPosition() / 1000;
+                        copythis.playBtn.setText("\\uF40D");
+                        copythis.timemp3 = null;
+                        //audioplay.pause();
+                    });
+
+                    audioplay.on("restore", function(e) {
+                        copythis.playBtn.setText("\\uF3E6");
+                        audioplay.start();
+                        audioplay.seekTo(copythis.cur * 1000);
+                        copythis.playStart();
+                    });
+
+
+
+                    audioplay.on("error", function(e) {
+                        // console.log("播放错误");
+                        var jsonData = {};
+                        jsonData.content = "播放错误！";
+                        ui.toast(jsonData);
+
+
+
+                    });
+
+
+                    app.on("activate", function(e) {
+
+                        // console.log("当前状态："+audioplay.getStatus());
+                        //  console.log("当前进度："+audioplay.getCurrentPosition());
 
 
 
 
-            },
-
-            getMp3Length: function () {
+                    });
 
 
-                //得到音频的总长度
-
-                this.dur = audioplay.getDuration() / 1000;
-                var d_minute = Math.floor(Number(this.dur) / 60) > 10 ? Math.floor(Number(this.dur) / 60) : "0" + Math.floor(Number(this.dur) / 60);
-
-                var d_senond = Math.floor(Number(this.dur) % 60) > 10 ? Math.floor(Number(this.dur) % 60) : "0" + Math.floor(Number(this.dur) % 60);
-
-                this.time2.setText(d_minute + ":" + d_senond);
-                this.loadingimage.setStyle("display", "none");
-                document.refresh();
+                },
+                playinit: function(playjson) {
 
 
-            },
-            init: function () {
+                    var copythis = this;
+                    this.playjson = playjson;
+
+                    //console.log(this.playjson);
+
+                    audioplay.init(this.playjson);
 
 
 
 
-                this.setStyle("button-height", this.getStyle("button-height"));
-
-                this.setStyle("width", this.getStyle("width"));
-
-                this.setStyle("sliderbar-color", this.getStyle("sliderbar-color"));
-                this.setStyle("sliderbar-after-color", this.getStyle("sliderbar-after-color"));
-                this.setStyle("button-background-color", this.getStyle("button-background-color"));
-                this.setStyle("button-border-color", this.getStyle("button-border-color"));
-                 document.refresh();
+                },
+                //给外部调用
+                start: function() {
 
 
-                this.setAttr("x_progress", this.getAttr("x_progress"));
+                    if (audioplay.getStatus() == 0) {
+                        this.play();
+                    } else if (audioplay.getStatus() == 2) {
+                        this.play();
 
-               
 
-
-            },
-            //属性变更回调函数
-            attrChanged: function (attrName, attrValue) {
-
-                // console.log(attrName+";"+attrValue);
-                if (attrName == "x_progress") {
-                    if (attrValue > 100) {
-                        attrValue = 100;
                     }
 
-                    this.x_progress = Number(attrValue).toFixed(2);
+                },
+                //给外部调用,内部也能用
+                stop: function() {
+                    time.clearInterval(this.timemp3);
+                    audioplay.stop();
+                    this.playBtn.setText("\\uF40D");
+                    this.cur = 0;
+                    // this.webcur = 0;
+                    // this.oldcur = -1;
+                    this.setAttr("x_progress", 0);
+                    this.time1.setText("00:00");
+                    this.timemp3 = null;
+                    return;
 
-                    this.setProgress(Number(attrValue).toFixed(2), "true");
-                }
+
+
+                },
+                //给外部调用，内部也能用
+                pause: function() {
+
+                    //暂停播放
+
+                    this.cur = audioplay.getCurrentPosition() / 1000;
+
+
+                    // console.log("进入了暂停："+this.cur);
+
+                    audioplay.pause();
+                    this.playBtn.setText("\\uF40D");
+                    time.clearInterval(this.timemp3);
+                    this.timemp3 = null;
 
 
 
-            },
-            //样式变更回调函数
-            styleChanged: function (styleName, styleValue) {
 
-                if (styleName == "sliderbar-color") {
-                    if (styleValue != null) {
+                },
+                getStatus: function() {
+                    return audioplay.getStatus();
+                },
+                play: function() {
 
-                        this.sliderbarColor = styleValue;
+                    if (this.playjson == null) {
+
+                        var jsonData = {};
+                        jsonData.content = "播放错误，当前没有音乐！";
+                        ui.toast(jsonData);
+                        return;
                     }
-                    this.before_x.setStyle("background-color", this.sliderbarColor);
 
-                }
+                    var copythis = this;
 
-
-                if (styleName == "sliderbar-after-color") {
-                    if (styleValue != null) {
-
-                        this.sliderbarAfterColor = styleValue;
-                    }
-                    this.after_x.setStyle("background-color", this.sliderbarAfterColor);
-
-                }
-
-
-                if (styleName == "button-background-color") {
-                    if (styleValue != null) {
-
-                        this.buttonBackgroundColor = styleValue;
-                    }
-                    this.sliderbox_btn.setStyle("background-color", this.buttonBackgroundColor);
-
-                }
-
-
-                if (styleName == "button-border-color") {
-                    if (styleValue != null) {
-
-                        this.buttonBorderColor = styleValue;
-                    }
-                    this.sliderbox_btn.setStyle("border-color", this.buttonBorderColor);
-
-                }
-
-
-
-                if (styleName == "button-height") {
-                    if (styleValue != null) {
-
-                        this.buttonHeight = styleValue;
-                    }
-                    this.slider_box.setStyle("height", this.buttonHeight);
-                    this.sliderbox_btn.setStyle("height", this.buttonHeight);
-                    this.sliderbox_btn.setStyle("width", this.buttonHeight);
-                    this.sliderbox_btn.setStyle("border-radius", this.buttonHeight / 2);
-                }
-
-                if (styleName == "width") {
-
-
-                    if (styleValue != null) {
-
-
-                        this.width = this.slider_box.getFrame().width;
-                    }
-                    else {
-
-                        this.width = this.slider_box.getFrame().width;
-                    }
-                    // this.slider_box.setStyle("width",this.width);
-                    this.x_max = this.width - this.sliderbox_btn.getStyle("width");
-
-
-                }
-
-
-
-
-
-            },
-            setProgress: function (x, tag) {
-
-                var x_w = ((x / 100) * this.x_max).toFixed(1);
-                //console.log("x_w:"+x_w);
-                //this.before_x.setStyle("width", x_w);
-                //this.after_x.setStyle("width", this.slider_box_w - x_w);
-               this.sliderbox_btn.setStyle("left", x_w);
-
-				//setFrame 可以修改style中的width和height, 刷新不会重置，只有x,y会重置对应样式的left,top
-				var before_x_json = this.before_x.getFrame();
-                before_x_json.width = x_w;
-				this.before_x.setFrame(before_x_json);
-				
-
-				var after_x_json = this.after_x.getFrame();
-				after_x_json.width = this.slider_box_w - x_w;
-				after_x_json.x=  x_w;
-				this.after_x.setFrame(after_x_json);
-
-				var sliderbox_btn_json = this.sliderbox_btn.getFrame();
-				sliderbox_btn_json.x = x_w;
-				this.sliderbox_btn.setFrame(sliderbox_btn_json);
-
-                var params = new Array();
-                params.push(x);
-                //this.fire("change",params);
-                if (tag == "true") {
+                    copythis.loadingimage.setStyle("display", "block");
+                    copythis.playBtn.setText("\\uF3E6");
                     document.refresh();
+
+                    audioplay.start();
+
+
+
+                    if (audioplay.getDuration() > 0) {
+                        copythis.getMp3Length();
+                        copythis.playStart();
+
+                    } else {
+
+                        //这里用定时轮询，看是否得到音频长度
+                        var ttt = time.setInterval(function() {
+
+                            if (audioplay.getDuration() > 0) {
+
+                                copythis.getMp3Length();
+                                copythis.playStart();
+
+                                time.clearInterval(ttt);
+
+                            }
+
+
+                        }, 10);
+
+                    }
+
+
+
+
+                },
+                playStart: function() {
+                    var copythis = this;
+                    //console.log("1234playStart当前进度:"+this.cur);
+
+                    this.cur = Math.floor(audioplay.getCurrentPosition() / 1000);
+
+                    // console.log("playStart当前进度:"+audioplay.getCurrentPosition());
+
+                    var t = this.cur;
+                    var x = (100 / copythis.dur) * t;
+
+
+                    if (this.btnMovetag == false) {
+                        this.setAttr("x_progress", x);
+                        var m;
+                        var s = Number(t % 60) >= 10 ? Number(t % 60) : "0" + Number(t % 60);
+
+
+                        if (Math.floor(t / 60) < 10) {
+                            m = "0" + Math.floor(t / 60);
+
+                        } else {
+                            m = Math.floor(t / 60);
+                        }
+                        var time1str = m + ":" + s;
+                        this.time1.setText(time1str);
+                    }
+
+                    if (this.timemp3 == null) {
+                        this.timemp3 = time.setInterval(function() {
+
+                            if (copythis.btnMovetag == false) {
+
+                                this.cur = Math.floor(audioplay.getCurrentPosition() / 1000);
+                                // console.log("11playStart当前状态:"+audioplay.getStatus());
+
+                                if (audioplay.getStatus() == 2) {
+                                    time.clearInterval(copythis.timemp3);
+                                    copythis.cur = audioplay.getCurrentPosition() / 1000;
+                                    copythis.playBtn.setText("\\uF40D");
+                                    copythis.timemp3 = null;
+                                }
+                                t = this.cur;
+                                var x = (100 / copythis.dur) * t;
+
+                                copythis.setAttr("x_progress", x);
+                                var m;
+                                var s = Number(t % 60) >= 10 ? Number(t % 60) : "0" + Number(t % 60);
+
+
+                                if (Math.floor(t / 60) < 10) {
+                                    m = "0" + Math.floor(t / 60);
+
+                                } else {
+                                    m = Math.floor(t / 60);
+                                }
+
+                                var time1str = m + ":" + s;
+
+                                copythis.time1.setText(time1str);
+
+                                if (t >= copythis.dur) {
+
+                                    copythis.stop();
+
+                                }
+
+                            }
+
+
+                        }, 200);
+                        //由于定时器和音乐播放进度有误差，这里设置小于1000毫秒
+
+
+                    }
+
+
+
+
+                },
+
+                getMp3Length: function() {
+
+
+                    //得到音频的总长度
+
+                    this.dur = audioplay.getDuration() / 1000;
+                    var d_minute = Math.floor(Number(this.dur) / 60) > 10 ? Math.floor(Number(this.dur) / 60) : "0" + Math.floor(Number(this.dur) / 60);
+
+                    var d_senond = Math.floor(Number(this.dur) % 60) > 10 ? Math.floor(Number(this.dur) % 60) : "0" + Math.floor(Number(this.dur) % 60);
+
+                    this.time2.setText(d_minute + ":" + d_senond);
+                    this.loadingimage.setStyle("display", "none");
+                    document.refresh();
+
+
+                },
+                init: function() {
+
+
+
+
+                    this.setStyle("button-height", this.getStyle("button-height"));
+
+                    this.setStyle("width", this.getStyle("width"));
+
+                    //  this.setStyle("sliderbar-color", this.getStyle("sliderbar-color"));
+                    //  this.setStyle("sliderbar-after-color", this.getStyle("sliderbar-after-color"));
+                    //// this.setStyle("button-background-color", this.getStyle("button-background-color"));
+                    //  this.setStyle("button-border-color", this.getStyle("button-border-color"));
+                    this.refresh();
+
+
+                    this.setAttr("x_progress", this.getAttr("x_progress"));
+
+
+
+
+                },
+                //属性变更回调函数
+                attrChanged: function(attrName, attrValue, taginit) {
+
+                    // console.log(attrName+";"+attrValue);
+                    if (taginit == false) {
+                        if (attrName == "x_progress") {
+                            if (attrValue > 100) {
+                                attrValue = 100;
+                            }
+
+                            this.x_progress = Number(attrValue).toFixed(2);
+
+                            this.setProgress(Number(attrValue).toFixed(2), "true");
+                        }
+                    }
+
+
+
+                },
+                //样式变更回调函数
+                styleChanged: function(styleName, styleValue, taginit) {
+
+                    if (styleName == "sliderbar-color") {
+                        if (styleValue != null) {
+
+                            this.sliderbarColor = styleValue;
+                        }
+                        this.before_x.setStyle("background-color", this.sliderbarColor);
+
+                    }
+
+
+                    if (styleName == "sliderbar-after-color") {
+                        if (styleValue != null) {
+
+                            this.sliderbarAfterColor = styleValue;
+                        }
+                        this.after_x.setStyle("background-color", this.sliderbarAfterColor);
+
+                    }
+
+
+                    if (styleName == "button-background-color") {
+                        if (styleValue != null) {
+
+                            this.buttonBackgroundColor = styleValue;
+                        }
+                        this.sliderbox_btn.setStyle("background-color", this.buttonBackgroundColor);
+
+                    }
+
+
+                    if (styleName == "button-border-color") {
+                        if (styleValue != null) {
+
+                            this.buttonBorderColor = styleValue;
+                        }
+                        this.sliderbox_btn.setStyle("border-color", this.buttonBorderColor);
+
+                    }
+
+
+                    if (taginit == false) {
+                        if (styleName == "button-height") {
+                            if (styleValue != null) {
+
+                                this.buttonHeight = styleValue;
+                            }
+                            this.slider_box.setStyle("height", this.buttonHeight);
+                            this.sliderbox_btn.setStyle("height", this.buttonHeight);
+                            this.sliderbox_btn.setStyle("width", this.buttonHeight);
+                            this.sliderbox_btn.setStyle("border-radius", this.buttonHeight / 2);
+                        }
+
+
+                    }
+
+
+                    if (taginit == false) {
+                        if (styleName == "width") {
+                            if (styleValue != null) {
+                                this.width = this.slider_box.getFrame().width;
+                            } else {
+
+                                this.width = this.slider_box.getFrame().width;
+                            }
+                            // this.slider_box.setStyle("width",this.width);
+                            this.x_max = this.width - this.sliderbox_btn.getStyle("width");
+
+                        }
+
+                    }
+
+                },
+                setProgress: function(x, tag) {
+
+                    var x_w = ((x / 100) * this.x_max).toFixed(1);
+                    //console.log("x_w:"+x_w);
+                    //this.before_x.setStyle("width", x_w);
+                    //this.after_x.setStyle("width", this.slider_box_w - x_w);
+                    this.sliderbox_btn.setStyle("left", x_w);
+
+                    //setFrame 可以修改style中的width和height, 刷新不会重置，只有x,y会重置对应样式的left,top
+                    var before_x_json = this.before_x.getFrame();
+                    before_x_json.width = x_w;
+                    this.before_x.setFrame(before_x_json);
+
+
+                    var after_x_json = this.after_x.getFrame();
+                    after_x_json.width = this.slider_box_w - x_w;
+                    after_x_json.x = x_w;
+                    this.after_x.setFrame(after_x_json);
+
+                    var sliderbox_btn_json = this.sliderbox_btn.getFrame();
+                    sliderbox_btn_json.x = x_w;
+                    this.sliderbox_btn.setFrame(sliderbox_btn_json);
+
+                    var params = new Array();
+                    params.push(x);
+                    //this.fire("change",params);
+                    if (tag == "true") {
+                        document.refresh();
+                    }
+
+                },
+                orientationChanged: function(orientation, screenWidth, screenHeight) {
+                    // document.refresh();
+                    //  console.log(this.slider_box.getFrame().width);
+
+                    this.x_max = this.slider_box.getFrame().width - this.sliderbox_btn.getStyle("width");
+
+                    var x = Number(this.x_progress).toFixed(2);
+                    var x_w = ((x / 100) * this.x_max).toFixed(1);
+                    //console.log("x_w:"+x_w);
+                    this.before_x.setStyle("width", x_w);
+                    this.after_x.setStyle("width", this.slider_box_w - x_w);
+                    this.sliderbox_btn.setStyle("left", x_w);
+
+                    document.refresh();
+
+
                 }
-
-            },
-            orientationChanged: function (orientation, screenWidth, screenHeight) {
-               // document.refresh();
-                //  console.log(this.slider_box.getFrame().width);
-
-                this.x_max = this.slider_box.getFrame().width - this.sliderbox_btn.getStyle("width");
-
-                var x = Number(this.x_progress).toFixed(2);
-                var x_w = ((x / 100) * this.x_max).toFixed(1);
-                //console.log("x_w:"+x_w);
-                this.before_x.setStyle("width", x_w);
-                this.after_x.setStyle("width", this.slider_box_w - x_w);
-                this.sliderbox_btn.setStyle("left", x_w);
-
-                document.refresh();
-
-
             }
-        }
-    
 
-    ]]>
+
+        ]]>
     </script>
     <style>
         @import url("audioplay.color.css");
@@ -673,12 +667,12 @@ getStatus():得到播放状态 /*0：未播放状态；
     <ui>
         <box class="audioplay">
 
-            <image id="loadingimage" style="width:15;height:15;margin:0;display: none;" class="button-image" src="loading.gif"
-            />
+            <image id="loadingimage" style="width:15;height:15;margin:0;display: none;" class="button-image" src="loading.gif" />
             <iconfont id="playBtn" style="font-family:Material Design Icons;color:#549FF7;font-size:35;text-align:center;width:35;margin:0 4 0 0">\uF40D</iconfont>
-            <text id="time1" style="font-size:14;text-align:right;width:40; ">00:00</text>
+            <text id="time1" style="font-size:14;text-align:right;width:40;
+            ">00:00</text>
             <box id="slider_box" class="sliderbar flex1" style="margin: 0 10 0 10;">
-                <box style="height:3;flex:0;border-radius:0" id="before_x"></box>
+                <box style="height:3;flex:0;border-radius:0;background-color:#549FF7;" id="before_x"></box>
                 <box style="background-color:#909090;height:3;flex:1;border-radius:0" id="after_x"></box>
                 <box id="sliderbox_btn" class="sliderbox_btn">
 

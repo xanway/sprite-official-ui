@@ -116,28 +116,20 @@
                 },
                 init: function() {
 
-                    if (this.getAttr("type") != null) {
-                        this.type = this.getAttr("type");
-                    }
 
-                    this.setStyle("color", this.getStyle("color"));
-                    this.setStyle("current-color", this.getStyle("current-color"));
-                    this.setStyle("tip-color", this.getStyle("tip-color"));
-                    this.setStyle("tip-background-color", this.getStyle("tip-background-color"));
-                    this.setStyle("icon-width", this.getStyle("icon-width"));
-                    this.setStyle("icon-height", this.getStyle("icon-height"));
-                    this.setStyle("font-size", this.getStyle("font-size"));
-                    this.setStyle("main-background-color", this.getStyle("main-background-color"));
-                    this.setStyle("text-margin", this.getStyle("text-margin"));
-                    this.setStyle("icon-margin", this.getStyle("icon-margin"));
 
-                    this.setAttr("index", this.getAttr("index"));
-                    this.setAttr("mainicon", this.getAttr("mainicon"));
-                    this.setStyle("main-transfer-y", this.getStyle("main-transfer-y"));
-                    this.setStyle("main-transfer-x", this.getStyle("main-transfer-x"));
+
+
                 },
                 //属性变更回调函数
-                attrChanged: function(attrName, attrValue) {
+                attrChanged: function(attrName, attrValue, taginit) {
+
+                    if (attrName == "type") {
+                        if (attrValue != null) {
+                            this.type = attrValue;
+                        }
+                    }
+
                     if (attrName == "index") {
 
                         // console.log("第一次进来");
@@ -163,7 +155,7 @@
                     }
                 },
                 //样式变更回调函数
-                styleChanged: function(styleName, styleValue) {
+                styleChanged: function(styleName, styleValue, taginit) {
                     if (styleName == "color") {
                         if (styleValue != null) {
                             this.color = styleValue;
@@ -369,20 +361,24 @@
                             var json = mainitem.getAbsoluteFrame();
                             root.appendChild(mainitem);
                             mainitem.setStyle("position", "absolute");
+                            var mainitemfrme = mainitem.getFrame();
+                            mainitemfrme.x = json.x + Number(copythis.mainTransferX);
+                            mainitemfrme.y = json.y + Number(copythis.mainTransferY)
+                            mainitem.setFrame(mainitemfrme);
                             mainitem.setStyle("left", json.x + Number(copythis.mainTransferX));
 
                             mainitem.setStyle("top", json.y + Number(copythis.mainTransferY));
 
-                            root.refresh();
+                            //  root.refresh();
 
-                        }, 50);
+                        }, 1);
 
                     }
                     //发送menubar切换事件监听 因为同步回传信息有问题，这里需要用定时
                     var copythis = this;
                     time.setTimeout(function() {
                         copythis.setAttr("index", copythis.index);
-                    }, 50);
+                    }, 1);
                 },
                 orientationChanged: function(orientation, screenWidth, screenHeight) {
                     document.refresh();
@@ -401,9 +397,6 @@
                         mainitem.setStyle("left", screenWidth / 2 - mainitem.getStyle("width") / 2 + Number(this.mainTransferX));
                         mainitem.setStyle("top", this.menubar.getAbsoluteFrame().y + Number(this.mainTransferY));
                         document.refresh();
-
-
-
 
                     }
                 },

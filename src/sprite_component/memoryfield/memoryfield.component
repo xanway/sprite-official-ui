@@ -207,8 +207,6 @@
                     }
                     this.jsonDatas = datas;
 
-
-
                     if (diskCache.getItem("memoryfield_" + this.getAttr("id")) == null) {
 
                         diskCache.setItem("memoryfield_" + this.getAttr("id"), this.jsonDatas);
@@ -216,13 +214,7 @@
                     } else {
 
                         this.jsonDatas = diskCache.getItem("memoryfield_" + this.getAttr("id"));
-
-
                     }
-
-
-
-
                     var thisframe = this.getAbsoluteFrame();
                     var width = thisframe.width;
 
@@ -440,10 +432,6 @@
 
                         this.memorylist.setAdapter(this.adapter);
                     }
-
-
-
-
                 },
                 init: function() {
                     // console.log("进入了init");

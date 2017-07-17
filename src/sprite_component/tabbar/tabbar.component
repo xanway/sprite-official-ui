@@ -16,11 +16,14 @@
     公共方法；
     loadData(json) : 加载数据
     json.datas 数组属性
-        var itemJson = {}; 
-        itemJson.text = "头条";   
+        var itemJson = {};
+        
+        itemJson.text = "头条";
+          
         datas.push(itemJson);
 
-    setPageScroll(param) param是json对象，结合slider控件使用，元素为  param.position，param.direction， param.offset; 该方法已经变成内部使用，不提供外部调用。
+    setPageScroll(param) param是json对象，结合slider控件使用，元素为  param.position，param.direction， param.offset;
+    该方法已经变成内部使用，不提供外部调用。
 
  
     事件：
@@ -60,6 +63,7 @@
                 this.w_r = 0;
                 this.oldposition = 0;
                 this.childrenObj = null;
+                this.childrenFrame = [];
                 this.position_index = 0;
                 this.bindid = null;
                 this.sliderdom = null;
@@ -102,9 +106,11 @@
                             // copythis.sliderScroll.refresh();
                         }
 
-                        //sliderid.setAttr("index",position_index); 这里要传出去
+                        //sliderid.setAttr("index",position_index);
+                        // 这里要传出去
                         /*var ary = new Array();
-                        ary.push(copythis.position_index);  
+                        ary.push(copythis.position_index);
+                         
                         copythis.fire("tabbarSelected",ary);*/
                         copythis.sliderdom.setAttr("index", copythis.position_index);
                     });
@@ -120,8 +126,8 @@
 
                 },
                 init: function() {
-                    this.setStyle("current-color", this.getStyle("current-color") == null ? this.currentColor : this.getStyle("current-color"));
-                    this.setStyle("color", this.getStyle("color") == null ? this.color : this.getStyle("color"));
+                    // this.setStyle("current-color", this.getStyle("current-color") == null ? this.currentColor : this.getStyle("current-color"));
+                    // this.setStyle("color", this.getStyle("color") == null ? this.color : this.getStyle("color"));
                 },
                 loadData: function(jsondatas) {
                     var copythis = this;
@@ -196,27 +202,37 @@
                     this.sliderScroll.refresh();
 
                     this.childrenObj = this.sliderScroll.getChildren();
+
+
+
+
+
                     this.sliderIndex = this.getElement("sliderIndex");
                     //把sliderIndex添加到外层的scroll容器里面
                     this.sliderScroll.appendChild(this.sliderIndex);
                     //var tabbarw = this.sliderScroll.getFrame().width;
                     var tabbarw = 0;
                     for (var i = 0; i < this.childrenObj.length; i++) {
+
+
+
+
+                        var childrenObj_getFirstChild = this.childrenObj[i].getFirstChild();
                         if (this.position_index == i) {
                             this.sliderIndex.setStyle("left", tabbarw);
                             this.sliderIndex.setStyle("width", this.childrenObj[i].getFrame().width + 20);
-                            this.childrenObj[i].getFirstChild().setStyle("color", this.currentColor);
-                            this.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text-index", this);
+                            childrenObj_getFirstChild.setStyle("color", this.currentColor);
+                            childrenObj_getFirstChild.setClassStyle("tabbar-text-box-text-index", this);
                             this.oldposition = i;
                         } else {
-                            this.childrenObj[i].getFirstChild().setStyle("color", this.color);
-                            this.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text", this);
+                            childrenObj_getFirstChild.setStyle("color", this.color);
+                            childrenObj_getFirstChild.setClassStyle("tabbar-text-box-text", this);
                         }
                         //这里动态设置每个box的宽度 
                         var cw = this.childrenObj[i].getFrame().width;
                         // console.log("cw:"+cw);
                         this.childrenObj[i].setStyle("width", cw + 20);
-                        this.childrenObj[i].getFirstChild().setStyle("width", cw + 20);;
+                        childrenObj_getFirstChild.setStyle("width", cw + 20);;
                         tabbarw = tabbarw + cw + 20;
                     }
                     //  console.log("tabbarw:"+tabbarw+";screenWidth:"+screenWidth);
@@ -230,6 +246,12 @@
                         }
                     }
                     copythis.sliderScroll.refresh();
+
+                    for (var i = 0; i < this.childrenObj.length; i++) {
+                        this.childrenFrame.push(this.childrenObj[i].getFrame());
+                    }
+
+
 
                 },
                 setPageScroll: function(param) {
@@ -274,10 +296,10 @@
                             }
                             var x_length = 0;
                             for (i = 0; i < n; i++) {
-                                x_length = x_length + this.childrenObj[i].getFrame().width;
+                                x_length = x_length + this.childrenFrame[i].width;
                             }
                             slider_index_json.x = x_length;
-                            slider_index_json.width = this.childrenObj[n].getFrame().width;
+                            slider_index_json.width = this.childrenFrame[n].width;
                             this.sliderIndex.setFrame(slider_index_json);
                             this.sliderIndex.setStyle("left", slider_index_json.x);
                             this.w_r = x_length;
@@ -298,23 +320,24 @@
                         //记录当前滑动条离容器最左边的距离
                         var x_length = 0;
                         for (i = 0; i < n; i++) {
-                            x_length = x_length + this.childrenObj[i].getFrame().width;
+                            x_length = x_length + this.childrenFrame[i].width;
                         }
                         this.w_r = x_length;
                         //  console.log("左滑：w_r:");
                         //计算滑动比例
                         var s = (offset + position) - n;
                         //当前位置滑动条宽度
-                        var current_width = this.childrenObj[n].getFrame().width;
+                        var current_width = this.childrenFrame[n].width;
                         //下一个位置滑动条的宽度
-                        var next_width = this.childrenObj[n + 1].getFrame().width;
+                        var next_width = this.childrenFrame[n + 1].width;
                         //算出滑动距离
-                        slider_index_json.x = this.w_r + s * this.childrenObj[n].getFrame().width;
-                        slider_index_json.width = this.childrenObj[n].getFrame().width + (next_width - current_width) * s;
+                        slider_index_json.x = this.w_r + s * current_width;
+                        slider_index_json.width = current_width + (next_width - current_width) * s;
                         this.sliderIndex.setFrame(slider_index_json);
                         this.sliderIndex.setStyle("left", slider_index_json.x);
                         this.childrenObj[n].getFirstChild().setStyle("font-size", 18 - 3 * s);
                         this.childrenObj[n + 1].getFirstChild().setStyle("font-size", 15 + 3 * s);
+
                         // console.log("s:"+s);
                         red = Number(this.normalRed) * s + (1 - s) * Number(this.currentRed);
                         green = Number(this.normalGreen) * s + (1 - s) * Number(this.currentGreen);
@@ -362,7 +385,7 @@
 
                         var x_length = 0;
                         for (i = 0; i < n; i++) {
-                            x_length = x_length + this.childrenObj[i].getFrame().width;
+                            x_length = x_length + this.childrenFrame[i].width;
                         }
                         this.w_r = x_length;
 
@@ -394,10 +417,12 @@
                         }
 
                         var s = (offset + n) - position;
-                        slider_index_json.x = this.w_r - s * this.childrenObj[n - 1].getFrame().width;
-                        var current_width = this.childrenObj[n].getFrame().width;
-                        var next_width = this.childrenObj[n - 1].getFrame().width;
-                        slider_index_json.width = this.childrenObj[n].getFrame().width + (next_width - current_width) * s;
+
+                        var next_width = this.childrenFrame[n - 1].width;
+                        slider_index_json.x = this.w_r - s * next_width;
+                        var current_width = this.childrenFrame[n].width;
+
+                        slider_index_json.width = current_width + (next_width - current_width) * s;
                         this.sliderIndex.setFrame(slider_index_json);
                         this.sliderIndex.setStyle("left", slider_index_json.x);
                         // slider_index.setStyle("bottom",0);
@@ -498,7 +523,8 @@
 
                         }
 
-                        //rgbstr =    rgbstr.replace(/rgb\((.*)\)/g,"$1");  
+                        //rgbstr =    rgbstr.replace(/rgb\((.*)\)/g,"$1");
+
 
 
                         this.normalRed = rgbstr.red;

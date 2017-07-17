@@ -170,8 +170,7 @@ popjson.datas.push(json);
                     this.popDom.setStyle("width", popMenuSize);
                     this.list.setStyle("width", popMenuSize);
                     // this.line.setStyle("line-length", popMenuSize);
-                    this.getElement("line0")
-                        .setStyle("line-length", popMenuSize);
+                    this.getElement("line0").setStyle("line-length", popMenuSize);
 
                     if (screenWidth_s > screenHeight_s) {
                         this.popDom.setStyle("height", popMenuSize);

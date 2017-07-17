@@ -149,6 +149,24 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
                     }
 
 
+                    if (attrName == "type") {
+                        if (attrValue != null) {
+
+                            this.type = attrValue;
+                        }
+
+                        if (attrValue == "notext") {
+
+                            this.sliderImgNewMarkBox.setClassStyle("slider-bottom-notext-mark-box", this);
+                            this.sliderImgNewMarkBox.clearStyle("background-color");
+                            // this.sliderImgNewMarkBox.setStyle("background-color","transparent");
+                            this.sliderImgNewTextBox.setStyle("display", "none");
+                            this.sliderImgNewTextBox.setStyle("flex", "0");
+                        }
+
+                    }
+
+
 
                 },
                 //样式变更回调函数
@@ -206,7 +224,7 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
                 init: function() {
 
 
-                    this.setStyle("height", this.getStyle("height"));
+                    /*this.setStyle("height", this.getStyle("height"));
                     this.setStyle("bottom-mark-height", this.getStyle("bottom-mark-height"));
                     this.setStyle("mark-point-width", this.getStyle("mark-point-width"));
                     this.setStyle("mark-point-height", this.getStyle("mark-point-height"));
@@ -219,9 +237,10 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
                     this.setAttr("interval", this.getAttr("interval"));
                     this.setAttr("bounces", this.getAttr("bounces"));
                     this.setAttr("direction", this.getAttr("direction"));
-                    this.setAttr("index", this.getAttr("index"));
+                    this.setAttr("index", this.getAttr("index"));*/
 
-                    if (this.getAttr("type") != null) {
+
+                    /*if (this.getAttr("type") != null) {
 
                         this.type = this.getAttr("type");
                     }
@@ -237,9 +256,9 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
                         this.sliderImgNewTextBox.setStyle("display", "none");
                         this.sliderImgNewTextBox.setStyle("flex", "0");
 
-                        // document.refresh();
-                        // console.log(this.sliderImgNewMarkBox);
-                    }
+                        
+                    }*/
+
 
                 },
                 //外部调用js方法

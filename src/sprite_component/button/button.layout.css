@@ -28,6 +28,10 @@
 	border-radius:4;
 }
 
+.radius8{
+	border-radius:8;
+}
+
 
 .row-flex-center{
 	flex-direction:row;
@@ -44,10 +48,16 @@
 	justify-content:center;
 	flex-wrap:wrap;
 	flex-direction:row;
+	flex:1;
 	
-	height:40;
-	padding:0 8 0 8;
+	
+	
 
+} 
+
+.ctrlbox{
+height:40;
+padding:0 8 0 8;
 }
 
 .button-image{

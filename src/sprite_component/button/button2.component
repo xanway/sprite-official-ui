@@ -87,7 +87,7 @@
                 this.ricon = "";
 
                 this.loading = "false";
-                // this.taginit = true;
+                this.taginit = true;
                 this.classStyle = "";
                 this.pathLocation = "";
 
@@ -118,14 +118,14 @@
 
                     this.init();
                     var copythis = this;
-                    this.box.on("touchDown", function(e, param) {
+                    this.btn.on("touchDown", function(e, param) {
 
                         if (copythis.readonly == "false") {
                             var jsonData = {};
                             var aniAry = new Array();
                             var jsonAni1 = {};
                             jsonAni1.delay = 0;
-                            jsonAni1.duration = 50;
+                            jsonAni1.duration = 200;
                             jsonAni1.curve = "linear";
                             jsonAni1.props = {};
                             jsonAni1.props.backgroundColor = copythis.backgroundClickColor;
@@ -143,7 +143,7 @@
 
                     });
 
-                    this.box.on("touchUp", function(e) {
+                    this.btn.on("touchUp", function(e) {
                         if (copythis.readonly == "false") {
 
                             var jsonData = {};
@@ -168,13 +168,13 @@
                         }
 
                     });
-                    this.box.on("touchCancel", function(e) {
+                    this.btn.on("touchCancel", function(e) {
                         if (copythis.readonly == "false") {
                             var jsonData = {};
                             var aniAry = new Array();
                             var jsonAni1 = {};
                             jsonAni1.delay = 0;
-                            jsonAni1.duration = 50;
+                            jsonAni1.duration = 200;
                             jsonAni1.curve = "linear";
                             jsonAni1.props = {};
                             jsonAni1.props.backgroundColor = copythis.backgroundColor;
@@ -197,48 +197,148 @@
                 },
                 init: function() {
 
-                    var builtInClass = this.getAttr("builtInClass");
+                    this.taginit = true;
 
-                    if (builtInClass != null) {
 
-                        if (builtInClass.indexOf("outline") > -1 && builtInClass.indexOf("submit") < 0 && builtInClass.indexOf("cancel") < 0) {
+                    if (this.getAttr("builtInClass") != null) {
+
+                        if ((this.getAttr("builtInClass")).indexOf("outline") > -1 && (this.getAttr("builtInClass")).indexOf("submit") < 0 && (this.getAttr("builtInClass")).indexOf("cancel") < 0) {
                             this.setClassStyle(this.classStyle + " outline", this);
                             this.classStyle = this.classStyle + " outline";
                         }
 
-
-                        if (builtInClass.indexOf("submit") > -1) {
+                        if ((this.getAttr("builtInClass")).indexOf("submit") > -1) {
 
                             this.setClassStyle(this.classStyle + " submit", this);
 
                             this.classStyle = this.classStyle + " submit";
 
 
-                        } else if (builtInClass.indexOf("submit") > -1 && builtInClass.indexOf("outline") > -1) {
+                        } else if ((this.getAttr("builtInClass")).indexOf("submit") > -1 && this.getAttr("builtInClass").indexOf("outline") > -1) {
 
                             this.setClassStyle(this.classStyle + " submit outline outline-submit-text", this);
 
                             this.classStyle = this.classStyle + "  submit outline outline-submit-text";
                         }
 
-                        if (builtInClass.indexOf("cancel") > -1) {
+                        if ((this.getAttr("builtInClass")).indexOf("cancel") > -1) {
 
                             this.setClassStyle(this.classStyle + " cancel", this);
                             this.classStyle = this.classStyle + "  cancel";
-                        } else if (builtInClass.indexOf("cancel") > -1 && builtInClass.indexOf("outline") > -1) {
+                        } else if ((this.getAttr("builtInClass")).indexOf("cancel") > -1 && this.classStyle.indexOf("outline") > -1) {
                             this.setClassStyle(this.classStyle + " cancel outline outline-cancel-text", this);
                             this.classStyle = this.classStyle + "   cancel outline outline-cancel-text";
                         }
                     }
 
+                    if (this.getAttr("readonly") != null) {
+                        this.setAttr("readonly", this.getAttr("readonly"));
+                    }
 
-                    var getParent = this.getParent();
-                    if (getParent != null) {
-                        if (getParent.getStyle("flex-direction") != "row") {
+
+                    //设置按钮的value值
+                    if (this.getAttr("value") != null) {
+                        this.setAttr("value", this.getAttr("value"));
+                    }
+
+                    if (this.getStyle("color") != null) {
+                        this.setStyle("color", this.getStyle("color"));
+                    }
+
+                    if (this.getStyle("color-click") != null) {
+                        this.setStyle("color-click", this.getStyle("color-click"));
+                    }
+
+                    if (this.getStyle("background-color") != null) {
+                        this.setStyle("background-color", this.getStyle("background-color"));
+                    }
+
+                    if (this.getStyle("background-color-click") != null) {
+                        this.setStyle("background-color-click", this.getStyle("background-color-click"));
+                    }
+
+                    if (this.getStyle("border-color-click") != null) {
+                        this.setStyle("border-color-click", this.getStyle("border-color-click"));
+                    }
+
+
+                    if (this.getStyle("border-color") != null) {
+                        this.setStyle("border-color", this.getStyle("border-color"));
+                    }
+
+
+                    if (this.getStyle("licon-width") != null) {
+                        this.setStyle("licon-width", this.getStyle("licon-width"));
+                    }
+
+                    if (this.getStyle("licon-height") != null) {
+                        this.setStyle("licon-height", this.getStyle("licon-height"));
+                    }
+                    if (this.getStyle("ricon-width") != null) {
+                        this.setStyle("ricon-width", this.getStyle("ricon-width"));
+                    }
+
+
+                    if (this.getStyle("ricon-height") != null) {
+                        this.setStyle("ricon-height", this.getStyle("ricon-height"));
+                    }
+
+
+
+                    if (this.getAttr("tip") != null) {
+                        this.setAttr("tip", this.getAttr("tip"));
+                    }
+
+                    if (this.getAttr("licon") != null) {
+                        this.setAttr("licon", this.getAttr("licon"));
+                    }
+
+                    if (this.getAttr("ricon") != null) {
+                        this.setAttr("ricon", this.getAttr("ricon"));
+                    }
+
+                    if (this.getStyle("tip-background-color") != null) {
+                        this.setStyle("tip-background-color", this.getStyle("tip-background-color"));
+                    }
+
+                    if (this.getStyle("tip-color") != null) {
+                        this.setStyle("tip-color", this.getStyle("tip-color"));
+                    }
+
+
+                    if (this.getStyle("font-size") != null) {
+                        this.setStyle("font-size", this.getStyle("font-size"));
+                    }
+
+
+                    if (this.getAttr("loading") != null) {
+                        this.setAttr("loading", this.getAttr("loading"));
+                    }
+
+
+                    if (this.getStyle("width") != null) {
+
+                        this.btn_content.setStyle("flex", "1");
+                        this.text.setStyle("flex", "1");
+
+                    }
+
+
+
+                    if (this.getStyle("flex") != null) {
+
+                        this.btn_content.setStyle("flex", "1");
+                        this.text.setStyle("flex", "1");
+                    }
+
+                    if (this.getParent() != null) {
+                        if (this.getParent().getStyle("flex-direction") != "row") {
+
                             this.btn_content.setStyle("flex", "1");
-                            this.text.setStyle("flex", "1");
+                            //this.text.setStyle("flex", "1");
                         }
                     }
+                    this.taginit = false;
                 },
                 click: function() {
                     var copythis = this;
@@ -254,14 +354,15 @@
 
                 },
                 //属性变更回调函数
-                attrChanged: function(attrName, attrValue, taginit) {
+                attrChanged: function(attrName, attrValue) {
                     var changetag = false;
-                    if (taginit == false) {
+                    if (this.taginit == false) {
 
                         if (this.getAttr(attrName) != this[attrName] && this.getAttr(attrName) != null) {
                             //this.fire("change");
                             changetag = true;
                         }
+
                     }
 
 
@@ -271,14 +372,12 @@
                         }
 
                         this.text.setText(this.value);
-                        if (taginit == false) {
+                        if (this.taginit == false) {
                             this.refresh();
                         }
                     }
 
                     if (attrName == "readonly") {
-
-                        var borderColorStyle = this.getStyle("border-color");
 
                         if (attrValue != null) {
                             this.readonly = attrValue;
@@ -286,18 +385,12 @@
                         if (this.readonly == "true") {
 
                             this.readonlydom.setStyle("visibility", "visible");
-                            if (borderColorStyle != null) {
-                                this.box.setStyle("border-color", "#ececec");
-                            }
-
                         } else {
                             this.readonlydom.setStyle("visibility", "hidden");
-                            if (borderColorStyle != null) {
-                                this.box.setStyle("border-color", this.borderColor);
-                            }
-
-
                         }
+
+
+
                     }
 
                     if (attrName == "tip") {
@@ -310,7 +403,7 @@
                             this.tipbox.setStyle("display", "none");
 
                         }
-                        if (taginit == false) {
+                        if (this.taginit == false) {
                             this.refresh();
                         }
                     }
@@ -333,7 +426,7 @@
 
                         }
 
-                        if (taginit == false) {
+                        if (this.taginit == false) {
                             this.refresh();
                         }
                     }
@@ -353,7 +446,7 @@
                             this.btn_rimage.setStyle("display", "none");
                         }
 
-                        if (taginit == false) {
+                        if (this.taginit == false) {
                             this.refresh();
                         }
                     }
@@ -368,18 +461,20 @@
                             this.loadingimage.setStyle("display", "none");
                         }
 
-                        if (taginit == false) {
+                        if (this.taginit == false) {
                             this.refresh();
                         }
                     }
+
+
+
 
                     if (changetag == true) {
                         this.fire("change");
                     }
                 },
                 //样式变更回调函数
-                styleChanged: function(styleName, styleValue, taginit) {
-                    // console.log("taginit++" + taginit);
+                styleChanged: function(styleName, styleValue) {
                     var copythis = this;
                     if (styleName == "color") {
                         if (styleValue != null) {
@@ -388,22 +483,6 @@
 
                         // console.log("this.color:"+this.color);
                         this.text.setStyle("color", this.color);
-                    }
-
-                    if (styleName == "width") {
-
-                        if (styleValue != null) {
-                            this.btn_content.setStyle("flex", "1");
-                            this.text.setStyle("flex", "1");
-                        }
-                    }
-
-
-                    if (styleName == "flex") {
-                        if (styleValue != null) {
-                            this.btn_content.setStyle("flex", "1");
-                            this.text.setStyle("flex", "1");
-                        }
                     }
 
 
@@ -422,7 +501,7 @@
 
                         }
 
-                        if (taginit == false) {
+                        if (this.taginit == false) {
 
                             time.setTimeout(function() {
                                 //console.log("修改了颜色");
@@ -476,7 +555,7 @@
                             this.fontSize = styleValue;
                         }
                         this.text.setStyle("font-size", this.fontSize);
-                        if (taginit == false) {
+                        if (this.taginit == false) {
 
                             this.refresh();
                         }
@@ -488,7 +567,7 @@
                             this.liconWidth = styleValue;
                         }
                         this.btn_image.setStyle("width", this.liconWidth);
-                        if (taginit == false) {
+                        if (this.taginit == false) {
 
                             this.refresh();
                         }
@@ -500,7 +579,7 @@
                             this.liconHeight = styleValue;
                         }
                         this.btn_image.setStyle("height", this.liconHeight);
-                        if (taginit == false) {
+                        if (this.taginit == false) {
 
                             this.refresh();
                         }
@@ -512,7 +591,7 @@
                             this.riconHeight = styleValue;
                         }
                         this.btn_rimage.setStyle("height", this.riconHeight);
-                        if (taginit == false) {
+                        if (this.taginit == false) {
 
                             this.refresh();
                         }
@@ -525,7 +604,7 @@
                         }
                         this.btn_rimage.setStyle("height", this.riconWidth);
 
-                        if (taginit == false) {
+                        if (this.taginit == false) {
 
                             this.refresh();
                         }

@@ -37,46 +37,46 @@ click()：模拟点击；
     </module>
     <script>
         <![CDATA[
-    var document = require("Document");
-        var window = require("Window");
-        var time = require("Time");
-        var console = require("Console");
+            var document = require("Document");
+            var window = require("Window");
+            var time = require("Time");
+            var console = require("Console");
 
-        var Checkbox = function () {
-            this.btn = null;
-            this.box = null;
-            this.boxcheck = null;
-            this.captiondom = null;
+            var Checkbox = function() {
+                this.btn = null;
+                this.box = null;
+                this.boxcheck = null;
+                this.captiondom = null;
 
-            this.height = "30";
-            this.fontSize = "16";
-            this.checkedColor = "#549FF7";
-            this.nocheckedColor = "#9B9C9C";
-            this.readonlyRadius = "0";
-            this.checkboxBorderRadius = "0";
-
-
-            this.value = "";
-            this.readonly = "false";
-            this.caption = "";
-            this.checked = "false";
-            this.checkedimage = "checkbox_c.png";
-            this.nocheckedimage = "checkbox.png";
-
-            this.taginit = true;
-            this.pathLocation = "";
-
-        };
-
-        module.exports = Checkbox;
+                this.height = 30;
+                this.fontSize = 16;
+                this.checkedColor = "#549FF7";
+                this.nocheckedColor = "#9B9C9C";
+                this.readonlyRadius = 0;
+                this.checkboxBorderRadius = 0;
 
 
-        Checkbox.prototype =
-            {
+                this.value = "";
+                this.readonly = "false";
+                this.caption = "";
+                this.checked = "false";
+                this.checkedimage = "checkbox_c.png";
+                this.nocheckedimage = "checkbox.png";
+                //这里标示自己在init里面初始调用的标记，如果在aq框架里面，框架会监听change事件，避免初始化的时候执行change事件
+                this.taginit = true;
 
-                created: function () {
+                this.pathLocation = "";
+
+            };
+
+            module.exports = Checkbox;
+
+
+            Checkbox.prototype = {
+
+                created: function() {
                     //这里是得到组件所在的uixml页面的绝对路径目录
-				    this.pathLocation = document.getPathLocation();
+                    this.pathLocation = document.getPathLocation();
                     this.box = this.getElement("box");
                     this.checkimage = this.getElement("checkimage");
                     this.boxcheck = this.getElement("boxcheck");
@@ -84,26 +84,31 @@ click()：模拟点击；
                     this.readonlydom = this.getElement("readonly");
                     this.init();
                     var copythis = this;
-                    this.box.on("touchUp", function (e) {
+                    this.box.on("touchUp", function(e) {
+                        //  console.log("touchUp");
 
                         if (copythis.readonly == "false") {
                             if (copythis.checked == "true") {
                                 copythis.setAttr("checked", "false");
-                            }
-                            else {
+                            } else {
                                 copythis.setAttr("checked", "true");
                             }
                         }
                     });
                 },
                 //属性变更回调函数
-                attrChanged: function (attrName, attrValue) {
+                attrChanged: function(attrName, attrValue, taginit) {
                     var changetag = false;
 
                     if (this.taginit == false) {
-                        if (this.getAttr(attrName) != this[attrName] && this[attrName] != null) {
-                            //this.fire("change"); 
-                            changetag = true;
+                        if (taginit != true) {
+                            //   console.log("能进来吗:" + attrName + ";" + attrValue + ";taginit:" + taginit);
+                            if (this.getAttr(attrName) != this[attrName] && this[attrName] != null && attrValue != null) {
+                                // console.log("123能进来吗:" + attrName + ";" + attrValue);
+                                // this[attrName] = attrValue;
+
+                                changetag = true;
+                            }
                         }
                     }
 
@@ -119,25 +124,18 @@ click()：模拟点击；
                             this.readonly = attrValue;
 
                             if (attrValue == "true") {
-                                // console.log("进入了readonly");
-                                this.box.appendChild(this.readonlydom);
-                                if (this.checked == "false") {
-                                    // this.boxradio.setStyle("background-color","#d9d9d9");
-                                    // this.btn.setStyle("background-color","#d9d9d9");
-                                }
-                            }
-                            else {
 
-                                this.box.insertBefore(this.readonlydom, this.boxcheck);
-                                if (this.checked == "false") {
-                                    // this.boxradio.setStyle("background-color","#ffffff");
-                                    // this.btn.setStyle("background-color","transparent");
-                                }
+                                this.readonlydom.setStyle("visibility", "visible");
+
+                            } else {
+
+
+                                this.readonlydom.setStyle("visibility", "hidden");
+
                             }
                         }
-                        if (this.taginit == false) {
-                            this.box.refresh();
-                        }
+
+
                     }
 
                     if (attrName == "checked") {
@@ -147,13 +145,28 @@ click()：模拟点击；
 
                             this.checkimage.setAttr("src", this.checkedimage);
 
-                            this.boxcheck.setStyle("border-color", this.checkedColor);
-                            this.boxcheck.setStyle("background-color", this.checkedColor);
+                            if (this.getStyle("checked-color") != null) {
+                                this.checkedColor = this.getStyle("checked-color");
+
+                            }
+
+                            if (this.getAttr("checkedimage") == null) {
+                                this.boxcheck.setStyle("border-color", this.checkedColor);
+                                this.boxcheck.setStyle("background-color", this.checkedColor);
+                            }
+
+
+
                             this.checked = "true";
-                        }
-                        else {
+                        } else {
+
                             this.checkimage.setAttr("src", this.nocheckedimage);
-                            this.boxcheck.setStyle("border-color", this.nocheckedColor);
+
+                            if (this.getAttr("checkedimage") == null) {
+                                this.boxcheck.setStyle("background-color", this.nocheckedColor);
+                                this.boxcheck.setStyle("border-color", this.nocheckedColor);
+                            }
+
                             this.checked = "false";
                         }
 
@@ -166,8 +179,8 @@ click()：模拟点击；
 
                         }
                         this.captiondom.setText(this.caption);
-                        if (this.taginit == false) {
-                            document.refresh();
+                        if (taginit == false) {
+                            this.refresh();
                         }
 
                     }
@@ -176,8 +189,7 @@ click()：模拟点击；
                         if (attrValue != null) {
                             if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
                                 this.checkedimage = attrValue;
-                            }
-                            else {
+                            } else {
                                 this.checkedimage = this.pathLocation + "/" + attrValue;
                             }
                             this.boxcheck.setStyle("background-color", "transparent");
@@ -197,8 +209,7 @@ click()：模拟点击；
 
                             if (attrValue.indexOf("res:") > -1 || attrValue.indexOf("http://") > -1 || attrValue.indexOf("https://") > -1) {
                                 this.nocheckedimage = attrValue;
-                            }
-                            else {
+                            } else {
                                 this.nocheckedimage = this.pathLocation + "/" + attrValue;
                             }
                             this.boxcheck.setStyle("background-color", "transparent");
@@ -213,7 +224,7 @@ click()：模拟点击；
 
                     }
 
-                   
+
 
                     if (changetag == true) {
                         this.fire("change");
@@ -221,7 +232,7 @@ click()：模拟点击；
 
                 },
                 //样式变更回调函数
-                styleChanged: function (styleName, styleValue) {
+                styleChanged: function(styleName, styleValue, taginit) {
                     if (styleName == "checkbox-border-radius") {
                         if (styleValue != null) {
 
@@ -232,7 +243,7 @@ click()：模拟点击；
 
                             }
                         }
-                        if (this.taginit == false) {
+                        if (taginit == false) {
                             this.box.refresh();
                         }
                     }
@@ -265,7 +276,7 @@ click()：模拟点击；
                         }
                         this.captiondom.setStyle("font-size", this.fontSize);
 
-                        if (this.taginit == false) {
+                        if (taginit == false) {
                             this.box.refresh();
                         }
 
@@ -278,7 +289,7 @@ click()：模拟点击；
                             this.readonlyRadius = styleValue;
                         }
                         this.readonlydom.setStyle("border-radius", this.readonlyRadius);
-                        if (this.taginit == false) {
+                        if (taginit == false) {
                             this.box.refresh();
                         }
 
@@ -286,31 +297,40 @@ click()：模拟点击；
                     }
 
 
+                    if (taginit == false) {
+                        if (styleName == "height") {
+                            if (styleValue != null) {
+                                this.height = styleValue;
 
-                    if (styleName == "height") {
-                        if (styleValue != null) {
-                            this.height =  styleValue;   
+                                this.height = (this.height).replace(/(\d+).*/g, "$1");
 
-                             this.height = (this.height).replace(/(\d+).*/g,"$1"); 
-                                          
-                        }
-                         this.boxcheck.setStyle("height",  this.height);
-                            this.boxcheck.setStyle("width",  this.height);
-                            this.checkimage.setStyle("height", this.height-1);
-                            this.checkimage.setStyle("width",  this.height-1);
-                            this.readonlydom.setStyle("height",  this.height);
-                            this.readonlydom.setStyle("width",  this.height);
+                            }
+                            this.boxcheck.setStyle("height", this.height);
+                            this.boxcheck.setStyle("width", this.height);
+                            this.checkimage.setStyle("height", this.height - 1);
+                            this.checkimage.setStyle("width", this.height - 1);
+                            this.readonlydom.setStyle("height", this.height);
+                            this.readonlydom.setStyle("width", this.height);
 
-                        if (this.taginit == false) {
-                            this.box.refresh();
+
+                            if (taginit == false && this.taginit == false) {
+                                this.box.refresh();
+                            }
+
+
                         }
                     }
+
                 },
-                init: function () {
-
-
+                init: function() {
                     this.taginit = true;
-                    this.setStyle("readonly-radius", this.getStyle("readonly-radius"));
+                    // this.setStyle("checkbox-border-radius", this.getStyle("checkbox-border-radius"));
+                    this.setAttr("checked", this.getAttr("checked"));
+                    this.setStyle("height", this.getStyle("height"));
+
+
+
+                    /*this.setStyle("readonly-radius", this.getStyle("readonly-radius"));
                     this.setStyle("checked-color", this.getStyle("checked-color"));
                     this.setStyle("nochecked-color", this.getStyle("nochecked-color"));
                     this.setStyle("checkbox-border-radius", this.getStyle("checkbox-border-radius"));
@@ -324,18 +344,19 @@ click()：模拟点击；
                     this.setAttr("checkedimage", this.getAttr("checkedimage"));
                     this.setAttr("nocheckedimage", this.getAttr("nocheckedimage"));
                     this.setAttr("readonly", this.getAttr("readonly"));
-                    this.setAttr("value", this.getAttr("value"));
+                    this.setAttr("value", this.getAttr("value"));*/
+
+
                     this.taginit = false;
+
                 },
 
-                click: function () {
+                click: function() {
 
                     this.box.fire("touchUp");
-					this.fire("click");
                     //document.refresh();
                 }
-            }
-    ]]>
+            }]]>
     </script>
     <style>
         @import url("checkbox.layout.css");
@@ -343,11 +364,12 @@ click()：模拟点击；
     </style>
     <ui>
         <box id="box" class="checkbox">
-            <box id="readonly" class="readonly" />
+
             <box class="boxcheck" id="boxcheck">
                 <image id="checkimage" />
             </box>
             <text id="caption"></text>
+            <box id="readonly" style="visibility:hidden" class="readonly" />
         </box>
     </ui>
 </page>

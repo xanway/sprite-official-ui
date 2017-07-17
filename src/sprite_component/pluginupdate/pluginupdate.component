@@ -2,7 +2,9 @@
 样式：无
 属性：无
 方法：plugininit(popjson);
-getVersion(callback:Function):void;
+getVersion(callback:Function):void;//获取应用资源版本信息
+
+getClientVersion(callback:Function):void;//获取客户端版本信息
 function(code,datastr):
 code:成功或失败标示1:成功，-1失败
 datastr：第三方接口返回的数据内容
@@ -26,6 +28,8 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
             var time = require("Time");
             var http = require("Http");
             var file = require("File");
+            var device = require("Device");
+            var native = require("Native");
 
 
             var screenWidth = window.getScreenWidth();
@@ -43,6 +47,11 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
                 this.pluginJson = null;
                 this.progressText2 = null;
                 this.progressBox = null;
+                //应用资源是否在更新
+                this.isPlugUpdate = false;
+                //客户端是否是否在更新
+                this.isClientUpdate = false;
+
 
             };
 
@@ -61,6 +70,7 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
                 styleChanged: function(styleName, styleValue) {
 
                 },
+
                 pluginupdateInit: function(popjson) {
                     this.pluginJson = popjson;
                     //这里是得到组件所在的uixml页面的绝对路径目录
@@ -88,6 +98,8 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
 
                 },
                 getVersion: function(fun) {
+
+                    // if (this.isClientUpdate == false) {
                     var option = {};
                     option.url = this.pluginJson.versionUrl;
                     option.method = "GET";
@@ -106,6 +118,147 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
 
                     });
 
+
+                    // }
+
+
+                },
+                getClientVersion: function(fun) {
+                    this.isClientUpdate = true;
+
+                    // if (this.isPlugUpdate == false) {
+                    var option = {};
+                    option.url = this.pluginJson.clientVersionUrl;
+                    option.method = "GET";
+                    option.data = "";
+                    option.isBlock = true;
+                    option.connectTimeout = 5;
+                    option.reqCharset = "utf-8";
+                    option.isBlock = false;
+                    http.ajax(option, function(json) {
+                        if (json.status == 200) {
+                            //成功
+                            fun(1, json.data);
+                        } else {
+                            fun(-1, "网络请求失败！");
+                        }
+
+                    });
+                    // }
+
+                },
+                clientDown: function(fun, downloadUrl) {
+                    if (downloadUrl == null || downloadUrl == "") {
+
+                        ui.toast({
+                            "content": "下载地址不能为空"
+                        });
+                        return;
+                    }
+
+
+                    if (device.getOs() == "iOS") {
+                        native.browser(downloadUrl);
+
+                    } else {
+
+                        var copythis = this;
+                        if (this.popshow == false) {
+
+                            this.popbgid.setStyle("visibility", "visible");
+                            var jsonData1 = {};
+                            var aniAry1 = new Array();
+
+                            //第一个动画
+                            var jsonAni1 = {};
+                            jsonAni1.delay = 0;
+                            jsonAni1.duration = 160;
+                            jsonAni1.curve = "linear";
+                            jsonAni1.props = {};
+                            jsonAni1.props.backgroundColor = "rgba(0,0,0,0.3)";
+                            aniAry1.push(jsonAni1);
+                            jsonData1.animators = aniAry1;
+                            this.popbgid.startAnimator(jsonData1, function() {
+                                copythis.popbgid.releaseAnimator();
+                                copythis.popshow = true;
+                            });
+
+
+
+                            var option = {};
+                            var base_https = downloadUrl;
+                            var savePath = "res:download/"
+                            var data = "";
+                            option.url = base_https;
+                            option.data = data;
+                            option.isBlock = false;
+                            option.timeout = 30;
+                            option.connectTimeout = 5;
+                            option.method = "GET";
+                            option.path = savePath;
+
+                            httpId = http.download(option,
+                                function(responseData) {
+                                    if (responseData.status >= 200 && responseData.status <= 299) {
+                                        console.log(responseData);
+
+
+                                        copythis.progressText2.setText("正在安装...");
+                                        native.installApk(responseData.path, function(json) {
+                                            if (json.code == 0) {
+                                                copythis.isClientUpdate = false;
+                                                //移除之前apk包
+                                                var option = {};
+                                                option.srcPath = responseData.path;
+                                                file.deleteFile(option);
+                                                copythis.hide();
+                                                fun(1);
+
+                                            } else {
+                                                copythis.isClientUpdate = false;
+                                                copythis.hide();
+                                                //安装失败
+                                                fun(-2);
+
+                                            }
+
+
+                                        });
+
+                                    } else {
+                                        copythis.isClientUpdate = false;
+                                        //网络请求失败
+                                        copythis.hide();
+                                        fun(-1);
+                                    }
+                                },
+                                function(progressjson) {
+
+                                    var rate = progressjson.receivedLength / progressjson.totalLength;
+                                    copythis.myProgress.setAttr("progress", rate);
+                                    copythis.progressText.setText(Math.floor(rate * 100) + "%");
+
+                                    if (progressjson.totalLength >= 1024 * 1024) {
+                                        var a = progressjson.receivedLength / 1024 / 1024;
+                                        var b = progressjson.totalLength / 1024 / 1024;
+                                        copythis.progressText2.setText(a.toFixed(2) + "M/" + b.toFixed(2) + "M");
+                                    } else if (progressjson.totalLength >= 1024) {
+                                        var a = progressjson.receivedLength / 1024;
+                                        var b = progressjson.totalLength / 1024;
+                                        copythis.progressText2.setText(a.toFixed(2) + "KB/" + b.toFixed(2) + "KB");
+                                    }
+                                }
+                            );
+
+
+
+                        }
+
+
+
+
+                    }
+
                 },
                 pluginDown: function(fun, downloadUrl) {
                     console.log("downloadUrl:" + downloadUrl);
@@ -117,6 +270,7 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
                         });
                         return;
                     }
+
 
                     var copythis = this;
                     if (this.popshow == false) {
@@ -168,7 +322,7 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
                                         if (zipData.code == 0) {
                                             //解压成功
                                             //移除之前zip包
-
+                                            copythis.isPlugUpdate = false;
                                             var option = {};
                                             option.srcPath = responseData.path;
                                             file.deleteFile(option);
@@ -176,12 +330,14 @@ code:成功或失败标示，1成功，-1请求失败 -2解压失败
 
                                             fun(1);
                                         } else {
+                                            copythis.isPlugUpdate = false;
                                             //解压失败 
                                             copythis.hide();
                                             fun(-2);
                                         }
                                     });
                                 } else {
+                                    copythis.isPlugUpdate = false;
                                     //网络请求失败
                                     copythis.hide();
                                     fun(-1);

@@ -81,35 +81,24 @@ change：监听select属性改变
                     this.readonlydom = this.getElement("readonly");
 
 
-                    this.setAttr("title", this.getAttr("title"));
+                    // this.setAttr("title", this.getAttr("title"));
                     this.setAttr("prompt", this.getAttr("prompt"));
 
-                    if (this.getStyle("select-color")) {
-                        this.selectColor = this.getStyle("select-color");
-                    }
-
-                    if (this.getStyle("title-background-color")) {
-                        this.titleBackgroundColor = this.getStyle("title-background-color");
-                    }
-
-                    if (this.getStyle("title-color")) {
-                        this.titleColor = this.getStyle("title-color");
-
-                    }
 
 
-                    this.setStyle("text-align", this.getStyle("text-align"));
-                    this.setStyle("color", this.getStyle("color"));
-                    this.setStyle("prompt-color", this.getStyle("prompt-color"))
-                    this.setStyle("font-size", this.getStyle("font-size"));
+                    // this.setStyle("text-align", this.getStyle("text-align"));
+                    // this.setStyle("color", this.getStyle("color"));
+                    this.setStyle("prompt-color", this.getStyle("prompt-color"));
+                    // this.setStyle("font-size", this.getStyle("font-size"));
 
 
-                    if (this.getAttr("value")) {
+                    /*if (this.getAttr("value")) {
                         this.value = this.getAttr("value");
-                    }
+                    }*/
 
 
-                    this.setAttr("readonly", this.getAttr("readonly"));
+
+                    //this.setAttr("readonly", this.getAttr("readonly"));
 
 
                     this.box.on("touchUp", function(e) {
@@ -155,21 +144,25 @@ change：监听select属性改变
 
                 },
                 //属性变更回调函数
-                attrChanged: function(attrName, attrValue) {
+                attrChanged: function(attrName, attrValue, taginit) {
                     var changetag = false;
                     if (this.taginit == false) {
+                        if (taginit != true) {
+                            //   console.log("能进来吗:" + attrName + ";" + attrValue + ";taginit:" + taginit);
+                            if (this.getAttr(attrName) != this[attrName] && this[attrName] != null && attrValue != null) {
+                                // console.log("123能进来吗:" + attrName + ";" + attrValue);
+                                // this[attrName] = attrValue;
 
-                        if (this.getAttr(attrName) != this[attrName] && this[attrName] != null) {
-                            //this.fire("change");
-                            changetag = true;
+                                changetag = true;
+                            }
                         }
-
                     }
 
-                    var m = 0;
-                    //用来判断数组里面元素的value是否和组件的value有相同的元素
+
 
                     if (attrName == "value") {
+                        var m = 0;
+                        //用来判断数组里面元素的value是否和组件的value有相同的元素
                         this.value = attrValue;
 
                         for (i = 0; i < this.options.length; i++) {
@@ -185,6 +178,8 @@ change：监听select属性改变
 
                         if (m != 1) {
 
+
+
                             this.text.setText(this.prompt);
                             this.text.setStyle("color", this.promptColor);
                         }
@@ -196,16 +191,15 @@ change：监听select属性改变
                         if (attrValue == "true") {
 
                             this.readonly = attrValue;
-                            this.box.appendChild(this.readonlydom);
+
+                            this.readonlydom.setStyle("visibility", "visible");
 
                         } else {
                             this.readonly = "false";
-                            this.box.insertBefore(this.readonlydom, this.boxcheck);
+
+                            this.readonlydom.setStyle("visibility", "hidden");
                         }
 
-                        if (this.taginit == false) {
-                            this.box.refresh();
-                        }
                     }
 
                     if (attrName == "prompt") {
@@ -233,7 +227,7 @@ change：监听select属性改变
 
                 },
                 //样式变更回调函数
-                styleChanged: function(styleName, styleValue) {
+                styleChanged: function(styleName, styleValue, taginit) {
                     if (styleName == "text-align") {
                         if (styleValue != null) {
                             this.textalign = styleValue;
@@ -263,6 +257,10 @@ change：监听select属性改变
 
                     }
 
+
+
+
+
                     if (styleName == "font-size") {
                         if (styleValue != null) {
                             this.fontSize = styleValue;
@@ -272,6 +270,30 @@ change：监听select属性改变
 
 
                     }
+
+
+                    if (styleName == "select-color") {
+                        if (styleValue != null) {
+                            this.selectColor = styleValue;
+                        }
+                    }
+
+
+                    if (styleName == "title-background-color") {
+                        if (styleValue != null) {
+                            this.titleBackgroundColor = styleValue;
+                        }
+                    }
+
+
+
+                    if (styleName == "title-color") {
+                        if (styleValue != null) {
+                            this.titleColor = styleValue;
+                        }
+                    }
+
+
 
 
 
@@ -343,15 +365,15 @@ change：监听select属性改变
     </style>
     <ui>
         <box id="box" class="box" style="flex-direction:row;">
-            <box id="readonly" class="readonly" />
-            <box class="boxselect" id="boxcheck" style="">
+
+            <box class="boxselect" id="boxcheck">
                 <text id="text" style="singleline:true;text-overflow:ellipsis;margin: 0 0 0 6;padding: 4"></text>
             </box>
             <!--  <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAARVBMVEUAAAC7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7swE7V+AAAAFnRSTlMACHwO/MS3o4+IA/fOmE/s6a1waGBaRYI0iAAAAHBJREFUKM/NzUkShCAUBNHPoIIoznn/ozZhEIQNvW9z+WpR8tf86lt0q5YAc8XjAEFmYBhrx0mzqO32lAM2VbwHfP4HevVwLTldFtMVL0tnsu/yaL8XMwGHfHUAU3J7StVpIfklTZeFEOVHcVmivLwPKBQHXHBrpN4AAAAASUVORK5CYII="/> -->
 
             <iconfont id="imageid" style="font-family:Material Design Icons;font-size:25;color:#9d9d9d;width: 30;;text-align: center;">\uF140</iconfont>
 
-
+            <box id="readonly" style="visibility:hidden" class="readonly" />
 
         </box>
 
