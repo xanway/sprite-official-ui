@@ -314,6 +314,16 @@ jsonData，json格式如下：
 参数：无
 
 返回值：无
+
+
+
+**clickMiddle():void**
+
+<code>模拟点击中间按钮</code>
+
+参数：无
+
+返回值：无
  
 
 <h2 id="cid_4">事件</h2>
