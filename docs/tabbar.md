@@ -115,6 +115,20 @@ tabbarid1.loadData(json);
 
 **注：** 除了公共样式以外，其他菜单样式通过js修改后，需重新执行loadData()才生效。  
 
+**font-max-size**
+
+<code>文字最大字号</code>
+
+文字颜色，默认18;
+
+**font-min-size**
+
+<code>文字最小字号</code>
+
+文字颜色，默认15;
+
+
+
 <h2 id="cid_3">js方法</h2>
 
 **公共方法**  
