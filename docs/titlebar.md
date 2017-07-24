@@ -106,6 +106,8 @@ title.setAttr("title","标题")
 > [ricon-height  右边图片高度](#ys_7)
 > 
 > [riconsnd-width  右边第二图片宽度](#ys_8)
+>  
+> [title-font-size  标题文字大小](#ys_9)
 
 
 
@@ -179,6 +181,12 @@ title.setStyle("title-color”,"red");
 <code>右边第二图片宽度</code>
 
 右边第二图片宽度(通过js可以修改)；默认高度30
+
+<span id="ys_9">**title-font-size**</span>
+
+<code>右边第二图片宽度</code>
+
+标题文字大小(通过js可以修改)；默认18
 
 
 

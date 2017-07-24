@@ -324,6 +324,13 @@ jsonData，json格式如下：
 参数：无
 
 返回值：无
+
+
+**mainImageInsertBeforeDom(IElement:dom):void**
+
+<code>中间菜单图片显示在某个dom之前</code>
+
+由于中间菜单在布局中采用绝对定位，默认层在最上层，有时候需要其他层进行遮罩，可以设置在某一层之前显示。
  
 
 <h2 id="cid_4">事件</h2>
