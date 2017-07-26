@@ -49,11 +49,13 @@
 	justify-content:flex-start;	
 	align-items:center;
 	padding:4 6 4 6;
+  height: 40;
 }
 .list-cell-text{
     text-align: left;
 		flex-wrap:wrap;     
     font-size: 17;
+
 }
 
 
@@ -62,4 +64,5 @@
   flex:1;
   justify-content:start;	
 	align-items:center;
+  margin: 0 0 0 6;
 }

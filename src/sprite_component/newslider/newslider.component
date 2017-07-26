@@ -320,7 +320,7 @@ pageSelected 参数(e,index) : 监听newslider切换事件，返回切换后的�
                             arr[i].imageurl = this.pathLocation + "/" + arr[i].imageurl;
                         }
                         var xmlstr = '<box >' +
-                            '<image style="flex:1;scaleType:cover;cacheType:memory;fade:true;" defaultSrc="' + arr[i].defaulturl + '"  src="' + arr[i].imageurl + '" />' +
+                            '<image style="flex:1;scaleType:cover;cacheType:disk;fade:true;" defaultSrc="' + arr[i].defaulturl + '"  src="' + arr[i].imageurl + '" />' +
                             '</box>';
                         var dombox = document.createElementByXml(xmlstr, this);
                         this.sliderImgNew.appendChild(dombox);

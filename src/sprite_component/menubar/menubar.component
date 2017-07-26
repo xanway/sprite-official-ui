@@ -36,6 +36,8 @@
 
     menubarRefresh(): 如需通过js动态修改某个菜单的json属性值，可执行menubarRefresh()属性数据    
 
+    clickMiddle();模拟点击中间菜单。
+
     事件：
     
     selectedItem:参数(e、index) 监听选中菜单标识
@@ -54,6 +56,7 @@
             var time = require("Time");
             var ui = require("UI");
             var console = require("Console");
+            var device = require("Device");
 
             var screenWidth_s = window.getScreenWidth();
             var screenHeight_s = window.getScreenHeight();
@@ -61,6 +64,7 @@
 
             var Menubar = function() {
                 this.menubar = null;
+                this.mainitem = null;
                 this.type = "normal";
 
 
@@ -83,6 +87,8 @@
                 this.jsondatas = null;
 
                 this.pathLocation = "";
+
+                this.BeforeDom = null;
 
 
             }
@@ -118,6 +124,17 @@
 
 
 
+
+
+                },
+                mainImageInsertBeforeDom: function(dom) {
+
+                    this.BeforeDom = dom;
+
+
+                },
+                clickMiddle: function() {
+                    this.mainitem.fire("touchUp");
 
 
                 },
@@ -226,6 +243,7 @@
                     }
                 },
                 loadData: function(jsondatas) {
+                    var copythis = this;
 
                     if (this.type == "middleMain") {
                         if (jsondatas.datas.length > 4) {
@@ -259,119 +277,156 @@
                     this.jsondatas = jsondatas;
                     //清空所有子节点
                     this.menubar.clear();
-                    for (var i = 0; i < this.jsondatas.datas.length; i++) {
+                    console.log("开始");
+
+                    var menubarstr = '<box class="menubarbox">';
+
+                    this.jsondatas.datas.forEach(function(itemjson, i) {
+
                         var src = "";
                         var color;
                         //因为这里的数据是外部通过js注入，内部无非判断图片路径是基于模板还是uixml这里做判断，按基于uixml处理，复合开发者的思维。
-                        if ((this.jsondatas.datas[i].iconCurrent).indexOf("res:") > -1 || (this.jsondatas.datas[i].iconCurrent).indexOf("http://") > -1 || (this.jsondatas.datas[i].iconCurrent).indexOf("https://") > -1) {
+                        if ((itemjson.iconCurrent).indexOf("res:") > -1 || (itemjson.iconCurrent).indexOf("http://") > -1 || (itemjson.iconCurrent).indexOf("https://") > -1) {
 
                         } else {
-                            this.jsondatas.datas[i].iconCurrent = this.pathLocation + "/" + this.jsondatas.datas[i].iconCurrent;
+                            itemjson.iconCurrent = copythis.pathLocation + "/" + itemjson.iconCurrent;
                         }
-                        if ((this.jsondatas.datas[i].icon).indexOf("res:") > -1 || (this.jsondatas.datas[i].icon).indexOf("http://") > -1 || (this.jsondatas.datas[i].icon).indexOf("https://") > -1) {
+                        if ((itemjson.icon).indexOf("res:") > -1 || (itemjson.icon).indexOf("http://") > -1 || (itemjson.icon).indexOf("https://") > -1) {
 
                         } else {
-                            this.jsondatas.datas[i].icon = this.pathLocation + "/" + this.jsondatas.datas[i].icon;
+                            itemjson.icon = copythis.pathLocation + "/" + itemjson.icon;
                         }
 
-                        if (this.index == i) {
+                        if (copythis.index == i) {
                             //因为这里的数据是外部通过js注入，内部无非判断图片路径是基于模板还是uixml这里做判断，按基于uixml处理，复合开发者的思维。                       
-                            src = this.jsondatas.datas[i].iconCurrent;
-                            color = this.currentColor;
+                            src = itemjson.iconCurrent;
+                            color = copythis.currentColor;
                         } else {
-                            src = jsondatas.datas[i].icon;
-                            color = this.color;
+                            src = itemjson.icon;
+                            color = copythis.color;
                         }
 
 
                         var tipxml = '';
-                        tipxml = '<box type="tipsmall" itemindex="' + i + '" style="background-color:' + this.tipbackgroundColor + ';display:none" class="menubar-item-tip-small"></box>';
-                        tipxml = tipxml + '<box type="tip" itemindex="' + i + '" class="menubar-item-tip" style="background-color:' + this.tipbackgroundColor + ';display:none"><text class="menubar-item-tip-text" style="color:' + this.tipColor + '"></text></box>';
+                        tipxml = '<box type="tipsmall" itemindex="' + i + '" style="background-color:' + copythis.tipbackgroundColor + ';display:none" class="menubar-item-tip-small"></box>';
+                        tipxml = tipxml + '<box type="tip" itemindex="' + i + '" class="menubar-item-tip" style="background-color:' + copythis.tipbackgroundColor + ';display:none"><text class="menubar-item-tip-text" style="color:' + copythis.tipColor + '"></text></box>';
 
-                        if (jsondatas.datas[i].isSmallTip != null && jsondatas.datas[i].isSmallTip == true) {
+                        if (itemjson.isSmallTip != null && itemjson.isSmallTip == true) {
 
-                            tipxml = '<box  type="tipsmall" itemindex="' + i + '" style="background-color:' + this.tipbackgroundColor + '" class="menubar-item-tip-small"></box>';
-                            tipxml = tipxml + '<box  type="tip" itemindex="' + i + '" class="menubar-item-tip" style="background-color:' + this.tipbackgroundColor + ';display:none"><text class="menubar-item-tip-text" style="color:' + this.tipColor + '"></text></box>';
-                        } else if (jsondatas.datas[i].tip != null && jsondatas.datas[i].tip != "") {
-                            tipxml = '<box  type="tipsmall" itemindex="' + i + '" style="background-color:' + this.tipbackgroundColor + ';display:none" class="menubar-item-tip-small"></box>';
+                            tipxml = '<box  type="tipsmall" itemindex="' + i + '" style="background-color:' + copythis.tipbackgroundColor + '" class="menubar-item-tip-small"></box>';
+                            tipxml = tipxml + '<box  type="tip" itemindex="' + i + '" class="menubar-item-tip" style="background-color:' + copythis.tipbackgroundColor + ';display:none"><text class="menubar-item-tip-text" style="color:' + copythis.tipColor + '"></text></box>';
+                        } else if (itemjson.tip != null && itemjson.tip != "") {
+                            tipxml = '<box  type="tipsmall" itemindex="' + i + '" style="background-color:' + copythis.tipbackgroundColor + ';display:none" class="menubar-item-tip-small"></box>';
 
-                            tipxml = tipxml + '<box  type="tip" itemindex="' + i + '" class="menubar-item-tip" style="background-color:' + this.tipbackgroundColor + '"><text class="menubar-item-tip-text" style="color:' + this.tipColor + '">' + jsondatas.datas[i].tip + '</text></box>';
+                            tipxml = tipxml + '<box  type="tip" itemindex="' + i + '" class="menubar-item-tip" style="background-color:' + copythis.tipbackgroundColor + '"><text class="menubar-item-tip-text" style="color:' + copythis.tipColor + '">' + itemjson.tip + '</text></box>';
                         }
 
                         var xmlstr = '<box   class="flex1 row-flex-center">' +
                             '<box itemindex="' + i + '"  class="menubar-item"  >' +
-                            '  <image id="image_' + i + '" itemindex="' + i + '" class="menubar-item-image" src="' + src + '" style="width:' + this.iconWidth + ';height:' + this.iconHeight + ';margin:' + this.iconMargin + '"/>' +
-                            ' <text id="text_' + i + '" itemindex="' + i + '" class="menubar-item-text" style="color:' + color + ';font-size:' + this.fontSize + ';margin:' + this.textMargin + '">' + jsondatas.datas[i].text + '</text>' +
+                            '  <image id="image_' + i + '" itemindex="' + i + '" class="menubar-item-image" src="' + src + '" style="width:' + copythis.iconWidth + ';height:' + copythis.iconHeight + ';margin:' + copythis.iconMargin + '"/>' +
+                            ' <text id="text_' + i + '" itemindex="' + i + '" class="menubar-item-text" style="color:' + color + ';font-size:' + copythis.fontSize + ';margin:' + copythis.textMargin + '">' + itemjson.text + '</text>' +
                             '' + tipxml + '' +
                             ' </box>' +
                             '</box>';
-                        var dom = document.createElementByXml(xmlstr, this);
-                        this.menubar.appendChild(dom);
 
-                        if (this.type == "middleMain") {
+
+                        menubarstr = menubarstr + xmlstr;
+                        // var dom = document.createElementByXml(xmlstr, copythis);
+                        // copythis.menubar.appendChild(dom);
+
+                        if (copythis.type == "middleMain") {
                             if (i == (jsondatas.datas.length / 2 - 1)) {
                                 var xmlstr = '<box class="flex1 row-flex-center">' +
-                                    '<box id="mainitem" class="menubar-item-main" style="background-color:' + this.mainbackgroundColor + '">' +
-                                    '<image class="menubar-item-main-image" src="' + this.mainicon + '"/>' +
+                                    '<box id="mainitem" class="menubar-item-main" style="background-color:' + copythis.mainbackgroundColor + '">' +
+                                    '<image class="menubar-item-main-image" src="' + copythis.mainicon + '"/>' +
                                     '</box>' +
                                     '</box>';
-                                var dom = document.createElementByXml(xmlstr, this);
-                                this.menubar.appendChild(dom);
+
+                                menubarstr = menubarstr + xmlstr;
+                                //  var dom = document.createElementByXml(xmlstr, copythis);
+                                //copythis.menubar.appendChild(dom);
                             }
                         }
-                    }
+
+
+                    });
+
+                    menubarstr = menubarstr + '</box>';
+
+                    var dom = document.createElementByXml(menubarstr, this);
+                    this.menubar.appendChild(dom);
+
                     this.menubar.refresh();
+
+                    console.log("结束");
                     if (this.type == "middleMain") {
-                        var mainitem = this.getElement("mainitem");
+                        this.mainitem = this.getElement("mainitem");
                         //console.log(mainitem);
                         var n = 0;
-                        mainitem.on('touchUp', function(e) {
+                        this.mainitem.on('touchUp', function(e) {
+
                             var jsonData = {};
                             var aniAry = new Array();
-                            var rotateAni = {};
-                            rotateAni.type = "rotate";
-                            rotateAni.delay = 0;
-                            rotateAni.duration = 200;
-                            rotateAni.curve = "linear";
+
+                            var jsonAni1 = {};
+                            jsonAni1.delay = 0;
+                            jsonAni1.duration = 150;
+                            jsonAni1.curve = "linear";
+                            jsonAni1.props = {};
+
                             if (n == 0) {
-                                rotateAni.fromDegree = 0;
-                                rotateAni.toDegree = 135;
+                                jsonAni1.props.rotation = 135;
                                 n = 1;
                             } else {
-                                rotateAni.fromDegree = 135;
-                                rotateAni.toDegree = 0;
+                                jsonAni1.props.rotation = 0;
                                 n = 0;
                             }
-                            aniAry.push(rotateAni);
-                            jsonData.fillAfter = 1;
-                            jsonData.animationSet = aniAry;
-                            mainitem.startAnimation(jsonData, function() {
-                                //mainitem.releaseAnimator();
-                                var ary = new Array();
-                                ary.push(n);
-                                copythis.fire("middleMainClick", ary);
-                                // document.refresh();
+
+
+                            aniAry.push(jsonAni1);
+                            jsonData.animators = aniAry;
+                            copythis.mainitem.startAnimator(jsonData, function(code) {
+
+
                             });
+
+                            var ary = new Array();
+                            ary.push(n);
+                            copythis.fire("middleMainClick", ary);
+
                         });
 
 
                         var copythis = this;
+
+                        var tt = 50;
+
+                        if (device.getOs() == "iOS") {
+                            var tt = 0;
+
+                        }
                         time.setTimeout(function() {
                             //android 在动态加载dom的时候getAbsoluteFrame 需要通过定时，才能获取到
-                            var json = mainitem.getAbsoluteFrame();
-                            root.appendChild(mainitem);
-                            mainitem.setStyle("position", "absolute");
-                            var mainitemfrme = mainitem.getFrame();
+                            var json = copythis.mainitem.getAbsoluteFrame();
+                            if (copythis.BeforeDom == null) {
+                                root.appendChild(copythis.mainitem);
+
+                            } else {
+                                root.insertBefore(copythis.mainitem, copythis.BeforeDom);
+                            }
+
+                            copythis.mainitem.setStyle("position", "absolute");
+                            var mainitemfrme = copythis.mainitem.getFrame();
                             mainitemfrme.x = json.x + Number(copythis.mainTransferX);
                             mainitemfrme.y = json.y + Number(copythis.mainTransferY)
-                            mainitem.setFrame(mainitemfrme);
-                            mainitem.setStyle("left", json.x + Number(copythis.mainTransferX));
+                            copythis.mainitem.setFrame(mainitemfrme);
+                            copythis.mainitem.setStyle("left", json.x + Number(copythis.mainTransferX));
 
-                            mainitem.setStyle("top", json.y + Number(copythis.mainTransferY));
+                            copythis.mainitem.setStyle("top", json.y + Number(copythis.mainTransferY));
 
                             //  root.refresh();
 
-                        }, 1);
+                        }, tt);
 
                     }
                     //发送menubar切换事件监听 因为同步回传信息有问题，这里需要用定时
@@ -401,7 +456,7 @@
                     }
                 },
                 changeIndex: function(num) {
-                    var list = this.menubar.getChildren();
+                    var list = this.menubar.getFirstChild().getChildren();
                     var ll = list.length;
 
                     if (this.type == "middleMain") {

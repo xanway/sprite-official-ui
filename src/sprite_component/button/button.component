@@ -248,7 +248,6 @@
 
                         copythis.fire("click");
 
-
                     }, 200);
 
 

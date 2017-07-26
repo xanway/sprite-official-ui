@@ -95,6 +95,7 @@
    
 	width:fill_screen;
 	height:44; 
+	
 }
 
 .titlebar-hasstatus{
@@ -106,22 +107,21 @@
 .titlebar-lcaption{
 	flex-direction:row;
 	padding:0 ;
-	height:44;
-	align-items:stretch;
-	justify-content:center;
+		
 	position: absolute;
 	bottom: 0;
 	left:0;
+	top:0;
+	
+	
 }
 .titlebar-rcaption{
 	flex-direction:row;
-	align-items:stretch;
-	justify-content:center;
 	padding:0 ;
-	height:44;
 	position: absolute;
 	bottom: 0;
 	right: 0;
+	top:0;
 }
 
 .titlebar-image{

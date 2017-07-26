@@ -3,6 +3,8 @@
     box公共样式;
     color:文字颜色
     current-color: 选中的颜色（包含文字和滑动条颜色）
+    font-max-size: 最大字号
+    font-min-size:最小字号
     
 
     
@@ -67,6 +69,9 @@
                 this.position_index = 0;
                 this.bindid = null;
                 this.sliderdom = null;
+
+                this.fontMax = 18;
+                this.fontMin = 15;
             };
 
             module.exports = Tabbar;
@@ -222,10 +227,13 @@
                             this.sliderIndex.setStyle("left", tabbarw);
                             this.sliderIndex.setStyle("width", this.childrenObj[i].getFrame().width + 20);
                             childrenObj_getFirstChild.setStyle("color", this.currentColor);
+
+                            childrenObj_getFirstChild.setStyle("font-size", this.fontMax);
                             childrenObj_getFirstChild.setClassStyle("tabbar-text-box-text-index", this);
                             this.oldposition = i;
                         } else {
                             childrenObj_getFirstChild.setStyle("color", this.color);
+                            childrenObj_getFirstChild.setStyle("font-size", this.fontMin);
                             childrenObj_getFirstChild.setClassStyle("tabbar-text-box-text", this);
                         }
                         //这里动态设置每个box的宽度 
@@ -236,6 +244,9 @@
                         tabbarw = tabbarw + cw + 20;
                     }
                     //  console.log("tabbarw:"+tabbarw+";screenWidth:"+screenWidth);
+                    screenWidth = copythis.sliderScroll.getFrame().width;
+
+
                     if (screenWidth >= tabbarw) {
                         for (var i = 0; i < this.childrenObj.length; i++) {
 
@@ -303,8 +314,8 @@
                             this.sliderIndex.setFrame(slider_index_json);
                             this.sliderIndex.setStyle("left", slider_index_json.x);
                             this.w_r = x_length;
-                            this.childrenObj[n].getFirstChild().setStyle("font-size", 18);
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", 15);
+                            this.childrenObj[n].getFirstChild().setStyle("font-size", this.fontMax);
+                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
                             this.oldposition = n;
 
                             var json = {};
@@ -335,8 +346,8 @@
                         slider_index_json.width = current_width + (next_width - current_width) * s;
                         this.sliderIndex.setFrame(slider_index_json);
                         this.sliderIndex.setStyle("left", slider_index_json.x);
-                        this.childrenObj[n].getFirstChild().setStyle("font-size", 18 - 3 * s);
-                        this.childrenObj[n + 1].getFirstChild().setStyle("font-size", 15 + 3 * s);
+                        this.childrenObj[n].getFirstChild().setStyle("font-size", this.fontMax - (this.fontMax - this.fontMin) * s);
+                        this.childrenObj[n + 1].getFirstChild().setStyle("font-size", this.fontMin + (this.fontMax - this.fontMin) * s);
 
                         // console.log("s:"+s);
                         red = Number(this.normalRed) * s + (1 - s) * Number(this.currentRed);
@@ -353,7 +364,7 @@
                         this.childrenObj[n + 1].getFirstChild().setStyle("color", color);
                         //这里解决间隔切换的问题
                         if (n != 0 && offset > 1) {
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", 15);
+                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
                             this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
                         }
                         this.oldposition = n;
@@ -404,8 +415,8 @@
                             this.sliderIndex.setFrame(slider_index_json);
                             this.sliderIndex.setStyle("left", slider_index_json.x);
                             this.w_r = 0;
-                            this.childrenObj[0].getFirstChild().setStyle("font-size", 18);
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", 15);
+                            this.childrenObj[0].getFirstChild().setStyle("font-size", this.fontMax);
+                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
                             this.oldposition = 0;
 
                             var json = {};
@@ -426,12 +437,13 @@
                         this.sliderIndex.setFrame(slider_index_json);
                         this.sliderIndex.setStyle("left", slider_index_json.x);
                         // slider_index.setStyle("bottom",0);
-                        this.childrenObj[n].getFirstChild().setStyle("font-size", 18 - 3 * s);
-                        this.childrenObj[n - 1].getFirstChild().setStyle("font-size", 15 + 3 * s);
-                        // console.log("n:"+n+";offset:"+offset);
+                        this.childrenObj[n].getFirstChild().setStyle("font-size", this.fontMax - (this.fontMax - this.fontMin) * s);
+                        this.childrenObj[n - 1].getFirstChild().setStyle("font-size", this.fontMin + (this.fontMax - this.fontMin) * s);
+                        // console.log("bbb:" + this.fontMin);
+                        // console.log("sss:" + (this.fontMin + (this.fontMax - this.fontMin) * s));
                         //这里解决间隔切换的问题
                         if ((n + 1) != this.childrenObj.length && offset > 1) {
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", 15);
+                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
                             this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
                         }
                         this.oldposition = n;
@@ -530,6 +542,21 @@
                         this.normalRed = rgbstr.red;
                         this.normalGreen = rgbstr.green;
                         this.normalBlue = rgbstr.blue;
+                    }
+
+
+                    if (styleName == "font-max-size") {
+                        if (styleValue != null) {
+                            this.fontMax = Number(styleValue);
+                        }
+
+                    }
+
+                    if (styleName == "font-min-size") {
+                        if (styleValue != null) {
+                            this.fontMin = Number(styleValue);
+                        }
+
                     }
                 }
             }

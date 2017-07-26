@@ -74,6 +74,14 @@ hide()():隐藏pop
 
                 },
                 popinit: function(popjson) {
+                    var copythis = this;
+                    // time.setTimeout(function() {
+
+                    copythis.popinit2(popjson);
+                    // }, 50);
+
+                },
+                popinit2: function(popjson) {
                     //这里是得到组件所在的uixml页面的绝对路径目录
                     this.pathLocation = document.getPathLocation();
                     this.rootDom = document.getRootElement();
@@ -95,7 +103,9 @@ hide()():隐藏pop
                     var arrowLeft = 0;
                     var domobj = this.popjson.domobj;
                     var framejson = domobj.getAbsoluteFrame();
-                    //console.log("x:"+framejson.x+";y:"+framejson.y+";width:"+framejson.width+";height:"+framejson.height);
+
+
+                    //  console.log("x:" + framejson.x + ";y:" + framejson.y + ";width:" + framejson.width + ";height:" + framejson.height);
 
                     if ((framejson.x + framejson.width / 2) >= popmenuWidth / 2 && screenWidth - (framejson.x + framejson.width / 2) <= popmenuWidth / 2) {
                         //这种情况弹出框只能在最右侧
@@ -117,26 +127,41 @@ hide()():隐藏pop
 
                     arrowLeft = (framejson.x + framejson.width / 2) - left - 11;
                     var popContent = '';
-                    for (var i = 0; i < this.popjson.datas.length; i++) {
 
-                        if ((this.popjson.datas[i].icon).indexOf("res:") > -1 || (this.popjson.datas[i].icon).indexOf("http://") > -1 || (this.popjson.datas[i].icon).indexOf("https://") > -1) {
+                    var popjsondata = this.popjson.datas;
+
+                    for (var i = 0; i < popjsondata.length; i++) {
+
+
+                        var imagesrc = '';
+
+
+                        if (popjsondata[i].icon == null || popjsondata[i].icon == "") {
+
 
                         } else {
-                            this.popjson.datas[i].icon = this.pathLocation + "/" + this.popjson.datas[i].icon;
+                            imagesrc = '<image src="' + popjsondata[i].icon + '"  index="' + i + '"  id="image_' + i + '"    class="list-cell-limage" style="width:20;height:20;margin:6 6 6 6" />';
+
+                            if ((popjsondata[i].icon).indexOf("res:") > -1 || (popjsondata[i].icon).indexOf("http://") > -1 || (popjsondata[i].icon).indexOf("https://") > -1) {
+
+                            } else {
+                                popjsondata[i].icon = this.pathLocation + "/" + popjsondata[i].icon;
+                            }
+
                         }
 
-
                         var linestr = '';
-                        if (i < this.popjson.datas.length - 1) {
+                        if (i < popjsondata.length - 1) {
 
                             linestr = '<line style="line-size:0.5"/>';
                         } else {
                             linestr = '';
                         }
+
                         popContent = popContent + '<box  class="onelist" index="' + i + '" id="box_' + i + '">' +
-                            '<image src="' + this.popjson.datas[i].icon + '"  index="' + i + '"  id="image_' + i + '"    class="list-cell-limage" style="width:25;height:25;margin:6 10 6 6" />' +
+                            '' + imagesrc + '' +
                             '<box class="onelist-cell-textbox"  id="text_' + i + '"  index="' + i + '">' +
-                            '<text  id="text_' + i + '"  index="' + i + '"  class="list-cell-text flex1" style="font-size:15;singleline:true;text-overflow:ellipsis;color:' + this.fontColor + '">' + this.popjson.datas[i].text + '</text>' +
+                            '<text  id="text_' + i + '"  index="' + i + '"  class="list-cell-text flex1" style="font-size:15;singleline:true;text-overflow:ellipsis;color:' + this.fontColor + '">' + popjsondata[i].text + '</text>' +
                             '</box>' +
                             '</box>' +
                             '' + linestr + '';
@@ -157,8 +182,8 @@ hide()():隐藏pop
                     var popmenuobj = document.createElementByXml(popxmlstr, this);
                     this.popbgid.appendChild(popmenuobj);
                     this.rootDom.appendChild(this);
-
                     this.rootDom.refresh();
+
 
                     this.popcontent = this.getElement("popcontent");
                     var copythis = this;
