@@ -420,7 +420,7 @@ menubar3.on("middleMainClick",function(e,tag){
 			  itemJson.iconCurrent = "res:yuanhongqian/image/ncontact-active.png";
 			  itemJson.text = "消息123";
 			  itemJson.tip = "1";
-			  menubar1.refresh();
+			  menubar1.menubarRefresh();
 	    });
 	  var json = {};
 	  var arr = new Array();
