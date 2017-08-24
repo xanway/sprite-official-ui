@@ -29,6 +29,8 @@ checkbox组件主要用于多选场景，除了自身样式外，开发者还可
 >[readonly	只读（可以通过js修改）](#sx_5)
 >
 >[value  提交值](#sx_6)
+>
+>[readonly-background-color  readonly层的背景颜色](#sx_6)
 
 
 
@@ -80,6 +82,15 @@ true选中，false 未选中(通过js可以修改)
 <code>提交值</code> 
 
 用于记录需要提交的值
+
+
+<span id="sx_7">**readonly-background-color**</span>
+
+<code>readonly层的背景颜色</code> 
+
+如果想让组件在readonly时候，显示原来样式，可以设置为透明色。
+
+
 
 
 <h2 id="cid_2">样式</h2>
