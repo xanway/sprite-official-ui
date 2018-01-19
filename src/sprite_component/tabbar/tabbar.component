@@ -49,6 +49,7 @@
             var console = require("Console");
             var encryption = require("Encryption");
             var ui = require("UI");
+            var device = require("Device");
             var Tabbar = function() {
                 this.sliderScroll = null;
                 this.sliderIndex = null;
@@ -89,11 +90,11 @@
                             for (var i = 0; i < copythis.childrenObj.length; i++) {
                                 if (ctrlobj.getText() == copythis.childrenObj[i].getFirstChild().getText()) {
                                     copythis.position_index = i;
-                                    copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text-index", copythis);
-                                    copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.currentColor);
+                                    //  copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text-index", copythis);
+                                    //  copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.currentColor);
                                 } else {
-                                    copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text", copythis);
-                                    copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
+                                    //copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text", copythis);
+                                    // copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
                                 }
                             }
                             // copythis.sliderScroll.refresh();
@@ -101,11 +102,11 @@
                             for (var i = 0; i < copythis.childrenObj.length; i++) {
                                 if (ctrlobj.getFirstChild().getText() == copythis.childrenObj[i].getFirstChild().getText()) {
                                     copythis.position_index = i;
-                                    copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text-index", copythis);
-                                    copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.currentColor);
+                                    // copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text-index", copythis);
+                                    // copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.currentColor);
                                 } else {
-                                    copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text", copythis);
-                                    copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
+                                    // copythis.childrenObj[i].getFirstChild().setClassStyle("tabbar-text-box-text", copythis);
+                                    // copythis.childrenObj[i].getFirstChild().setStyle("color", copythis.color);
                                 }
                             }
                             // copythis.sliderScroll.refresh();
@@ -220,8 +221,6 @@
                     for (var i = 0; i < this.childrenObj.length; i++) {
 
 
-
-
                         var childrenObj_getFirstChild = this.childrenObj[i].getFirstChild();
                         if (this.position_index == i) {
                             this.sliderIndex.setStyle("left", tabbarw);
@@ -240,20 +239,31 @@
                         var cw = this.childrenObj[i].getFrame().width;
                         // console.log("cw:"+cw);
                         this.childrenObj[i].setStyle("width", cw + 20);
-                        childrenObj_getFirstChild.setStyle("width", cw + 20);;
+                        childrenObj_getFirstChild.setStyle("width", cw + 20);
                         tabbarw = tabbarw + cw + 20;
                     }
                     //  console.log("tabbarw:"+tabbarw+";screenWidth:"+screenWidth);
                     screenWidth = copythis.sliderScroll.getFrame().width;
 
-
+                    // console.log("tabbarw:" + tabbarw + ";screenWidth:" + screenWidth);
                     if (screenWidth >= tabbarw) {
                         for (var i = 0; i < this.childrenObj.length; i++) {
 
-                            if (this.position_index == i) {
-                                this.sliderIndex.setStyle("width", screenWidth / this.childrenObj.length);
+                            var nnn = screenWidth / this.childrenObj.length;
+
+                            // console.log("tabbarw:" + this.childrenObj[i].getFrame().width + ";screenWidth:" + nnn);
+
+                            if (this.childrenObj[i].getFrame().width >= nnn) {
+                                this.childrenObj[i].setStyle("width", this.childrenObj[i].getFrame().width);
+
+                            } else {
+                                this.childrenObj[i].setStyle("width", nnn);
                             }
-                            this.childrenObj[i].setStyle("width", screenWidth / this.childrenObj.length);
+
+                            if (this.position_index == i) {
+                                this.sliderIndex.setStyle("width", nnn);
+                            }
+
                         }
                     }
                     copythis.sliderScroll.refresh();
@@ -298,11 +308,13 @@
                     //左滑
                     if (direction == 0) {
                         //得到当前滑动了第几个容器，由于快速滑动postion不会变，根据offset+postion一起判断
-                        var n = Math.floor(offset) + position;
+                        // console.log(Math.abs(offset) + ";;" + position);
+                        var n = Math.floor(Math.abs(offset)) + position;
                         // console.log(offset+"左滑回弹"+n);
                         //判断是否滑动到最后一个
                         if ((n + 1) == this.childrenObj.length) {
-                            if (offset - Math.floor(offset) > 0) {
+
+                            if (Math.abs(offset) - Math.floor(Math.abs(offset)) > 0) {
                                 return;
                             }
                             var x_length = 0;
@@ -314,8 +326,13 @@
                             this.sliderIndex.setFrame(slider_index_json);
                             this.sliderIndex.setStyle("left", slider_index_json.x);
                             this.w_r = x_length;
+
+                            // console.log(n + ":进入了这里1:" + this.oldposition);
                             this.childrenObj[n].getFirstChild().setStyle("font-size", this.fontMax);
+                            this.childrenObj[n].getFirstChild().setStyle("color", this.currentColor);
                             this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
+                            this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
+                            this.childrenObj[0].getFirstChild().setStyle("color", this.color);
                             this.oldposition = n;
 
                             var json = {};
@@ -336,8 +353,10 @@
                         this.w_r = x_length;
                         //  console.log("左滑：w_r:");
                         //计算滑动比例
-                        var s = (offset + position) - n;
+                        var s = (Math.abs(offset) + position) - n;
+                        s = s.toFixed(2);
                         //当前位置滑动条宽度
+                        //  console.log("n=======" + n);
                         var current_width = this.childrenFrame[n].width;
                         //下一个位置滑动条的宽度
                         var next_width = this.childrenFrame[n + 1].width;
@@ -349,13 +368,14 @@
                         this.childrenObj[n].getFirstChild().setStyle("font-size", this.fontMax - (this.fontMax - this.fontMin) * s);
                         this.childrenObj[n + 1].getFirstChild().setStyle("font-size", this.fontMin + (this.fontMax - this.fontMin) * s);
 
-                        // console.log("s:"+s);
+                        // console.log("s:" + s);
                         red = Number(this.normalRed) * s + (1 - s) * Number(this.currentRed);
                         green = Number(this.normalGreen) * s + (1 - s) * Number(this.currentGreen);
                         blue = Number(this.normalBlue) * s + (1 - s) * Number(this.currentBlue);
                         var color = "rgb(" + red + "," + green + "," + blue + ")";
                         // console.log(color);
                         this.childrenObj[n].getFirstChild().setStyle("color", color);
+                        // console.log(Math.floor(Math.abs(offset)) + ";color：" + color);
                         //右侧tab色值变换
                         red = Number(this.currentRed) * s + (1 - s) * Number(this.normalRed);
                         green = Number(this.currentGreen) * s + (1 - s) * Number(this.normalGreen);
@@ -363,14 +383,26 @@
                         var color = "rgb(" + red + "," + green + "," + blue + ")";
                         this.childrenObj[n + 1].getFirstChild().setStyle("color", color);
                         //这里解决间隔切换的问题
-                        if (n != 0 && offset > 1) {
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
+                        if (n != 0 && Math.floor(Math.abs(offset)) > 1) {
+                            // console.log(this.oldposition + "进入了这里2：" + Math.abs(offset));
+                            if (device.getOs() == "iOS") {
+                                this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
+                                this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
+                            }
+
                         }
+
                         this.oldposition = n;
+
                         if ((n + 1) != this.childrenObj.length) {
+                            // console.log("进入了这里3");
+                            if (device.getOs() == "Android" && n != 0) {
+
+                                this.childrenObj[0].getFirstChild().setStyle("color", this.color);
+                            }
+
                             // console.log(n + ":n :" + (offset + position));
-                            if (n == (offset + position)) {
+                            if (n == (Math.abs(offset) + position)) {
                                 //松手的时候 判断下 是否相等，然后做容器滑动
                                 var json = {};
                                 json.animated = true;
@@ -381,8 +413,12 @@
                             }
 
                         }
+
+
+
                     } else {
-                        var n = position - Math.floor(offset);
+                        // console.log("this.oldposition------" + this.oldposition);
+                        var n = position - Math.floor(Math.abs(offset));
 
                         if (n == this.childrenObj.length - 1) {
                             //由于反弹会进入，到右边最后一个
@@ -403,12 +439,14 @@
                         if (position == 0)
                             return;
 
-                        // console.log("n:" + n);
+
                         if (n == 0) {
+                            //  console.log("this.oldposition:" + this.oldposition + " Math.floor(Math.abs(offset)):" + Math.floor(Math.abs(offset)));
 
-                            if (offset - Math.floor(offset) > 0) {
+                            if (Math.abs(offset) - Math.floor(Math.abs(offset)) > 0) {
+                                //   console.log("进来了6");
 
-                                return;
+                                // return;
                             }
                             slider_index_json.x = 0;
                             slider_index_json.width = this.childrenObj[0].getFrame().width;
@@ -416,18 +454,26 @@
                             this.sliderIndex.setStyle("left", slider_index_json.x);
                             this.w_r = 0;
                             this.childrenObj[0].getFirstChild().setStyle("font-size", this.fontMax);
+
+                            this.childrenObj[0].getFirstChild().setStyle("color", this.currentColor);
                             this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
-                            this.oldposition = 0;
+                            this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
+                            this.childrenObj[this.childrenObj.length - 1].getFirstChild().setStyle("color", this.color);
+
+
+                            //this.oldposition = 0;
 
                             var json = {};
                             json.animated = true;
                             json.domObj = this.childrenObj[0];
                             this.sliderScroll.scrollToCtrl(json);
 
+
+
                             return;
                         }
 
-                        var s = (offset + n) - position;
+                        var s = (Math.abs(offset) + n) - position;
 
                         var next_width = this.childrenFrame[n - 1].width;
                         slider_index_json.x = this.w_r - s * next_width;
@@ -439,14 +485,31 @@
                         // slider_index.setStyle("bottom",0);
                         this.childrenObj[n].getFirstChild().setStyle("font-size", this.fontMax - (this.fontMax - this.fontMin) * s);
                         this.childrenObj[n - 1].getFirstChild().setStyle("font-size", this.fontMin + (this.fontMax - this.fontMin) * s);
-                        // console.log("bbb:" + this.fontMin);
+                        //  console.log(Math.floor(Math.abs(offset)) + "bbb:" + (n + 1));
                         // console.log("sss:" + (this.fontMin + (this.fontMax - this.fontMin) * s));
-                        //这里解决间隔切换的问题
-                        if ((n + 1) != this.childrenObj.length && offset > 1) {
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
-                            this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
+                        //这里解决间隔切换的问题 
+                        if (device.getOs() == "Android") {
+                            if ((n + 1) != this.childrenObj.length && Math.floor(Math.abs(offset)) >= 1) {
+                                //   console.log("进入了这里5 ");
+                                //  console.log("this.oldposition=" + this.oldposition);
+                                this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
+                                this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
+                            }
+
+
+                        } else {
+
+                            if ((n + 1) != this.childrenObj.length && Math.floor(Math.abs(offset)) > 1) {
+                                //   console.log("进入了这里5 ");
+                                //   console.log("this.oldposition=" + this.oldposition);
+                                this.childrenObj[this.oldposition].getFirstChild().setStyle("font-size", this.fontMin);
+                                this.childrenObj[this.oldposition].getFirstChild().setStyle("color", this.color);
+                            }
                         }
+
+
                         this.oldposition = n;
+
                         // red = red + (0-red)*s;
                         // green = green + (0-green)*s;
                         // blue = blue + (0-blue)*s;
@@ -464,7 +527,7 @@
                         //var ctrlid =  childrenObj[n-1].getId();
                         //通过控对象滚动
 
-                        if (n == (position - offset)) {
+                        if (n == (position - Math.abs(offset))) {
                             //松手的时候 判断下 是否相等，然后做容器滑动
                             var json = {};
                             json.animated = true;

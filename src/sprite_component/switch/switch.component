@@ -88,7 +88,7 @@ click():模拟点击
                             copythis.btnFrame.x = copythis.space_w;
                         }
                         // console.log(json.x+"copythis.space_w"+copythis.space_w);
-                        console.log(copythis.btnFrame);
+                        //  console.log(copythis.btnFrame);
                         this.setFrame(copythis.btnFrame);
                         if (copythis.btnFrame.x > copythis.space_w / 2) {
                             copythis.box.setStyle("background-color", copythis.backgroundColor);
@@ -198,7 +198,7 @@ click():模拟点击
                             jsonData.animators = aniAry;
                             var copythis = this;
                             this.btn.startAnimator(jsonData, function() {
-                                console.log("copythis.isOn:" + copythis.isOn + "##attrValue:" + copythis.checked);
+                                //  console.log("copythis.isOn:" + copythis.isOn + "##attrValue:" + copythis.checked);
                                 if (copythis.isOn + "" != copythis.checked) {
 
                                     if (copythis.checked == "true")
@@ -349,7 +349,7 @@ click():模拟点击
     <ui>
         <box class="ctrlbox" id="ctrlbox">
             <box id="readonly" class="readonly" />
-            <box id="box" class="box">
+            <box id="box" class="box" style="background-color: #e5e7ea">
                 <text id="ontext" class="ontext"></text>
                 <text id="offtext" class="offtext"></text>
                 <box id="roundbtn" class="btn">

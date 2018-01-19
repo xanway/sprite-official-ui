@@ -8,6 +8,8 @@ height:checkbox高度 设置高度后宽度自动和高度一致;
 font-size:字体大小(通过js可以修改属性)；
 checkbox-border-radius：checkbox的边框弧度
 readonly-radius:只读状态遮罩区域的弧度，一般用于有图片的时候设置
+readonly-background-color:设置readonly时的背景色
+
 
 
 属性：
@@ -54,6 +56,7 @@ click()：模拟点击；
                 this.nocheckedColor = "#9B9C9C";
                 this.readonlyRadius = 0;
                 this.checkboxBorderRadius = 0;
+                this.readonlyBackgroundColor = "rgba(255, 255, 255, 0.7)";
 
 
                 this.value = "";
@@ -239,6 +242,13 @@ click()：模拟点击；
                             this.checkboxBorderRadius = styleValue;
                             if (this.getAttr("checkedimage") == null) {
                                 this.boxcheck.setStyle("border-radius", this.checkboxBorderRadius);
+                                if (this.checkboxBorderRadius == (this.height / 2)) {
+                                    this.checkimage.setStyle("round", true);
+                                } else {
+                                    this.checkimage.setStyle("border-radius", this.checkboxBorderRadius);
+                                    this.checkimage.setStyle("round", false);
+                                }
+
                                 this.readonlydom.setStyle("border-radius", this.checkboxBorderRadius);
 
                             }
@@ -297,28 +307,42 @@ click()：模拟点击；
                     }
 
 
-                    if (taginit == false) {
-                        if (styleName == "height") {
-                            if (styleValue != null) {
-                                this.height = styleValue;
+                    // if (taginit == false) {
+                    if (styleName == "height") {
+                        //  console.log(taginit + "进来了吗" + styleValue);
+                        if (styleValue != null) {
+                            this.height = styleValue;
 
-                                this.height = (this.height).replace(/(\d+).*/g, "$1");
-
-                            }
-                            this.boxcheck.setStyle("height", this.height);
-                            this.boxcheck.setStyle("width", this.height);
-                            this.checkimage.setStyle("height", this.height - 1);
-                            this.checkimage.setStyle("width", this.height - 1);
-                            this.readonlydom.setStyle("height", this.height);
-                            this.readonlydom.setStyle("width", this.height);
-
-
-                            if (taginit == false && this.taginit == false) {
-                                this.box.refresh();
-                            }
-
+                            this.height = (this.height).replace(/(\d+).*/g, "$1");
 
                         }
+
+
+                        this.boxcheck.setStyle("height", this.height);
+                        this.boxcheck.setStyle("width", this.height);
+                        /*this.checkimage.setStyle("height", this.height - 1);
+                        this.checkimage.setStyle("width", this.height - 1);*/
+
+                        this.readonlydom.setStyle("height", this.height);
+                        this.readonlydom.setStyle("width", this.height);
+
+
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
+
+
+                    }
+                    // }
+
+                    if (styleName == "readonly-background-color") {
+                        if (styleValue != null) {
+                            this.readonlyBackgroundColor = styleValue;
+                        }
+                        this.readonlydom.setStyle("background-color", this.readonlyBackgroundColor);
+
+
+
                     }
 
                 },
@@ -326,7 +350,11 @@ click()：模拟点击；
                     this.taginit = true;
                     // this.setStyle("checkbox-border-radius", this.getStyle("checkbox-border-radius"));
                     this.setAttr("checked", this.getAttr("checked"));
-                    this.setStyle("height", this.getStyle("height"));
+                    // var h = this.getStyle("height");
+                    //  console.log(this.getAttr("checked") + "this.getStyle(height)" + h);
+                    // this.setStyle("height", "20");
+
+
 
 
 
@@ -365,7 +393,7 @@ click()：模拟点击；
     <ui>
         <box id="box" class="checkbox">
 
-            <box class="boxcheck" id="boxcheck">
+            <box class="boxcheck" id="boxcheck" style="padding: 4">
                 <image id="checkimage" />
             </box>
             <text id="caption"></text>

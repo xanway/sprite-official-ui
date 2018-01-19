@@ -297,36 +297,43 @@ click()：模拟点击；
                     }
 
 
-                    if (taginit == false) {
-                        if (styleName == "height") {
-                            if (styleValue != null) {
-                                this.height = styleValue;
+                    // if (taginit == false) {
+                    if (styleName == "height") {
+                        //  console.log(taginit + "进来了吗" + styleValue);
+                        if (styleValue != null) {
+                            this.height = styleValue;
 
-                                this.height = (this.height).replace(/(\d+).*/g, "$1");
-
-                            }
-                            this.boxcheck.setStyle("height", this.height);
-                            this.boxcheck.setStyle("width", this.height);
-                            this.checkimage.setStyle("height", this.height - 1);
-                            this.checkimage.setStyle("width", this.height - 1);
-                            this.readonlydom.setStyle("height", this.height);
-                            this.readonlydom.setStyle("width", this.height);
-
-
-                            if (taginit == false && this.taginit == false) {
-                                this.box.refresh();
-                            }
-
+                            this.height = (this.height).replace(/(\d+).*/g, "$1");
 
                         }
+
+
+                        this.boxcheck.setStyle("height", this.height);
+                        this.boxcheck.setStyle("width", this.height);
+                        this.checkimage.setStyle("height", this.height - 1);
+                        this.checkimage.setStyle("width", this.height - 1);
+                        this.readonlydom.setStyle("height", this.height);
+                        this.readonlydom.setStyle("width", this.height);
+
+
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
+
+
                     }
+                    // }
 
                 },
                 init: function() {
                     this.taginit = true;
                     // this.setStyle("checkbox-border-radius", this.getStyle("checkbox-border-radius"));
                     this.setAttr("checked", this.getAttr("checked"));
-                    this.setStyle("height", this.getStyle("height"));
+                    // var h = this.getStyle("height");
+                    //  console.log(this.getAttr("checked") + "this.getStyle(height)" + h);
+                    // this.setStyle("height", "20");
+
+
 
 
 

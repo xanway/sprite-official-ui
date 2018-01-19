@@ -277,7 +277,7 @@
                     this.jsondatas = jsondatas;
                     //清空所有子节点
                     this.menubar.clear();
-                    console.log("开始");
+                    // console.log("开始");
 
                     var menubarstr = '<box class="menubarbox">';
 
@@ -358,7 +358,7 @@
 
                     this.menubar.refresh();
 
-                    console.log("结束");
+                    //  console.log("结束");
                     if (this.type == "middleMain") {
                         this.mainitem = this.getElement("mainitem");
                         //console.log(mainitem);
@@ -480,12 +480,18 @@
                     this.fire("selectedItem", ary);
                 },
                 menubarRefresh: function() {
-                    var childarr = this.menubar.getChildren();
+                    //  console.log("111111111111111");
+                    var childarr = this.menubar.getFirstChild().getChildren();
+                    //  console.log(childarr.length);
+                    //  console.log("2222222222222");
                     if (this.type == "middleMain") {
                         childarr.splice((childarr.length - 1) / 2, 1);
                     }
 
+                    console.log(childarr.length);
+
                     for (var i = 0; i < childarr.length; i++) {
+
 
                         if ((this.jsondatas.datas[i].iconCurrent).indexOf("res:") > -1 || (this.jsondatas.datas[i].iconCurrent).indexOf("http:") > -1 || (this.jsondatas.datas[i].iconCurrent).indexOf("https://") > -1) {
 

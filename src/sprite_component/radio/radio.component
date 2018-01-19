@@ -159,7 +159,7 @@ click(): 模拟radio点击方法；
                     this.taginit = true;
 
                     this.setAttr("checked", this.getAttr("checked"));
-                    this.setStyle("height", this.getStyle("height"));
+                    // this.setStyle("height", this.getStyle("height"));
 
 
                     /*this.setStyle("readonly-radius", this.getStyle("readonly-radius"));
@@ -245,6 +245,9 @@ click(): 模拟radio点击方法；
                             } else {
                                 this.checkedimage = this.pathLocation + "/" + attrValue;
                             }
+
+                            this.boxradio.setStyle("border-radius", 0);
+                            this.readonlydom.setStyle("border-radius", 0);
 
 
                             this.checkedColor = "transparent";
@@ -418,38 +421,36 @@ click(): 模拟radio点击方法；
                     }
 
 
-                    if (taginit == false) {
-                        if (styleName == "height") {
-                            if (styleValue != null) {
-                                this.height = styleValue;
-                            }
-
-                            this.boxradio.setStyle("height", this.height);
-                            this.boxradio.setStyle("width", this.height);
-                            this.readonlydom.setStyle("height", this.height);
-                            this.readonlydom.setStyle("width", this.height);
-
-                            if (this.getAttr("checkedimage") == null) {
-                                this.boxradio.setStyle("border-radius", this.height / 2);
-                                this.readonlydom.setStyle("border-radius", this.height / 2);
-
-                                this.btn.setStyle("height", this.height / 2);
-                                this.btn.setStyle("width", this.height / 2);
-
-                                this.btn.setStyle("border-radius", this.height / 4);
-
-                            } else {
-
-                                this.checkimage.setStyle("height", this.height - 1);
-                                this.checkimage.setStyle("width", this.height - 1);
-                            }
-
-                            if (taginit == false && this.taginit == false) {
-                                this.box.refresh();
-                            }
-
+                    // if (taginit == false) {
+                    if (styleName == "height") {
+                        if (styleValue != null) {
+                            this.height = styleValue;
                         }
+
+                        this.boxradio.setStyle("height", this.height);
+                        this.boxradio.setStyle("width", this.height);
+                        this.readonlydom.setStyle("height", this.height);
+                        this.readonlydom.setStyle("width", this.height);
+
+                        if (this.getAttr("checkedimage") == null) {
+                            this.boxradio.setStyle("border-radius", this.height / 2);
+                            this.readonlydom.setStyle("border-radius", this.height / 2);
+                            this.btn.setStyle("border-radius", this.height / 4);
+                            this.btn.setStyle("height", this.height / 2);
+                            this.btn.setStyle("width", this.height / 2);
+
+                        } else {
+
+                            this.checkimage.setStyle("height", this.height - 1);
+                            this.checkimage.setStyle("width", this.height - 1);
+                        }
+
+                        if (taginit == false) {
+                            this.box.refresh();
+                        }
+
                     }
+                    // }
 
 
                 }
