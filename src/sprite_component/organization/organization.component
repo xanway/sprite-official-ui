@@ -5,7 +5,7 @@
     属性：
     rootid="root" ：跟节点ID
     ischeckbox="true" ：是否有checkbox，可通过setAttr动态设置(可通过js修改)。
-    rootname="南京烽火星空通信发展有限公司"  ：根节点名称
+    rootname="南京先维信息技术有限公司"  ：根节点名称
     
     方法：
     loadData(datas);

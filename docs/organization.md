@@ -13,7 +13,7 @@ organization组件是专门为组织架构选人场景封装的，该组件支�
 示例，注意该控件需要放在垂直布局的容器中，如果在横向布局的容器里面需要指定width。  
 
 ```html
-<organization id="organization" rootid="root" ischeckbox="false" rootname="南京烽火星空通信发展有限公司"/>
+<organization id="organization" rootid="root" ischeckbox="false" rootname="南京先维信息技术有限公司"/>
 ``` 
 
 <h2 id="cid_1">属性</h2>
@@ -39,7 +39,7 @@ organization组件是专门为组织架构选人场景封装的，该组件支�
 
 <code>根节点名称</code>
 
-如：rootname="南京烽火星空通信发展有限公司"
+如：rootname="南京先维信息技术有限公司"
  
 
 <h2 id="cid_2">样式</h2>
@@ -441,7 +441,7 @@ ishaschild：
         <box class="full" style="" id="box">
             <titlebar id="titleid" class="titlebar-hasstatus" style="background-color:#549FF7;title-color:#ffffff;right-color:#ffffff"
                 title="组织架构" rtext="编辑" licon="res:yuanhongqian/image/back.png"></titlebar>
-                <organization id="organization" rootid="root" ischeckbox="false" rootname="南京烽火星空通信发展有限公司" />
+                <organization id="organization" rootid="root" ischeckbox="false" rootname="南京先维信息技术有限公司" />
         </box>
     </ui>
 </page>
